@@ -36,7 +36,7 @@ const teamPassOwned = GFN.owned('pass_'+id);
 document.title = `${t.name} ${t.squad} — GameFilmNow`;
 document.getElementById('page').innerHTML = `
   <div class="team-hero">
-    <div class="team-crest">${t.crest}</div>
+    <div class="team-crest">${GFX.logo(t)}</div>
     <div>
       <span class="pill">${t.league}</span>
       <h1>${t.name} <span style="color:var(--gold)">${t.squad}</span></h1>
@@ -72,7 +72,7 @@ document.getElementById('page').innerHTML = `
       <div class="panel">
         <div class="panel-head"><h3>🤝 Sponsors</h3><a href="#" onclick="alert('Demo: sponsor slots are ad space sold by the team.');return false">Sponsor us</a></div>
         <div class="panel-body flush">
-          ${t.sponsors.length? t.sponsors.map(s=>`<div class="sponsor"><div class="sponsor-logo">${s.i}</div>${s.n}</div>`).join('') : '<p style="padding:1rem 1.2rem;color:var(--muted);font-size:.9rem">Your business here — support the team.</p>'}
+          ${t.sponsors.length? t.sponsors.map(s=>`<div class="sponsor"><div class="sponsor-logo">${GFX.mono(s.m,s.c1,s.c2)}</div>${s.n}</div>`).join('') : '<p style="padding:1rem 1.2rem;color:var(--muted);font-size:.9rem">Your business here — support the team.</p>'}
         </div>
       </div>
       <div class="panel" style="margin-top:1.2rem">
@@ -84,7 +84,7 @@ document.getElementById('page').innerHTML = `
       ${t.merch.length?`<div class="panel" style="margin-top:1.2rem">
         <div class="panel-head"><h3>🛍️ Team Store</h3></div>
         <div class="panel-body flush">
-          ${t.merch.map(m=>`<div class="merch"><div class="merch-img">${m.i}</div><div><b>${m.n}</b><small>$${m.p}</small></div><button class="btn btn-ghost" onclick="alert('Demo: merch checkout ships in Phase 3.')">Buy</button></div>`).join('')}
+          ${t.merch.map(m=>`<div class="merch"><div class="merch-img">${GFX.mono(m.m,t.c1,t.c2)}</div><div><b>${m.n}</b><small>$${m.p}</small></div><button class="btn btn-ghost" onclick="alert('Demo: merch checkout ships in Phase 3.')">Buy</button></div>`).join('')}
         </div>
       </div>`:''}
     </aside>

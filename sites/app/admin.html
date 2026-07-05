@@ -77,7 +77,7 @@
       <div class="toolbar">
         <input type="search" placeholder="Search buyer, game, order #…">
         <div class="spacer"></div>
-        <button class="btn" style="background:#fee2e2;color:var(--red)" onclick="alert('Demo: pick a cancelled game → every purchase on it refunds in one batch via Stripe, buyers get an automatic text + email.')">⚠ Refund Entire Game</button>
+        <button class="btn" style="background:rgba(255,77,77,.14);color:var(--red);border-color:rgba(255,77,77,.4)" onclick="alert('Demo: pick a cancelled game → every purchase on it refunds in one batch via Stripe, buyers get an automatic text + email.')">⚠ Refund Entire Game</button>
       </div>
       <div class="grid-wrap">
         <table class="grid">
@@ -123,7 +123,16 @@
         <div class="field"><label>Team (squad)</label><select><option>Lakeland Eagles 12U</option><option>Winter Haven Storm 12U</option></select></div>
         <div class="field"><label>Event</label><select><option>Fall Season 2026</option><option>Winter Haven Classic — Round 1</option><option>Winter Haven Classic — Round 2</option></select></div>
       </div>
-      <div class="field"><label>Opponent</label><input value="Winter Haven Storm 12U"><div class="hint">Type any name. If they're on GFN it links their page automatically; if not, it stays plain text.</div></div>
+      <div class="field"><label>Opponent</label><input class="cell-opp" value="Winter Haven Storm 12U" placeholder="Type to search or create…"><div class="hint">Search as you type — filter by division, pick a GFN team (links automatically), or create a new one on the spot.</div></div>
+      <div class="field"><label>Game image</label>
+        <div class="img-choice">
+          <div class="preview" id="matchupPreview"></div>
+          <div style="flex:1;min-width:180px">
+            <div class="hint" style="margin:0 0 .5rem">✨ Auto-generated from the two team logos. Want your own photo instead?</div>
+            <button type="button" class="btn btn-ghost" style="padding:.45rem .9rem;font-size:.8rem" onclick="alert('Demo: upload a custom image (game poster, action photo) — it replaces the auto matchup art on cards and the game page.')">⬆ Upload custom image</button>
+          </div>
+        </div>
+      </div>
       <div class="field-row">
         <div class="field"><label>Date</label><input type="date" value="2026-07-10"></div>
         <div class="field"><label>Kickoff</label><input type="time" value="19:00"></div>
@@ -161,11 +170,11 @@ const rows=[
 ];
 function rowHtml(r){
   return `<tr>
-    <td><input type="text" value="${r.team}" style="max-width:110px;font-weight:700"></td>
+    <td><input type="text" class="cell-team" value="${r.team}" placeholder="Type to search…" style="max-width:130px;font-weight:700"></td>
     <td><input type="text" value="${r.event}"></td>
     <td><input type="date" value="${r.date}"></td>
     <td><input type="time" value="${r.time}"></td>
-    <td><input type="text" value="${r.opp}" style="max-width:170px"></td>
+    <td><input type="text" class="cell-opp" value="${r.opp}" placeholder="Type to search…" style="max-width:170px"></td>
     <td><input type="checkbox" ${r.stream?'checked':''}></td>
     <td><input type="text" value="${r.win}" style="max-width:95px"></td>
     <td><input type="number" value="${r.sp}" step="0.01" style="max-width:70px"></td>
@@ -177,7 +186,29 @@ function rowHtml(r){
   </tr>`;
 }
 document.getElementById('gridBody').innerHTML = rows.map(rowHtml).join('');
-function addRow(){ document.getElementById('gridBody').insertAdjacentHTML('afterbegin', rowHtml({team:'',event:'Fall Season 2026',date:'',time:'',opp:'',stream:true,win:'',sp:9.99,rec:true,rp:7.99,score:'',crew:''})); }
+
+/* search-as-you-type on team & opponent cells:
+   filter by division chips, pick from GFN squads, or create new inline */
+function wireCombos(scope){
+  (scope||document).querySelectorAll('.cell-team:not([data-combo]),.cell-opp:not([data-combo])').forEach(inp=>{
+    inp.dataset.combo='1';
+    GFN.combo(inp, ()=>GFN.squadOptions(), {
+      allowCreate:true,
+      onPick:o=>{ inp.value=o.label; },
+      onCreate:name=>{
+        const div=prompt(`Quick-create "${name}" — which division? (e.g. 12U)`,'12U');
+        if(div){ inp.value=`${name} ${div}`; alert(`Demo: "${name} ${div}" created with an auto-generated logo — in the real app it's saved and instantly searchable everywhere (grid, tournaments, coach invites).`); }
+      }
+    });
+  });
+}
+wireCombos();
+// auto matchup preview in the game editor modal
+document.getElementById('matchupPreview').innerHTML = GFN.matchupFor(GFN.games.g1);
+function addRow(){
+  document.getElementById('gridBody').insertAdjacentHTML('afterbegin', rowHtml({team:'',event:'Fall Season 2026',date:'',time:'',opp:'',stream:true,win:'',sp:9.99,rec:true,rp:7.99,score:'',crew:''}));
+  wireCombos(document.getElementById('gridBody'));
+}
 </script>
 </body>
 </html>

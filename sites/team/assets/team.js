@@ -5,6 +5,55 @@
 const FR = {
   me: { name:"Zach Riddle", num:22, pos:"RB", team:"Lakeland Eagles 12U", initials:"ZR" },
 
+  /* roster powers @mention search — every pick links to a profile */
+  roster: [
+    { name:"Zach Riddle",    num:22, pos:"RB" },
+    { name:"Antoine Carter", num:7,  pos:"QB" },
+    { name:"DeShawn Willis", num:11, pos:"WR" },
+    { name:"Marcus Lee",     num:55, pos:"OL" },
+    { name:"Tommy Vega",     num:30, pos:"LB" },
+    { name:"Coach Mike",     num:0,  pos:"COACH" }
+  ],
+  handle(p){ return '@'+p.name.replace(/\s+/g,''); },
+
+  /* turn @Handles into clickable profile links */
+  linkMentions(text){
+    return text.replace(/@([A-Za-z][\w]*)/g, (m,h)=>{
+      const p=this.roster.find(r=>r.name.replace(/\s+/g,'').toLowerCase()===h.toLowerCase());
+      return p? `<a class="mention" href="profile.html" title="${p.name}${p.num?' #'+p.num:''} · ${p.pos}">@${h}</a>` : `<span class="mention">@${h}</span>`;
+    });
+  },
+
+  /* @mention popover: type @ in an input → live player search with
+     position filter chips; click to insert, linked to their profile */
+  attachMentions(input){
+    const box=input.closest('.comment-box')||input.parentNode;
+    let pop=null, posFilter='ALL';
+    const positions=['ALL','QB','RB','WR','OL','LB','COACH'];
+    const close=()=>{ if(pop){pop.remove();pop=null;} };
+    const token=()=>{ const m=input.value.slice(0,input.selectionStart??input.value.length).match(/@([\w]*)$/); return m?m[1]:null; };
+    const render=()=>{
+      const q=token();
+      if(q===null){ close(); return; }
+      const opts=FR.roster.filter(p=>(posFilter==='ALL'||p.pos===posFilter) && p.name.toLowerCase().includes(q.toLowerCase()));
+      if(!pop){ pop=document.createElement('div'); pop.className='mention-pop'; box.appendChild(pop); }
+      pop.innerHTML=
+        `<div class="combo-filters">${positions.map(x=>`<button type="button" data-p="${x}" class="${x===posFilter?'on':''}">${x}</button>`).join('')}</div>`
+        + (opts.length? opts.map((p,i)=>`<div class="mention-item" data-i="${i}">
+            <span class="mi-num">${p.num||'C'}</span><span><b>${p.name}</b></span><small>${p.pos}</small></div>`).join('')
+          : `<div class="combo-empty" style="padding:.8rem;color:var(--muted);font-size:.82rem;text-align:center">No players match</div>`);
+      pop.querySelectorAll('.combo-filters button').forEach(b=>b.onmousedown=e=>{e.preventDefault();posFilter=b.dataset.p;render();});
+      pop.querySelectorAll('.mention-item').forEach(el=>el.onmousedown=e=>{
+        e.preventDefault(); const p=opts[+el.dataset.i];
+        input.value=input.value.replace(/@[\w]*$/, FR.handle(p)+' ');
+        close(); input.focus();
+      });
+    };
+    input.addEventListener('input',render);
+    input.addEventListener('keyup',e=>{ if(e.key==='Escape') close(); });
+    input.addEventListener('blur',()=>setTimeout(close,180));
+  },
+
   games: [
     { id:"g2", label:"vs Auburndale Rams 12U", date:"Jul 4", event:"Fall Season 2026", score:"W 21–14", plays:64, status:"ready", myTags:6 },
     { id:"g3", label:"vs Plant City Raiders 12U", date:"Jun 28", event:"WH Classic — Rd 2", score:"W 28–7", plays:71, status:"ready", myTags:9 },

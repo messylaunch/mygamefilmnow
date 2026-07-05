@@ -64,8 +64,9 @@ function render(){
     if(teams.length){
       html+=`<h2 class="page-title" style="font-size:1.25rem">Teams on GameFilmNow</h2><p class="page-sub">Only teams listed here have film for sale — opponents without a GFN account appear as text on schedules.</p><div class="card-grid" style="margin-bottom:2.4rem">`;
       html+=teams.map(t=>`<a class="game-card" href="team.html?id=${t.id}">
-        <div class="gc-media"><div class="vs">${t.crest} ${t.name}<small>${t.squad} · ${t.league}</small></div></div>
-        <div class="gc-body"><b>${t.city}</b><small>Record ${t.record} · Team Pass $${t.teamPass}</small>
+        <div class="gc-media" style="background:linear-gradient(120deg,${t.c1},${t.c2});display:grid;place-items:center">
+          <div style="width:84px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))">${GFX.logo(t)}</div></div>
+        <div class="gc-body"><b>${t.name} ${t.squad}</b><small>${t.league} · ${t.city} · Record ${t.record} · Team Pass $${t.teamPass}</small>
         <div class="gc-foot"><span class="gc-price"></span><span class="btn btn-navy" style="padding:.4rem .9rem;font-size:.83rem">View Team →</span></div></div></a>`).join('');
       html+=`</div>`;
     }

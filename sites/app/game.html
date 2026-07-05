@@ -56,7 +56,7 @@ function products(){
           <div class="buy"><span class="price">$${g.stream}</span><button class="btn btn-primary" onclick="buy('stream')">Buy Stream</button></div></div>`;
     rows += `<div class="product"><div class="product-icon">🎬</div><div><b>Game Recording</b><small>Full edited game, ready within 72 hours after the final whistle</small></div>
         <div class="buy"><span class="price">$${g.recording}</span><button class="btn btn-ghost" onclick="buy('rec')">Pre-order</button></div></div>`;
-    if (g.bundle && !ownsStream) rows += `<div class="product" style="background:#f6fbf8"><div class="product-icon" style="background:#e8f7ee">⭐</div><div><b>Stream + Recording Bundle</b><small>Watch live now, keep the recording forever — best value</small></div>
+    if (g.bundle && !ownsStream) rows += `<div class="product featured"><div class="product-icon" style="background:var(--yellow-dim);border-color:rgba(255,210,0,.4)">⭐</div><div><b>Stream + Recording Bundle</b><small>Watch live now, keep the recording forever — best value</small></div>
         <div class="buy"><span class="price"><span class="was">$${(g.stream+g.recording).toFixed(2)}</span>$${g.bundle}</span><button class="btn btn-primary" onclick="buy('bundle')">Buy Bundle</button></div></div>`;
   } else {
     rows += `<div class="product disabled"><div class="product-icon">📡</div><div><b>Live Stream</b><small>This game has ended — the stream is no longer for sale. The recording below has every play.</small></div><div class="buy"><span class="status-tag st-proc">ENDED</span></div></div>`;
@@ -87,7 +87,8 @@ document.getElementById('page').innerHTML = `
   <p style="margin-bottom:.8rem;font-size:.9rem"><a href="team.html?id=${g.home}">← ${t.name} ${t.squad}</a> <span style="color:var(--muted)">· ${g.event}</span></p>
   <div class="layout" style="margin-top:0">
     <div>
-      <div class="video-stage ${ (g.status==='recording'&&ownsRec) ? '' : 'locked'}">${stage()}</div>
+      <div class="video-stage ${ (g.status==='recording'&&ownsRec) ? '' : 'locked'}">
+        <div class="stage-bg">${GFN.matchupFor(g)}</div>${stage()}</div>
       <div style="margin-top:1rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;align-items:center">
         <div><h2 style="font-size:1.3rem">${t.name} ${t.squad} vs ${g.awayName}</h2>
         <p style="color:var(--muted);font-size:.9rem">${dateStr} · ${g.time} · ${g.venue} ${g.score?`· <b>Final ${g.score}</b>`:''}</p></div>
