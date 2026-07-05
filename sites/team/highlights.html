@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Highlights — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/team.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <h1 class="page-title" style="font-size:1.5rem">🏷️ My Plays &amp; Highlights</h1>
+    <p class="page-sub">Every play you've tagged yourself on, all season — 19 plays and counting.</p>
+
+    <div class="layout">
+      <div>
+        <div id="lockedView">
+          <div class="paywall">
+            <h3>⭐ Unlock Highlight Mode — $40, one time</h3>
+            <p style="color:var(--muted);font-size:.92rem;max-width:44em;margin:.6rem auto 1rem">
+              <b style="color:var(--ink)">Download everything:</b> every tagged play as video files in one ZIP — no screen recording, ever.<br>
+              <b style="color:var(--ink)">Build your tape:</b> pick up to 20 plays and we auto-stitch them into one highlight reel with music.<br>
+              <b style="color:var(--ink)">Go public:</b> your montage shows on your player profile for family, friends, and scouts.
+            </p>
+            <button class="btn btn-primary btn-lg" onclick="FR.paywallCheckout('Highlight Mode — Zach Riddle','ZIP download + highlight builder + public montage',40,'highlight_unlock',render)">Unlock for $40</button>
+            <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">Billed to your parent's card on file · covers the whole season</p>
+          </div>
+        </div>
+
+        <div id="builderView" style="display:none">
+          <div class="panel">
+            <div class="panel-head"><h3>🎬 Highlight Builder</h3><span style="font-size:.8rem;color:var(--muted)"><span id="selCount">0</span>/20 clips selected</span></div>
+            <div class="panel-body">
+              <p style="font-size:.85rem;color:var(--muted);margin-bottom:.9rem">Tap your best plays (max 20). We stitch them in order into one reel.</p>
+              <div class="clip-grid" id="clips"></div>
+            </div>
+          </div>
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head"><h3>🎵 Pick your soundtrack</h3></div>
+            <div class="panel-body">
+              <div class="music-pick">
+                <button class="act-btn on" onclick="pickMusic(this)">🔥 Action — "Game Time"</button>
+                <button class="act-btn" onclick="pickMusic(this)">⚡ Hype — "Friday Lights"</button>
+                <button class="act-btn" onclick="pickMusic(this)">🎺 Classic — "Stadium Brass"</button>
+                <button class="act-btn" onclick="alert('Demo: upload your own track (rights-cleared for private sharing).')">⬆ Upload my own</button>
+              </div>
+              <div style="display:flex;gap:.7rem;margin-top:1.2rem;flex-wrap:wrap">
+                <button class="btn btn-primary btn-lg" onclick="alert('Demo: the real build queues an auto-edit job (clips + music bed) and notifies you when your reel is ready — usually minutes.')">🎬 Build My Highlight Reel</button>
+                <button class="btn btn-ghost btn-lg" onclick="alert('Demo: ZIP of all 19 tagged plays begins downloading.')">⬇ Download all plays (ZIP)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="panel">
+          <div class="panel-head"><h3>📁 My Lists</h3></div>
+          <div class="panel-body flush">
+            <div class="game-row"><div class="notif-icon">🏷️</div><div class="gr-info"><b>Tagged: my plays</b><small>the reel builder pulls from these</small></div><span class="tag tag-gold">19</span></div>
+            <div class="game-row"><div class="notif-icon">❤️</div><div class="gr-info"><b>Liked plays</b><small>anything you ❤ in the film room</small></div><span class="tag tag-dim">31</span></div>
+            <div class="game-row"><div class="notif-icon">📁</div><div class="gr-info"><b>My List</b><small>saved for study, not highlights</small></div><span class="tag tag-dim">12</span></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head"><h3>👀 Who's watching</h3></div>
+          <div class="panel-body">
+            <p style="font-size:.88rem;color:var(--muted)">Your plays have <b style="color:var(--ink)">412 views</b> this season. Views only — we keep the focus on the film, not the fame.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="assets/team.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = FR.header('highlights');
+const clipNames=["44 Sweep TD","Screen L +18","Kick return","Cutback +11","Goal line TD","4th down stop","Swing pass +9","Counter +15","2pt conversion","Jet sweep +22","Wheel route TD","Stiff arm +8","44 Lead +7","Toss crack +12","Screen R +6","Draw +19","Fade TD","Pitch +10","Trap +13"];
+let selected = new Set();
+
+function render(){
+  const unlocked = FR.state('highlight_unlock',false);
+  document.getElementById('lockedView').style.display = unlocked?'none':'';
+  document.getElementById('builderView').style.display = unlocked?'':'none';
+  if(unlocked) renderClips();
+}
+function renderClips(){
+  document.getElementById('clips').innerHTML = clipNames.map((c,i)=>`
+    <div class="clip ${selected.has(i)?'sel':''}" onclick="pick(${i})">
+      <div class="cv">▶ ${c}</div>
+      <div class="cm">Game ${i<8?'vs Rams':i<14?'vs Raiders':'vs Chiefs'} · 0:0${(i%9)+2}s</div>
+    </div>`).join('');
+  document.getElementById('selCount').textContent=selected.size;
+}
+function pick(i){
+  if(selected.has(i)) selected.delete(i);
+  else { if(selected.size>=20){ alert('Max 20 plays per reel — keep it tight, keep it fire. 🔥'); return; } selected.add(i); }
+  renderClips();
+}
+function pickMusic(btn){ document.querySelectorAll('.music-pick .act-btn').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
+render();
+</script>
+</body>
+</html>

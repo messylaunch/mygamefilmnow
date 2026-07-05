@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Team — GameFilmNow Film Room</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/team.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <h1 class="page-title" style="font-size:1.5rem">🦅 Lakeland Eagles 12U — Film Room</h1>
+    <p class="page-sub">Welcome back, Zach. New film drops within 24 hours of every game. This is your team's private study space — no open chat, just football.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card"><small>Games on film</small><b>3</b><span class="delta">+1 in editing</span></div>
+      <div class="stat-card"><small>Plays you're tagged in</small><b>19</b><span class="delta">▲ 6 from last game</span></div>
+      <div class="stat-card"><small>Your play views</small><b>412</b><span class="delta">people watching your film</span></div>
+      <div class="stat-card"><small>Coach questions open</small><b>2</b><span class="delta" style="color:var(--gold)">answer them ↓</span></div>
+    </div>
+
+    <div class="layout">
+      <div>
+        <div class="panel">
+          <div class="panel-head"><h3>🎞️ Game Film</h3><span style="font-size:.8rem;color:var(--muted)">Team film in 24h · every play, every angle</span></div>
+          <div class="panel-body flush" id="gamesEl"></div>
+        </div>
+
+        <div class="panel" style="margin-top:1.4rem">
+          <div class="panel-head"><h3>📅 Team Calendar</h3><a href="#" onclick="alert('Demo: full calendar — games, practices, film sessions, Zoom calls. Coach adds events; parents get reminders.');return false">Full calendar</a></div>
+          <div class="panel-body flush">
+            <div class="game-row"><div class="gr-date"><b>7</b><small>Jul</small></div><div class="gr-info"><b>Film Study — Tuesday Session</b><small>6:30 PM · Coach reviews vs Mulberry · bring your homework plays</small></div><span class="tag tag-gold">FILM</span></div>
+            <div class="game-row"><div class="gr-date"><b>10</b><small>Jul</small></div><div class="gr-info"><b>GAME vs Winter Haven Storm</b><small>7:00 PM · Bryant Stadium Field 2 · streaming live</small></div><span class="tag tag-new">GAME</span></div>
+            <div class="game-row"><div class="gr-date"><b>12</b><small>Jul</small></div><div class="gr-info"><b>Team Zoom — Scheme Install</b><small>5:00 PM · link goes to parents' email</small></div><span class="tag tag-dim">ZOOM</span></div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="panel" id="notifications">
+          <div class="panel-head"><h3>🔔 Notifications</h3><a href="#" onclick="return false">Mark read</a></div>
+          <div class="panel-body flush">
+            <div class="notif unread"><div class="notif-icon">❓</div><div><b>Coach Mike asked on Play 14:</b> "What hole should we hit here?"<small>vs Rams · 3h ago · <a href="film-room.html">answer in film room →</a></small></div></div>
+            <div class="notif unread"><div class="notif-icon">💬</div><div><b>@DeShawn mentioned you</b> on Play 15: "<span style="color:var(--gold)">@ZachRiddle</span> that cut was nasty 🔥"<small>vs Rams · 5h ago</small></div></div>
+            <div class="notif unread"><div class="notif-icon">🎞️</div><div><b>New film posted:</b> vs Auburndale Rams — 64 plays ready.<small>1d ago · parents notified too</small></div></div>
+            <div class="notif unread"><div class="notif-icon">👨‍👩‍👧</div><div><b>John Smith</b> (your uncle) started following you.<small>2d ago</small></div></div>
+            <div class="notif"><div class="notif-icon">📌</div><div><b>Coach note:</b> "@RunningBacks watch your landmarks on 14 before Tuesday."<small>2d ago</small></div></div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head"><h3>⭐ My Lists</h3></div>
+          <div class="panel-body flush">
+            <a class="game-row" href="highlights.html"><div class="notif-icon">🏷️</div><div class="gr-info"><b>Tagged: my plays</b><small>19 plays across 3 games</small></div><span class="tag tag-gold">19</span></a>
+            <a class="game-row" href="highlights.html"><div class="notif-icon">❤️</div><div class="gr-info"><b>Liked plays</b><small>plays you hit ❤ on</small></div><span class="tag tag-dim">31</span></a>
+            <a class="game-row" href="highlights.html"><div class="notif-icon">📁</div><div class="gr-info"><b>My List</b><small>saved for later study</small></div><span class="tag tag-dim">12</span></a>
+          </div>
+        </div>
+
+        <p class="consent-note">🛡️ <b>Kid-safe by design:</b> your account is linked to Maria Riddle (parent). All texts/emails go to her — you get notifications right here in the app.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="assets/team.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = FR.header('home');
+document.getElementById('gamesEl').innerHTML = FR.games.map(g=>{
+  const ready = g.status==='ready';
+  return `<a class="game-row" href="${ready?'film-room.html?g='+g.id:'#'}" ${ready?'':'onclick="return false" style="opacity:.55;cursor:default"'}>
+    <div class="gr-date"><b>${g.date.split(' ')[1]}</b><small>${g.date.split(' ')[0]}</small></div>
+    <div class="gr-info"><b>${g.label} · Final ${g.score}</b><small>${g.event}${ready?` · ${g.plays} plays · you're tagged in ${g.myTags}`:''}</small></div>
+    ${ready?'<span class="tag tag-new">▶ STUDY</span>':'<span class="tag tag-dim">EDITING — READY IN ~24H</span>'}</a>`;
+}).join('');
+</script>
+</body>
+</html>
