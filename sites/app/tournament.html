@@ -29,8 +29,8 @@ function schedRow(gid){
 
 function render(){
   document.getElementById('page').innerHTML = `
-  <div class="team-hero" style="background:linear-gradient(160deg,#3b1d0d,#5c2d10)">
-    <div class="team-crest" style="background:linear-gradient(135deg,var(--gold),#b45309)">🏆</div>
+  <div class="team-hero">
+    <div class="team-crest">${GFX.logo({name:T.name,abbr:'WHC',c1:'#b8860b',c2:'#6b4a08'})}</div>
     <div>
       <span class="pill">Tournament</span>
       <h1>${T.name}</h1>
@@ -67,7 +67,7 @@ function render(){
         <div class="panel-head"><h3>🎫 Tournament Passes</h3></div>
         <div class="panel-body flush">
           ${T.passes.map(p=>{ const t=GFN.teams[p.team]; const key='tpass_'+T.id+'_'+p.team;
-            return `<div class="product"><div class="product-icon">${t.crest}</div>
+            return `<div class="product"><div class="product-icon" style="padding:4px;background:none;border:none">${GFX.logo(t)}</div>
               <div><b>${t.name} ${t.squad}</b><small>Every ${t.name} game in this tournament — streams + recordings</small></div>
               <div class="buy">${GFN.owned(key)?'<span class="owned-chip">✓ ACTIVE</span>':`<span class="price">$${p.price}</span><button class="btn btn-primary" onclick="GFN.openCheckout('Tournament Pass — ${t.name} ${t.squad}','${T.name}',${p.price},'${key}',render)">Get Pass</button>`}</div></div>`;}).join('')}
         </div>

@@ -114,14 +114,18 @@ function tagMe(btn){
 }
 function postComment(){
   const inp=document.getElementById('cInput'); if(!inp.value.trim()) return;
-  const html=inp.value.replace(/@(\w+)/g,'<span class="mention">@$1</span>');
+  const html=FR.linkMentions(inp.value);
   const box=document.querySelector('.panel-body.flush');
   box.insertAdjacentHTML('beforeend',`<div class="comment"><div class="avatar" style="background:#7c3aed">ZR</div>
     <div><b>Zach Riddle</b><span class="who">#22 RB · you</span><p>${html}</p>
     <div class="c-actions"><a href="#" onclick="return false">Reply</a></div></div></div>`);
-  if(inp.value.includes('@')) setTimeout(()=>alert('Demo: your @mention just sent a notification to that teammate (and an email to their parent).'),150);
+  if(inp.value.includes('@')) setTimeout(()=>alert('Demo: your @mention just notified that player (and emailed their parent). The tag links straight to their profile.'),150);
   inp.value='';
 }
+// @ search: type @ for live player search with position filter — picks link to profiles
+FR.attachMentions(document.getElementById('cInput'));
+// make the pre-seeded @ZachRiddle mention clickable too
+document.querySelectorAll('.comment p').forEach(p=>{ p.innerHTML = FR.linkMentions(p.textContent); });
 jump(2);
 </script>
 </body>

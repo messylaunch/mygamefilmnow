@@ -38,9 +38,9 @@
         <table class="grid">
           <thead><tr><th>Event</th><th>Date</th><th>Time</th><th>Opponent</th><th>📡</th><th>Stream window</th><th>Stream $</th><th>Rec $</th><th>Score</th><th>Sold</th></tr></thead>
           <tbody>
-            <tr><td>Fall Season 2026</td><td><input type="date" value="2026-07-10"></td><td><input type="time" value="19:00"></td><td><input type="text" value="Winter Haven Storm 12U"></td><td><input type="checkbox" checked></td><td><input type="text" value="18:50–21:30" style="max-width:95px"></td><td><input type="number" value="9.99" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" placeholder="—" style="max-width:80px"></td><td><b>31</b> 🎟</td></tr>
-            <tr><td>Fall Season 2026</td><td><input type="date" value="2026-07-04"></td><td><input type="time" value="18:00"></td><td><input type="text" value="Auburndale Rams 12U"></td><td><input type="checkbox"></td><td><input type="text" value="ended" style="max-width:95px"></td><td><input type="number" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" value="W 21–14" style="max-width:80px"></td><td><b>44</b> 🎟</td></tr>
-            <tr><td>WH Classic — Rd 2</td><td><input type="date" value="2026-06-28"></td><td><input type="time" value="13:00"></td><td><input type="text" value="Plant City Raiders 12U"></td><td><input type="checkbox"></td><td><input type="text" value="ended" style="max-width:95px"></td><td><input type="number" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" value="W 28–7" style="max-width:80px"></td><td><b>58</b> 🎟</td></tr>
+            <tr><td>Fall Season 2026</td><td><input type="date" value="2026-07-10"></td><td><input type="time" value="19:00"></td><td><input type="text" class="cell-opp" value="Winter Haven Storm 12U"></td><td><input type="checkbox" checked></td><td><input type="text" value="18:50–21:30" style="max-width:95px"></td><td><input type="number" value="9.99" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" placeholder="—" style="max-width:80px"></td><td><b>31</b> 🎟</td></tr>
+            <tr><td>Fall Season 2026</td><td><input type="date" value="2026-07-04"></td><td><input type="time" value="18:00"></td><td><input type="text" class="cell-opp" value="Auburndale Rams 12U"></td><td><input type="checkbox"></td><td><input type="text" value="ended" style="max-width:95px"></td><td><input type="number" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" value="W 21–14" style="max-width:80px"></td><td><b>44</b> 🎟</td></tr>
+            <tr><td>WH Classic — Rd 2</td><td><input type="date" value="2026-06-28"></td><td><input type="time" value="13:00"></td><td><input type="text" class="cell-opp" value="Plant City Raiders 12U"></td><td><input type="checkbox"></td><td><input type="text" value="ended" style="max-width:95px"></td><td><input type="number" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" value="W 28–7" style="max-width:80px"></td><td><b>58</b> 🎟</td></tr>
           </tbody>
         </table>
       </div>
@@ -127,6 +127,14 @@
 document.getElementById('hdr').innerHTML = GFN.header('coach');
 function tab(el,id){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active');
   ['sched','page','comms'].forEach(s=>document.getElementById('tab-'+s).style.display = s===id?'':'none'); }
+
+// search-as-you-type on opponent cells (same combobox as admin, division filters + create)
+document.querySelectorAll('.cell-opp').forEach(inp=>GFN.combo(inp, ()=>GFN.squadOptions(), {allowCreate:true}));
+
+// generated sponsor/merch art (replaces emoji placeholders)
+const monos=[['PP','#c2410c','#7c2d12'],['LA','#334155','#0f172a']];
+document.querySelectorAll('#tab-page .sponsor-logo').forEach((el,i)=>{const m=monos[i]||['SP','#444','#222'];el.innerHTML=GFX.mono(m[0],m[1],m[2]);});
+document.querySelectorAll('#tab-page .merch-img').forEach(el=>{el.innerHTML=GFX.mono('HD','#1e8a3c','#0b3d1a');el.style.overflow='hidden';el.style.borderRadius='10px';});
 </script>
 </body>
 </html>
