@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container" id="page"></div>
+</main>
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = GFN.header('browse');
+const id = new URLSearchParams(location.search).get('id') || 'g1';
+const g = GFN.games[id];
+const t = GFN.teams[g.home];
+document.title = `${t.name} ${t.squad} vs ${g.awayName} — GameFilmNow`;
+
+const ownsStream = GFN.owned('stream_'+id) || GFN.owned('bundle_'+id) || GFN.owned('pass_'+g.home);
+const ownsRec    = GFN.owned('rec_'+id)    || GFN.owned('bundle_'+id) || GFN.owned('pass_'+g.home);
+const d = new Date(g.date+"T12:00:00");
+const dateStr = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+
+/* -------- video stage: what shows depends on game status + what you own -------- */
+function stage(){
+  if (g.status==='upcoming') {
+    if (ownsStream) return `<div class="vs-inner"><div class="lock">🎟️</div><h2>You're set for the live stream!</h2>
+      <p>Come back ${dateStr} at ${g.time}. The stream starts automatically right here — and we'll text your reminder with this link.</p>
+      <div class="countdown"><div class="count-cell"><b>4</b><small>days</small></div><div class="count-cell"><b>17</b><small>hrs</small></div><div class="count-cell"><b>22</b><small>min</small></div></div></div>`;
+    return `<div class="vs-inner"><div class="lock">🔒</div><h2>${t.name} ${t.squad} vs ${g.awayName}</h2>
+      <p>Live ${dateStr} · ${g.time} · ${g.venue}. Buy the stream and watch right here — no redirects, no hunting for links.</p>
+      <div class="countdown"><div class="count-cell"><b>4</b><small>days</small></div><div class="count-cell"><b>17</b><small>hrs</small></div><div class="count-cell"><b>22</b><small>min</small></div></div></div>`;
+  }
+  if (g.status==='processing') return `<div class="vs-inner"><div class="lock">🎬</div><h2>Final ${g.score} — recording in the edit room</h2>
+    <p>Our editors are cutting this game now. Recordings go on sale within 72 hours of the final whistle${ownsRec?" — yours will unlock right here the moment it's ready.":" — follow "+t.name+" and we'll notify you the moment it drops."}</p></div>`;
+  if (g.status==='recording') {
+    if (ownsRec) return `<div class="playing"><div style="text-align:center"><div class="play-circle">▶</div>
+      <p style="margin-top:1rem;color:#c4d0e2">Full game recording · ${t.name} ${t.squad} vs ${g.awayName} · Final ${g.score}</p>
+      <p style="color:#7d92b3;font-size:.8rem">(Demo player — Phase 1 embeds the real video here, e.g. Bunny Stream)</p></div></div>`;
+    return `<div class="vs-inner"><div class="lock">🔒</div><h2>Full recording ready — Final ${g.score}</h2>
+      <p>Every play, multi-camera, professionally edited. Buy it below and it unlocks on this page instantly.</p></div>`;
+  }
+}
+
+/* -------- products: stream auto-off after window, forwards to recording -------- */
+function products(){
+  let rows='';
+  if (g.status==='upcoming') {
+    rows += ownsStream
+      ? `<div class="product"><div class="product-icon">📡</div><div><b>Live Stream</b><small>Starts ${g.time} · auto-ends when the game does</small></div><div class="buy"><span class="owned-chip">✓ PURCHASED</span></div></div>`
+      : `<div class="product"><div class="product-icon">📡</div><div><b>Live Stream</b><small>Watch live from anywhere · comes off sale automatically when the game ends</small></div>
+          <div class="buy"><span class="price">$${g.stream}</span><button class="btn btn-primary" onclick="buy('stream')">Buy Stream</button></div></div>`;
+    rows += `<div class="product"><div class="product-icon">🎬</div><div><b>Game Recording</b><small>Full edited game, ready within 72 hours after the final whistle</small></div>
+        <div class="buy"><span class="price">$${g.recording}</span><button class="btn btn-ghost" onclick="buy('rec')">Pre-order</button></div></div>`;
+    if (g.bundle && !ownsStream) rows += `<div class="product" style="background:#f6fbf8"><div class="product-icon" style="background:#e8f7ee">⭐</div><div><b>Stream + Recording Bundle</b><small>Watch live now, keep the recording forever — best value</small></div>
+        <div class="buy"><span class="price"><span class="was">$${(g.stream+g.recording).toFixed(2)}</span>$${g.bundle}</span><button class="btn btn-primary" onclick="buy('bundle')">Buy Bundle</button></div></div>`;
+  } else {
+    rows += `<div class="product disabled"><div class="product-icon">📡</div><div><b>Live Stream</b><small>This game has ended — the stream is no longer for sale. The recording below has every play.</small></div><div class="buy"><span class="status-tag st-proc">ENDED</span></div></div>`;
+    rows += g.status==='recording'
+      ? (ownsRec
+        ? `<div class="product"><div class="product-icon">🎬</div><div><b>Game Recording</b><small>Yours forever — also saved in My Games</small></div><div class="buy"><span class="owned-chip">✓ PURCHASED</span></div></div>`
+        : `<div class="product"><div class="product-icon">🎬</div><div><b>Game Recording</b><small>Full edited game · every play guaranteed</small></div>
+            <div class="buy"><span class="price">$${g.recording}</span><button class="btn btn-primary" onclick="buy('rec')">Buy &amp; Watch Now</button></div></div>`)
+      : `<div class="product"><div class="product-icon">🎬</div><div><b>Game Recording</b><small>In editing — on sale within 72 hours. ${ownsRec?"Yours will unlock automatically.":"Pre-order now and it unlocks the moment it's ready."}</small></div>
+          <div class="buy">${ownsRec?'<span class="owned-chip">✓ PRE-ORDERED</span>':`<span class="price">$${g.recording}</span><button class="btn btn-ghost" onclick="buy('rec')">Pre-order</button>`}</div></div>`;
+  }
+  rows += `<div class="product"><div class="product-icon">🎫</div><div><b>${t.name} ${t.squad} Team Pass</b><small>Every game this season — streams and recordings included</small></div>
+      <div class="buy">${GFN.owned('pass_'+g.home)?'<span class="owned-chip">✓ ACTIVE</span>':`<span class="price">$${t.teamPass}</span><button class="btn btn-navy" onclick="buy('pass')">Get Pass</button>`}</div></div>`;
+  return rows;
+}
+
+function buy(kind){
+  const map={
+    stream:[`Live Stream — vs ${g.awayName}`,`${dateStr} · ${g.time}`,g.stream,'stream_'+id],
+    rec:[`Game Recording — vs ${g.awayName}`,`${t.name} ${t.squad} · ${g.event}`,g.recording,'rec_'+id],
+    bundle:[`Stream + Recording Bundle`,`vs ${g.awayName} · best value`,g.bundle,'bundle_'+id],
+    pass:[`${t.name} ${t.squad} Team Pass`,`Every game this season`,t.teamPass,'pass_'+g.home]
+  }[kind];
+  GFN.openCheckout(map[0],map[1],map[2],map[3],()=>location.reload());
+}
+
+document.getElementById('page').innerHTML = `
+  <p style="margin-bottom:.8rem;font-size:.9rem"><a href="team.html?id=${g.home}">← ${t.name} ${t.squad}</a> <span style="color:var(--muted)">· ${g.event}</span></p>
+  <div class="layout" style="margin-top:0">
+    <div>
+      <div class="video-stage ${ (g.status==='recording'&&ownsRec) ? '' : 'locked'}">${stage()}</div>
+      <div style="margin-top:1rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;align-items:center">
+        <div><h2 style="font-size:1.3rem">${t.name} ${t.squad} vs ${g.awayName}</h2>
+        <p style="color:var(--muted);font-size:.9rem">${dateStr} · ${g.time} · ${g.venue} ${g.score?`· <b>Final ${g.score}</b>`:''}</p></div>
+        ${GFN.statusTag(g)}
+      </div>
+    </div>
+    <aside>
+      <div class="panel">
+        <div class="panel-head"><h3>🎟️ Watch this game</h3></div>
+        <div class="panel-body flush">${products()}</div>
+      </div>
+      <div class="panel" style="margin-top:1.2rem">
+        <div class="panel-body" style="font-size:.85rem;color:var(--muted)">
+          <b style="color:var(--ink)">How it works:</b> pay in the popup, video unlocks right here. It's saved in <a href="account.html">My Games</a> and we text you this link. Need a refund for a cancelled game? One tap from support — no forms.
+        </div>
+      </div>
+    </aside>
+  </div>`;
+</script>
+</body>
+</html>

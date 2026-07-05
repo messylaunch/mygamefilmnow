@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container" id="page"></div>
+</main>
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = GFN.header('browse');
+const id = new URLSearchParams(location.search).get('id') || 'eagles12u';
+const t = GFN.teams[id];
+const games = Object.values(GFN.games).filter(g=>g.home===id).sort((a,b)=>b.date.localeCompare(a.date));
+
+// Group games by event — season + tournaments together on one page, clearly labeled
+const events = {};
+games.forEach(g=>{ const key=g.event.split('—')[0].trim(); (events[key]=events[key]||[]).push(g); });
+
+function schedRow(g){
+  const d=new Date(g.date+"T12:00:00");
+  const price = g.status==='upcoming'?`$${g.stream}`:(g.status==='recording'?`$${g.recording}`:'');
+  return `<a class="sched-row" href="game.html?id=${g.id}">
+    <div class="sched-date"><b>${d.getDate()}</b><small>${d.toLocaleDateString('en-US',{month:'short'})}</small></div>
+    <div class="sched-info"><b>vs ${g.awayName}</b><small>${g.time} · ${g.venue}${g.score?` · Final ${g.score}`:''}${g.event.includes('—')?` · ${g.event.split('—')[1].trim()}`:''}</small></div>
+    <div class="sched-cta"><span class="price">${price}</span>${GFN.statusTag(g)}</div></a>`;
+}
+
+const teamPassOwned = GFN.owned('pass_'+id);
+document.title = `${t.name} ${t.squad} — GameFilmNow`;
+document.getElementById('page').innerHTML = `
+  <div class="team-hero">
+    <div class="team-crest">${t.crest}</div>
+    <div>
+      <span class="pill">${t.league}</span>
+      <h1>${t.name} <span style="color:var(--gold)">${t.squad}</span></h1>
+      <div class="team-meta">${t.city} · Record ${t.record} · ${games.length} games on film</div>
+    </div>
+    <div class="team-actions">
+      <button class="btn btn-primary" id="followBtn" onclick="this.textContent=this.textContent.includes('Following')?'⭐ Follow Team':'✓ Following';">⭐ Follow Team</button>
+      ${teamPassOwned
+        ? `<span class="owned-chip" style="align-self:center">✓ TEAM PASS ACTIVE</span>`
+        : `<button class="btn" style="background:var(--gold);color:var(--navy)" onclick="GFN.openCheckout('${t.name} ${t.squad} Team Pass','Every ${t.name} game this season',${t.teamPass},'pass_${id}',()=>location.reload())">Team Pass · $${t.teamPass}</button>`}
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="panel">
+        <div class="panel-head"><h3>📅 Schedule &amp; Film</h3><a href="tournament.html">Winter Haven Classic →</a></div>
+        <div class="panel-body flush">
+          ${Object.entries(events).map(([ev,gs])=>
+            `<div class="sched-group">${ev}</div>${gs.map(schedRow).join('')}`).join('')}
+        </div>
+      </div>
+      <div class="panel" style="margin-top:1.4rem">
+        <div class="panel-head"><h3>🎓 Player Pass — Film Study Portal</h3></div>
+        <div class="panel-body" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <p style="flex:1;min-width:220px;color:var(--muted);font-size:.93rem">Unlock the ${t.name} film room for your player: every game play-by-play in 24 hours, coach questions, self-tagging, and a public player profile. Requires parent consent — we'll walk you through it.</p>
+          <button class="btn btn-navy btn-lg" onclick="GFN.openCheckout('Player Pass — ${t.name} ${t.squad}','Film room access for 1 player + parent',75,'playerpass_${id}',()=>alert('Demo: in the real flow this now sends the parent consent form by text + email, then creates the player and parent accounts on team.mygamefilmnow.com.'))">Player Pass · $75</button>
+        </div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="panel">
+        <div class="panel-head"><h3>🤝 Sponsors</h3><a href="#" onclick="alert('Demo: sponsor slots are ad space sold by the team.');return false">Sponsor us</a></div>
+        <div class="panel-body flush">
+          ${t.sponsors.length? t.sponsors.map(s=>`<div class="sponsor"><div class="sponsor-logo">${s.i}</div>${s.n}</div>`).join('') : '<p style="padding:1rem 1.2rem;color:var(--muted);font-size:.9rem">Your business here — support the team.</p>'}
+        </div>
+      </div>
+      <div class="panel" style="margin-top:1.2rem">
+        <div class="panel-head"><h3>🏈 Roster</h3><a href="#" onclick="alert('Demo: full roster page.');return false">Full roster</a></div>
+        <div class="panel-body flush">
+          ${t.roster.map(p=>`<a class="roster-row" href="https://team.mygamefilmnow.com/profile.html"><span class="roster-num">${p.num}</span>${p.name}<small>${p.pos}</small></a>`).join('')}
+        </div>
+      </div>
+      ${t.merch.length?`<div class="panel" style="margin-top:1.2rem">
+        <div class="panel-head"><h3>🛍️ Team Store</h3></div>
+        <div class="panel-body flush">
+          ${t.merch.map(m=>`<div class="merch"><div class="merch-img">${m.i}</div><div><b>${m.n}</b><small>$${m.p}</small></div><button class="btn btn-ghost" onclick="alert('Demo: merch checkout ships in Phase 3.')">Buy</button></div>`).join('')}
+        </div>
+      </div>`:''}
+    </aside>
+  </div>`;
+</script>
+</body>
+</html>

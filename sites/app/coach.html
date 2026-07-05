@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach Dashboard — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <h1 class="page-title" style="font-size:1.6rem">🦅 Eagles 12U — Coach Dashboard</h1>
+    <p class="page-sub">Logged in as Coach Mike · you can edit everything about your squad, and only your squad.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card"><small>Team revenue this season</small><b>$2,315</b><span class="delta">▲ $410 this week · streams + recordings + passes</span></div>
+      <div class="stat-card"><small>Tickets sold this season</small><b>203</b><span class="delta">Fri vs Storm: 31 pre-sold already</span></div>
+      <div class="stat-card"><small>Player passes</small><b>18 / 22</b><span class="delta">4 players not signed up — send reminder</span></div>
+      <div class="stat-card"><small>Texts &amp; emails left</small><b>212 / 300</b><span class="delta">team quota · players' Top-20 lists are separate</span><div class="quota-bar"><i style="width:71%"></i></div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="tab(this,'sched')">📅 My Schedule</button>
+      <button class="tab" onclick="tab(this,'page')">🎨 Team Page</button>
+      <button class="tab" onclick="tab(this,'comms')">📣 Fundraising &amp; Comms</button>
+    </div>
+
+    <!-- MY SCHEDULE (scoped grid) -->
+    <section id="tab-sched">
+      <div class="toolbar">
+        <span style="font-size:.85rem;color:var(--muted)">Same grid as GFN admin — scoped to Eagles 12U. Edit times, prices, stream windows; scores post automatically to your page.</span>
+        <div class="spacer"></div>
+        <button class="btn btn-primary" onclick="alert('Demo: coaches add games too — GFN admin just approves crew assignment.')">＋ Add Game</button>
+      </div>
+      <div class="grid-wrap">
+        <table class="grid">
+          <thead><tr><th>Event</th><th>Date</th><th>Time</th><th>Opponent</th><th>📡</th><th>Stream window</th><th>Stream $</th><th>Rec $</th><th>Score</th><th>Sold</th></tr></thead>
+          <tbody>
+            <tr><td>Fall Season 2026</td><td><input type="date" value="2026-07-10"></td><td><input type="time" value="19:00"></td><td><input type="text" value="Winter Haven Storm 12U"></td><td><input type="checkbox" checked></td><td><input type="text" value="18:50–21:30" style="max-width:95px"></td><td><input type="number" value="9.99" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" placeholder="—" style="max-width:80px"></td><td><b>31</b> 🎟</td></tr>
+            <tr><td>Fall Season 2026</td><td><input type="date" value="2026-07-04"></td><td><input type="time" value="18:00"></td><td><input type="text" value="Auburndale Rams 12U"></td><td><input type="checkbox"></td><td><input type="text" value="ended" style="max-width:95px"></td><td><input type="number" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" value="W 21–14" style="max-width:80px"></td><td><b>44</b> 🎟</td></tr>
+            <tr><td>WH Classic — Rd 2</td><td><input type="date" value="2026-06-28"></td><td><input type="time" value="13:00"></td><td><input type="text" value="Plant City Raiders 12U"></td><td><input type="checkbox"></td><td><input type="text" value="ended" style="max-width:95px"></td><td><input type="number" style="max-width:70px"></td><td><input type="number" value="7.99" style="max-width:70px"></td><td><input type="text" value="W 28–7" style="max-width:80px"></td><td><b>58</b> 🎟</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TEAM PAGE EDITOR -->
+    <section id="tab-page" style="display:none">
+      <div class="layout" style="margin-top:0">
+        <div class="panel">
+          <div class="panel-head"><h3>🎨 Edit your public page</h3><a href="team.html?id=eagles12u">Preview live page →</a></div>
+          <div class="panel-body">
+            <div class="field"><label>Team bio</label><textarea rows="3">Lakeland's hardest-working 12U squad. Family first, film always. 🦅</textarea></div>
+            <div class="field"><label>Sponsors (your ad space — you keep this revenue)</label>
+              <div class="sponsor" style="padding:.45rem 0"><div class="sponsor-logo">🍕</div>Papa's Pizza Co.<button class="icon-btn danger" style="margin-left:auto">🗑</button></div>
+              <div class="sponsor" style="padding:.45rem 0"><div class="sponsor-logo">🚗</div>Lakeland Auto Group<button class="icon-btn danger" style="margin-left:auto">🗑</button></div>
+              <button class="btn btn-ghost" style="margin-top:.5rem" onclick="alert('Demo: add sponsor name, logo, link, and what they paid you — GFN takes no cut of sponsor money.')">＋ Add sponsor</button>
+            </div>
+            <div class="field"><label>Merch</label>
+              <div class="merch" style="padding:.45rem 0"><div class="merch-img">🧥</div><div><b>Eagles Hoodie</b><small>$38</small></div><button class="icon-btn danger" style="margin-left:auto">🗑</button></div>
+              <button class="btn btn-ghost" style="margin-top:.5rem">＋ Add merch item</button>
+            </div>
+            <button class="btn btn-primary">Save Page</button>
+          </div>
+        </div>
+        <aside>
+          <div class="panel"><div class="panel-head"><h3>🏈 Roster</h3></div>
+            <div class="panel-body flush">
+              <div class="roster-row"><span class="roster-num">22</span>Zach Riddle<small>Pass ✓</small></div>
+              <div class="roster-row"><span class="roster-num">7</span>Antoine Carter<small>Pass ✓</small></div>
+              <div class="roster-row"><span class="roster-num">55</span>Marcus Lee<small style="color:var(--red)">No pass</small></div>
+              <div class="roster-row"><span class="roster-num">11</span>DeShawn Willis<small>Pass ✓</small></div>
+            </div>
+            <div class="panel-body" style="border-top:1px solid var(--line)">
+              <button class="btn btn-navy btn-block" onclick="alert('Demo: enter player names + PARENT email/phone. GFN sends the Player Pass invite + parent consent form. Kids never get texted directly.')">＋ Invite players</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FUNDRAISING & COMMS -->
+    <section id="tab-comms" style="display:none">
+      <div class="layout" style="margin-top:0">
+        <div>
+          <div class="panel">
+            <div class="panel-head"><h3>📣 Send to your list</h3></div>
+            <div class="panel-body">
+              <div class="field"><label>Audience</label>
+                <select><option>Team boosters + fundraising contacts (212 remaining of 300)</option><option>All player families (18 passes)</option><option>Everyone following Eagles 12U (94 fans)</option></select>
+              </div>
+              <div class="field"><label>Message</label>
+                <textarea rows="3">🦅 GAME DAY Friday 7PM vs Winter Haven Storm! Can't make it to Bryant Stadium? Watch LIVE: {{game_link}} — every ticket supports the team!</textarea>
+                <div class="hint">GHL: this sends through your GoHighLevel sub-account. {{game_link}} personalizes per contact. Quota: 300/season per team; each Player Pass includes the player's own Top-20 list.</div>
+              </div>
+              <button class="btn btn-primary" onclick="alert('Demo: in Phase 3 this fires the GHL campaign. Costs 1 quota credit per contact.')">Send · uses 212 → 118 credits</button>
+            </div>
+          </div>
+          <div class="panel" style="margin-top:1.2rem">
+            <div class="panel-head"><h3>🪜 Your Fundraising Ladder</h3><a href="#" onclick="alert('Full playbook: docs/FUNDRAISING-LADDER.md');return false">Open playbook</a></div>
+            <div class="panel-body flush">
+              <div class="notif"><div class="notif-icon">1️⃣</div><div><b>Every player fills their Top-20</b> — the 20 people who'd actually watch.<small>18 of 22 players done · that's already 360 warm contacts</small></div></div>
+              <div class="notif"><div class="notif-icon">2️⃣</div><div><b>Game-week auto-texts go out</b> — reminders + stream links, hands-free.<small>GHL automation · runs Tue + game-day</small></div></div>
+              <div class="notif"><div class="notif-icon">3️⃣</div><div><b>Sell the game to local businesses</b> — sponsor slots on your team page.<small>Easier than selling candy. Script's in the playbook.</small></div></div>
+              <div class="notif"><div class="notif-icon">4️⃣</div><div><b>Big-game pushes</b> — bundle + merch offers on rivalry/tournament games.<small>Your car-wash and door-to-door contacts go in the 300 list</small></div></div>
+            </div>
+          </div>
+        </div>
+        <aside>
+          <div class="panel">
+            <div class="panel-head"><h3>📌 Film room note</h3></div>
+            <div class="panel-body">
+              <p style="font-size:.88rem;color:var(--muted);margin-bottom:.8rem">Post a question or note to your team's film room — players get notified, answers collect in your notifications.</p>
+              <div class="field"><textarea rows="2" placeholder="e.g. @RunningBacks — watch play 14. What hole should we hit?"></textarea></div>
+              <button class="btn btn-navy btn-block" onclick="alert('Demo: posts to team.mygamefilmnow.com film room + notifies players (via parents).')">Post to Film Room</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </div>
+</main>
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = GFN.header('coach');
+function tab(el,id){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active');
+  ['sched','page','comms'].forEach(s=>document.getElementById('tab-'+s).style.display = s===id?'':'none'); }
+</script>
+</body>
+</html>

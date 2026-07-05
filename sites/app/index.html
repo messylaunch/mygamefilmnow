@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse Games — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="hdr"></div>
+
+<section class="search-hero">
+  <div class="container">
+    <h1>Find your team. Watch your game.</h1>
+    <div class="search-box">
+      <input id="q" type="search" placeholder="Search team, town, league, player, or tournament…" oninput="render()">
+      <button class="btn btn-primary">Search</button>
+    </div>
+    <div class="chip-row" id="chips">
+      <button class="chip active" data-f="all" onclick="setChip(this)">All</button>
+      <button class="chip" data-f="live" onclick="setChip(this)">🔴 Live &amp; This Week</button>
+      <button class="chip" data-f="recording" onclick="setChip(this)">🎬 Recordings</button>
+      <button class="chip" data-f="teams" onclick="setChip(this)">🏈 Teams</button>
+      <button class="chip" data-f="tournament" onclick="setChip(this)">🏆 Tournaments</button>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="container">
+    <div id="results"></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none;padding-top:0">
+    <span>© 2026 GameFilmNow</span>
+    <span><a href="https://start.mygamefilmnow.com" style="display:inline">About GFN</a> · <a href="https://team.mygamefilmnow.com" style="display:inline">Player Portal</a></span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = GFN.header('browse');
+let filter='all';
+function setChip(el){ document.querySelectorAll('#chips .chip').forEach(c=>c.classList.remove('active')); el.classList.add('active'); filter=el.dataset.f; render(); }
+
+function render(){
+  const q=(document.getElementById('q').value||'').toLowerCase();
+  const games=Object.values(GFN.games).filter(g=>{
+    const t=GFN.teams[g.home];
+    const hay=`${t.name} ${t.squad} ${t.city} ${t.league} ${g.awayName} ${g.event}`.toLowerCase();
+    if(q && !hay.includes(q)) return false;
+    if(filter==='live') return g.status==='upcoming'||g.status==='live';
+    if(filter==='recording') return g.status==='recording';
+    if(filter==='tournament') return g.event.toLowerCase().includes('classic')||g.event.toLowerCase().includes('tournament');
+    return true;
+  }).sort((a,b)=>b.date.localeCompare(a.date));
+
+  let html='';
+  if(filter==='teams'||filter==='all'){
+    const teams=Object.values(GFN.teams).filter(t=>!q||`${t.name} ${t.squad} ${t.city} ${t.league}`.toLowerCase().includes(q));
+    if(teams.length){
+      html+=`<h2 class="page-title" style="font-size:1.25rem">Teams on GameFilmNow</h2><p class="page-sub">Only teams listed here have film for sale — opponents without a GFN account appear as text on schedules.</p><div class="card-grid" style="margin-bottom:2.4rem">`;
+      html+=teams.map(t=>`<a class="game-card" href="team.html?id=${t.id}">
+        <div class="gc-media"><div class="vs">${t.crest} ${t.name}<small>${t.squad} · ${t.league}</small></div></div>
+        <div class="gc-body"><b>${t.city}</b><small>Record ${t.record} · Team Pass $${t.teamPass}</small>
+        <div class="gc-foot"><span class="gc-price"></span><span class="btn btn-navy" style="padding:.4rem .9rem;font-size:.83rem">View Team →</span></div></div></a>`).join('');
+      html+=`</div>`;
+    }
+  }
+  if(filter!=='teams'){
+    html+=`<h2 class="page-title" style="font-size:1.25rem">${filter==='recording'?'Game Recordings':filter==='live'?'Live & Upcoming':'Games'}</h2><p class="page-sub">${games.length} game${games.length===1?'':'s'}</p>`;
+    html+= games.length? `<div class="card-grid">${games.map(g=>GFN.gameCard(g)).join('')}</div>`
+      : `<div class="card" style="text-align:center;padding:3rem"><h3>No games match</h3><p>Try a different search, or <a href="https://start.mygamefilmnow.com/request-film.html">request film for your team →</a></p></div>`;
+  }
+  document.getElementById('results').innerHTML=html;
+}
+render();
+</script>
+</body>
+</html>
