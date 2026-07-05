@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach View — GameFilmNow Film Room</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/team.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <h1 class="page-title" style="font-size:1.5rem">📋 Coach Mike — Eagles 12U Film Room</h1>
+    <p class="page-sub">Run film like the pros: post questions, pin notes, track who's doing their homework. The <a href="../..//docs/COACHES-PLAYBOOK.md" onclick="alert('See docs/COACHES-PLAYBOOK.md — the 30-minute film session system.');return false">30-Minute Film Session playbook</a> shows you exactly how.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card"><small>Players with passes</small><b>18/22</b><span class="delta">4 to invite</span></div>
+      <div class="stat-card"><small>Film homework done</small><b>13/18</b><span class="delta" style="color:var(--gold)">5 haven't answered Play 14</span></div>
+      <div class="stat-card"><small>Plays watched this week</small><b>1,204</b><span class="delta">▲ team is locked in</span></div>
+      <div class="stat-card"><small>Open questions</small><b>2</b></div>
+    </div>
+
+    <div class="layout">
+      <div>
+        <div class="panel">
+          <div class="panel-head"><h3>❓ Post a film question</h3></div>
+          <div class="panel-body">
+            <div class="field"><label>Attach to</label><select><option>vs Rams — Play 14 (44 Lead)</option><option>vs Rams — Play 15 (44 Sweep TD)</option><option>Whole game — general note</option></select></div>
+            <div class="field"><label>Question / note</label><textarea rows="2" placeholder="e.g. What hole should we hit on this look? Everyone answers before Tuesday."></textarea></div>
+            <div class="field"><label>Who</label><select><option>Whole team</option><option>@RunningBacks</option><option>@OLine</option><option>@Defense</option><option>One player…</option></select></div>
+            <button class="btn btn-primary" onclick="alert('Demo: posts to the film room pinned, notifies the group, and tracks who answered.')">📌 Post Question</button>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:1.4rem">
+          <div class="panel-head"><h3>✅ Homework tracker — Play 14: "what hole?"</h3></div>
+          <div class="panel-body flush">
+            <div class="game-row"><div class="notif-icon">✅</div><div class="gr-info"><b>Zach Riddle #22</b><small>"Two hole — backer overran it" · 3h ago</small></div><span class="tag tag-new">ANSWERED</span></div>
+            <div class="game-row"><div class="notif-icon">✅</div><div class="gr-info"><b>DeShawn Willis #11</b><small>"2 hole, crack the safety" · 5h ago</small></div><span class="tag tag-new">ANSWERED</span></div>
+            <div class="game-row"><div class="notif-icon">⏳</div><div class="gr-info"><b>Marcus Lee #55</b><small>hasn't opened the film yet</small></div><span class="tag tag-dim">REMIND</span></div>
+            <div class="game-row"><div class="notif-icon">⏳</div><div class="gr-info"><b>Tommy Vega #30</b><small>watched, no answer yet</small></div><span class="tag tag-dim">REMIND</span></div>
+          </div>
+          <div class="panel-body" style="border-top:1px solid var(--line)">
+            <button class="btn btn-ghost" onclick="alert('Demo: nudges go to the PARENTS of players who haven\\'t done film homework. Kids never get texted directly.')">🔔 Remind the stragglers (via parents)</button>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="panel">
+          <div class="panel-head"><h3>🗓️ Add to team calendar</h3></div>
+          <div class="panel-body">
+            <div class="field"><label>Event</label><select><option>Film session</option><option>Practice</option><option>Team Zoom call</option><option>Podcast / media day</option></select></div>
+            <div class="field-row">
+              <div class="field"><label>Date</label><input type="date" value="2026-07-07"></div>
+              <div class="field"><label>Time</label><input type="time" value="18:30"></div>
+            </div>
+            <button class="btn btn-navy btn-block" style="background:var(--surface-2);color:var(--ink);border:1px solid var(--line)" onclick="alert('Demo: event lands on every player\\'s calendar; parents get the reminder text/email (GHL).')">Add Event</button>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head"><h3>🎓 Player Pass status</h3></div>
+          <div class="panel-body flush">
+            <div class="game-row"><div class="gr-info"><b>18 active passes</b><small>$75 each · set by GFN admin</small></div><span class="tag tag-new">ACTIVE</span></div>
+            <div class="game-row"><div class="gr-info"><b>4 players missing</b><small>Marcus L, Tommy V, Eli C, Jamal P</small></div><span class="tag tag-gold">INVITE</span></div>
+          </div>
+          <div class="panel-body" style="border-top:1px solid var(--line)">
+            <button class="btn btn-primary btn-block" onclick="alert('Demo: sends Player Pass invite + parent consent form to the parents\\' contacts you entered. Once paid & signed, the player and parent accounts activate automatically.')">Send invites to parents</button>
+          </div>
+        </div>
+        <p class="consent-note">🛡️ Every player invite goes through the parent: consent form first, then accounts for both parent and player. No consent, no film room.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="assets/team.js"></script>
+<script>document.getElementById('hdr').innerHTML = FR.header('coach');</script>
+</body>
+</html>

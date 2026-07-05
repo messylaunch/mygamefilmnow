@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Game Film — GameFilmNow</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small>Now</small></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <nav class="nav-links">
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#teams">For Teams</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="https://app.mygamefilmnow.com">Find Your Team</a>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-head center" style="margin:0 auto 2.4rem">
+      <span class="kicker">Let's Get You On Camera</span>
+      <h2>Request game film for your team, league, or tournament.</h2>
+      <p class="lead">Two minutes now, and we'll follow up — usually same day — with pricing and available dates.</p>
+    </div>
+
+    <!-- GHL: replace this <form> with your GoHighLevel form embed OR keep it and
+         point the action at a GHL inbound webhook. Field names below match the
+         mapping in docs/GHL-INTEGRATION.md (contact.type drives the pipeline). -->
+    <form class="form-card" id="requestForm">
+      <div class="field">
+        <label for="type">I am a…</label>
+        <select id="type" name="contact_type" required>
+          <option value="">Choose one</option>
+          <option value="coach">Coach / Team Manager — film my team's games</option>
+          <option value="league">League / Tournament Director — film our event</option>
+          <option value="parent">Parent — I want my player's team on GFN</option>
+          <option value="camera-school">Camera School applicant — we'll film our own games</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="fname">First name</label><input id="fname" name="first_name" required></div>
+        <div class="field"><label for="lname">Last name</label><input id="lname" name="last_name" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="email">Email</label><input id="email" type="email" name="email" required></div>
+        <div class="field"><label for="phone">Mobile phone</label><input id="phone" type="tel" name="phone" required><div class="hint">We text scheduling updates — standard rates apply.</div></div>
+      </div>
+      <div class="field"><label for="team">Team / League name</label><input id="team" name="team_name" placeholder="e.g. Lakeland Eagles 12U"></div>
+      <div class="field-row">
+        <div class="field"><label for="sport">Sport</label><select id="sport" name="sport"><option>Football</option><option>Baseball</option><option>Softball</option><option>Basketball</option><option>Soccer</option><option>Other</option></select></div>
+        <div class="field"><label for="city">City / area</label><input id="city" name="city" placeholder="e.g. Winter Haven, FL"></div>
+      </div>
+      <div class="field"><label for="details">Tell us about your games</label><textarea id="details" name="details" rows="4" placeholder="Season or tournament? How many games? Where do you play? When does the season start?"></textarea></div>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Send My Request →</button>
+      <p class="ghl-note"><b>GHL:</b> This form is a placeholder. Swap it for your GoHighLevel form embed (or point it at a GHL webhook) so submissions create a contact tagged <code>lead</code> + the "I am a…" value, and drop into your Film Requests pipeline. Full instructions: <code>docs/GHL-INTEGRATION.md</code> → section 2.</p>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none;padding-top:0">
+    <span>© 2026 GameFilmNow. All rights reserved.</span>
+    <a href="index.html" style="display:inline">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+// Pre-select Camera School when linked as request-film.html?type=camera-school
+const t = new URLSearchParams(location.search).get('type');
+if (t) { const s = document.getElementById('type'); if ([...s.options].some(o=>o.value===t)) s.value = t; }
+
+// Demo submit — replace with GHL embed/webhook (see docs/GHL-INTEGRATION.md)
+document.getElementById('requestForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  this.innerHTML = '<h3 style="text-align:center;padding:2rem 0">🎉 Got it! We\'ll be in touch within one business day.</h3>';
+});
+</script>
+</body>
+</html>

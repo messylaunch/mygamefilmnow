@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <h1 class="page-title" style="font-size:1.6rem">Hey John 👋</h1>
+    <p class="page-sub">Fan account · following 2 people &amp; 1 team · <span style="color:var(--green-dark);font-weight:700">GHL: tagged #1000 (Zach Riddle) · #500 (Eagles 12U)</span></p>
+
+    <div class="layout" style="grid-template-columns:220px 1fr;margin-top:0">
+      <aside class="side-nav">
+        <a class="active" href="#mygames" onclick="show('mygames',this);return false">🎬 My Games</a>
+        <a href="#feed" onclick="show('feed',this);return false">⭐ My Feed</a>
+        <a href="#family" onclick="show('family',this);return false">👨‍👩‍👧 Family List</a>
+        <a href="#notifications" onclick="show('notifications',this);return false">🔔 Notifications</a>
+        <a href="#" onclick="alert('Demo: profile settings — name, phone, email, password, payment methods.');return false">⚙️ Settings</a>
+      </aside>
+
+      <div>
+        <!-- MY GAMES -->
+        <section id="sec-mygames">
+          <div class="panel">
+            <div class="panel-head"><h3>🎬 My Games — everything you've bought, forever</h3></div>
+            <div class="panel-body flush" id="ownedListEl"></div>
+          </div>
+        </section>
+
+        <!-- FEED -->
+        <section id="sec-feed" style="display:none">
+          <div class="panel" style="margin-bottom:1.2rem">
+            <div class="panel-head"><h3>⭐ Following</h3></div>
+            <div class="panel-body flush">
+              <div class="follow-row"><div class="avatar">ZR</div><div><b style="font-size:.92rem">Zach Riddle</b><br><small style="color:var(--muted)">#22 RB · Lakeland Eagles 12U</small></div><button class="btn btn-ghost">Following ✓</button></div>
+              <div class="follow-row"><div class="avatar" style="background:var(--navy)">🦅</div><div><b style="font-size:.92rem">Lakeland Eagles 12U</b><br><small style="color:var(--muted)">Team · Mid-Florida Youth League</small></div><button class="btn btn-ghost">Following ✓</button></div>
+              <div class="follow-row"><div class="avatar" style="background:#64748b">＋</div><div><b style="font-size:.92rem">Follow someone new</b><br><small style="color:var(--muted)">Search any player or team — no limit on your list</small></div><button class="btn btn-primary" onclick="alert('Demo: search & follow flow.')">Search</button></div>
+            </div>
+          </div>
+          <h3 style="margin:0 0 .8rem">Games from people you follow</h3>
+          <div class="card-grid" id="feedEl"></div>
+        </section>
+
+        <!-- FAMILY -->
+        <section id="sec-family" style="display:none">
+          <div class="panel">
+            <div class="panel-head"><h3>👨‍👩‍👧 Family List</h3></div>
+            <div class="panel-body flush">
+              <div class="follow-row"><div class="avatar">ZR</div><div><b style="font-size:.92rem">Zach Riddle</b><br><small style="color:var(--muted)">Nephew · you see his games first</small></div><span class="status-tag st-rec">LINKED</span></div>
+              <div class="follow-row"><div class="avatar" style="background:#7c3aed">MR</div><div><b style="font-size:.92rem">Maria Riddle</b><br><small style="color:var(--muted)">Added you to her family list</small></div><span class="status-tag st-up">SEES YOU</span></div>
+            </div>
+            <div class="panel-body" style="border-top:1px solid var(--line)">
+              <div class="field"><label>Add family — search anyone on GameFilmNow</label><input placeholder="e.g. your cousin's name…"></div>
+              <button class="btn btn-navy" onclick="alert('Demo: they get a notification that you added them, and you appear in their list.')">Add to my family</button>
+              <p style="font-size:.8rem;color:var(--muted);margin-top:.7rem">They'll be notified and you'll appear in their list. No limit on family size.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- NOTIFICATIONS -->
+        <section id="sec-notifications" style="display:none">
+          <div class="panel">
+            <div class="panel-head"><h3>🔔 Notifications</h3><a href="#" onclick="return false">Mark all read</a></div>
+            <div class="panel-body flush">
+              <div class="notif unread"><div class="notif-icon">🎟️</div><div><b>Game reminder:</b> Eagles 12U vs Winter Haven Storm streams Friday 7:00 PM.<small>Because you follow Zach Riddle · 2h ago · GHL: auto-text also sent</small></div></div>
+              <div class="notif unread"><div class="notif-icon">🎬</div><div><b>Recording ready:</b> Eagles vs Auburndale Rams (W 21–14) is now on sale.<small>Because you follow Lakeland Eagles 12U · 1d ago</small></div></div>
+              <div class="notif unread"><div class="notif-icon">👨‍👩‍👧</div><div><b>Maria Riddle</b> added you to her family list.<small>2d ago</small></div></div>
+              <div class="notif"><div class="notif-icon">🧾</div><div><b>Purchase receipt:</b> Live Stream — Eagles vs Mulberry. Link texted to (863) ···-··42.<small>5d ago</small></div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = GFN.header('account');
+
+function show(sec, link){
+  ['mygames','feed','family','notifications'].forEach(s=>document.getElementById('sec-'+s).style.display = s===sec?'':'none');
+  document.querySelectorAll('.side-nav a').forEach(a=>a.classList.remove('active'));
+  if(link) link.classList.add('active');
+}
+if(location.hash==='#notifications'){ show('notifications', document.querySelector('.side-nav a[href="#notifications"]')); }
+
+/* My Games — from demo purchases */
+const owned = GFN.ownedList();
+const rows = owned.map(key=>{
+  const [kind, id, extra] = key.split('_');
+  if(kind==='pass'){ const t=GFN.teams[id]; return t?`<div class="sched-row"><div class="sched-date"><b>🎫</b></div><div class="sched-info"><b>${t.name} ${t.squad} Team Pass</b><small>Every game this season</small></div><div class="sched-cta"><span class="status-tag st-owned">ACTIVE</span></div></div>`:''; }
+  if(kind==='tpass'){ return `<div class="sched-row"><div class="sched-date"><b>🏆</b></div><div class="sched-info"><b>Tournament Pass</b><small>${GFN.tournament.name}</small></div><div class="sched-cta"><span class="status-tag st-owned">ACTIVE</span></div></div>`; }
+  if(kind==='playerpass'){ return `<div class="sched-row"><div class="sched-date"><b>🎓</b></div><div class="sched-info"><b>Player Pass</b><small>Film room access on team.mygamefilmnow.com</small></div><div class="sched-cta"><span class="status-tag st-owned">ACTIVE</span></div></div>`; }
+  const g=GFN.games[id]; if(!g) return '';
+  const t=GFN.teams[g.home]; const d=new Date(g.date+"T12:00:00");
+  const label={stream:'Live Stream',rec:'Recording',bundle:'Stream + Recording'}[kind]||'Purchase';
+  return `<a class="sched-row" href="game.html?id=${g.id}">
+    <div class="sched-date"><b>${d.getDate()}</b><small>${d.toLocaleDateString('en-US',{month:'short'})}</small></div>
+    <div class="sched-info"><b>${t.name} ${t.squad} vs ${g.awayName}</b><small>${label}${g.score?` · Final ${g.score}`:''}</small></div>
+    <div class="sched-cta"><span class="status-tag st-owned">▶ WATCH</span></div></a>`;
+}).join('');
+document.getElementById('ownedListEl').innerHTML = rows || `<p style="padding:2rem;text-align:center;color:var(--muted)">Nothing yet — <a href="index.html">find your team</a> and buy a game. It'll live here forever.<br><small>(Demo tip: buy anything with the fake checkout and it appears here.)</small></p>`;
+
+/* Feed — followed team's games with "because you follow" */
+document.getElementById('feedEl').innerHTML =
+  Object.values(GFN.games).filter(g=>g.home==='eagles12u').sort((a,b)=>b.date.localeCompare(a.date))
+    .map(g=>GFN.gameCard(g, g.awayName.includes('Storm')?'Zach Riddle':'Eagles 12U')).join('');
+</script>
+</body>
+</html>

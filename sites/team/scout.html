@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scout View — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/team.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <h1 class="page-title" style="font-size:1.5rem">🔭 Scout Desk</h1>
+    <p class="page-sub">Logged in as T. Alvarez — Kathleen HS assistant coach. Follow local teams &amp; players; their film and profiles collect here.</p>
+
+    <div class="layout">
+      <div>
+        <div class="panel">
+          <div class="panel-head"><h3>⭐ Players you follow</h3><button class="btn btn-ghost" style="padding:.4rem .9rem;font-size:.83rem" onclick="alert('Demo: search any player or team by name, town, league, or position.')">＋ Follow more</button></div>
+          <div class="panel-body flush">
+            <a class="game-row" href="profile.html">
+              <div class="notif-icon" style="background:linear-gradient(135deg,var(--gold),#b45309)">🏈</div>
+              <div class="gr-info"><b>Zach Riddle — #22 RB</b><small>Eagles 12U · 486 yds · 7 TD · public reel 2:14 · 19 tagged plays</small></div>
+              <span class="tag tag-gold">REEL ▶</span></a>
+            <a class="game-row" href="profile.html">
+              <div class="notif-icon" style="background:linear-gradient(135deg,#3b82f6,#1e3a8a)">🏈</div>
+              <div class="gr-info"><b>Antoine Carter — #7 QB</b><small>Eagles 12U · stats hidden by player · 11 tagged plays</small></div>
+              <span class="tag tag-dim">PROFILE</span></a>
+            <a class="game-row" href="profile.html">
+              <div class="notif-icon" style="background:linear-gradient(135deg,#7c3aed,#312e81)">🏈</div>
+              <div class="gr-info"><b>Jayden Brooks — #4 QB</b><small>Storm 12U · new film posted yesterday</small></div>
+              <span class="tag tag-new">NEW FILM</span></a>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:1.4rem">
+          <div class="panel-head"><h3>🏈 Teams you follow</h3></div>
+          <div class="panel-body flush">
+            <div class="game-row"><div class="notif-icon">🦅</div><div class="gr-info"><b>Lakeland Eagles 12U</b><small>6–1 · 3 games on film · next: Fri vs Storm</small></div><span class="tag tag-new">FOLLOWING</span></div>
+            <div class="game-row"><div class="notif-icon">⛈️</div><div class="gr-info"><b>Winter Haven Storm 12U</b><small>5–2 · 2 games on film</small></div><span class="tag tag-new">FOLLOWING</span></div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="panel">
+          <div class="panel-head"><h3>✉️ Contact a player</h3></div>
+          <div class="panel-body">
+            <p style="font-size:.88rem;color:var(--muted);margin-bottom:.9rem">We never share a player's contact info — we never even collect it. Your request goes to the <b style="color:var(--ink)">parent</b>, who decides whether to respond.</p>
+            <div class="field"><label>Player</label><select><option>Zach Riddle — Eagles 12U</option><option>Antoine Carter — Eagles 12U</option></select></div>
+            <div class="field"><label>Message to the parent</label><textarea rows="3" placeholder="Introduce yourself, your program, and why you're reaching out."></textarea></div>
+            <button class="btn btn-primary btn-block" onclick="alert('Demo: message routes to the parent\\'s email with your verified scout profile attached. The player never sees your contact info either — parents broker everything.')">Send via parent</button>
+          </div>
+        </div>
+        <p class="consent-note">🛡️ Scout accounts are verified by GFN staff before activation, and every contact request is logged.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="assets/team.js"></script>
+<script>document.getElementById('hdr').innerHTML = FR.header('scout');</script>
+</body>
+</html>

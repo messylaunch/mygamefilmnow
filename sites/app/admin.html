@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <h1 class="page-title" style="font-size:1.6rem">GFN Admin</h1>
+    <p class="page-sub">One grid runs the whole platform: teams, games, tournaments, streams, prices — no more post-hopping.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card"><small>Revenue this week</small><b>$1,842</b><span class="delta">▲ 23% vs last week</span></div>
+      <div class="stat-card"><small>Games this week</small><b>12</b><span class="delta">3 live streams scheduled</span></div>
+      <div class="stat-card"><small>Recordings due (72h SLA)</small><b>2</b><span class="delta" style="color:#b45309">1 due in 14h</span></div>
+      <div class="stat-card"><small>Player Passes active</small><b>47</b><span class="delta">▲ 5 this week</span></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="tab(this,'sched')">📅 Schedule Grid</button>
+      <button class="tab" onclick="tab(this,'teams')">🏈 Teams &amp; Squads</button>
+      <button class="tab" onclick="tab(this,'orders')">🧾 Orders &amp; Refunds</button>
+      <button class="tab" onclick="tab(this,'staff')">👥 Staff &amp; Roles</button>
+    </div>
+
+    <!-- ============ SCHEDULE GRID ============ -->
+    <section id="tab-sched">
+      <div class="toolbar">
+        <input type="search" placeholder="Filter games…">
+        <select><option>All events</option><option>Fall Season 2026</option><option>Winter Haven Classic</option></select>
+        <select><option>All teams</option><option>Lakeland Eagles 12U</option><option>Winter Haven Storm 12U</option><option>Auburndale Rams 10U</option></select>
+        <div class="spacer"></div>
+        <button class="btn btn-ghost" onclick="alert('Demo: CSV import — paste a season schedule straight from Excel, one row per game.')">⬆ Import CSV</button>
+        <button class="btn btn-primary" onclick="addRow()">＋ Add Game Row</button>
+      </div>
+      <div class="grid-wrap">
+        <table class="grid" id="schedGrid">
+          <thead><tr>
+            <th>Team (squad)</th><th>Event</th><th>Date</th><th>Time</th><th>Opponent</th>
+            <th title="Stream on sale">📡</th><th>Stream window</th><th>Stream $</th>
+            <th title="Recording on sale">🎬</th><th>Rec $</th><th>Score</th><th>Assigned crew</th><th></th>
+          </tr></thead>
+          <tbody id="gridBody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:.7rem">💡 Edit any cell inline — it saves as you type (in the real app). Streams come <b>on sale automatically</b> at window start and <b>off sale at window end</b>; the game page then forwards buyers to the recording. Click ✎ for the full game editor (links, photos, highlights, bracket photo, player-pass settings).</p>
+    </section>
+
+    <!-- ============ TEAMS ============ -->
+    <section id="tab-teams" style="display:none">
+      <div class="toolbar">
+        <input type="search" placeholder="Filter teams…">
+        <div class="spacer"></div>
+        <button class="btn btn-primary" onclick="alert('Demo: create Team → add Squads (10U, 12U…) → attach to a Season or Tournament. One screen, ~60 seconds. Making one team no longer means making five WordPress posts.')">＋ New Team</button>
+      </div>
+      <div class="grid-wrap">
+        <table class="grid">
+          <thead><tr><th>Team</th><th>Squad</th><th>League / Org</th><th>City</th><th>Events</th><th>Coach login</th><th>Player passes</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><b>🦅 Lakeland Eagles</b></td><td>12U</td><td>Mid-Florida Youth League</td><td>Lakeland, FL</td><td>Fall Season 2026 · WH Classic</td><td>coach.mike@… ✓</td><td>18 active</td><td><div class="row-actions"><button class="icon-btn">✎</button><button class="icon-btn">👤＋</button></div></td></tr>
+            <tr><td><b>🦅 Lakeland Eagles</b></td><td>10U</td><td>Mid-Florida Youth League</td><td>Lakeland, FL</td><td>Fall Season 2026</td><td>coach.d@… ✓</td><td>11 active</td><td><div class="row-actions"><button class="icon-btn">✎</button><button class="icon-btn">👤＋</button></div></td></tr>
+            <tr><td><b>⛈️ Winter Haven Storm</b></td><td>12U</td><td>Mid-Florida Youth League</td><td>Winter Haven, FL</td><td>Fall Season 2026 · WH Classic</td><td><span style="color:var(--red)">no login yet</span></td><td>12 active</td><td><div class="row-actions"><button class="icon-btn">✎</button><button class="icon-btn" title="Invite coach">👤＋</button></div></td></tr>
+            <tr><td><b>🐏 Auburndale Rams</b></td><td>10U</td><td>Mid-Florida Youth League</td><td>Auburndale, FL</td><td>Fall Season 2026</td><td>rams.coach@… ✓</td><td>6 active</td><td><div class="row-actions"><button class="icon-btn">✎</button><button class="icon-btn">👤＋</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:.7rem">💡 A <b>Squad</b> = team + division (Eagles 12U). Players attach to squads per season. Squads join Seasons and Tournaments — that's why season and tournament games finally show up together on one team page.</p>
+    </section>
+
+    <!-- ============ ORDERS & REFUNDS ============ -->
+    <section id="tab-orders" style="display:none">
+      <div class="toolbar">
+        <input type="search" placeholder="Search buyer, game, order #…">
+        <div class="spacer"></div>
+        <button class="btn" style="background:#fee2e2;color:var(--red)" onclick="alert('Demo: pick a cancelled game → every purchase on it refunds in one batch via Stripe, buyers get an automatic text + email.')">⚠ Refund Entire Game</button>
+      </div>
+      <div class="grid-wrap">
+        <table class="grid">
+          <thead><tr><th>Order</th><th>Buyer</th><th>Item</th><th>Game</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>#10231</td><td>John Smith</td><td>Live Stream</td><td>Eagles 12U vs Storm 12U</td><td>$9.99</td><td><span class="status-tag st-rec">PAID</span></td><td><button class="icon-btn danger" title="Refund" onclick="alert('Demo: one-click Stripe refund + automatic notification to buyer.')">↩</button></td></tr>
+            <tr><td>#10230</td><td>Denise Watkins</td><td>Team Pass</td><td>Eagles 12U — Fall 2026</td><td>$49.99</td><td><span class="status-tag st-rec">PAID</span></td><td><button class="icon-btn danger">↩</button></td></tr>
+            <tr><td>#10229</td><td>Maria Riddle</td><td>Player Pass</td><td>Zach Riddle — Eagles 12U</td><td>$75.00</td><td><span class="status-tag st-rec">PAID</span></td><td><button class="icon-btn danger">↩</button></td></tr>
+            <tr><td>#10228</td><td>Carl Otero</td><td>Recording</td><td>Storm 12U vs Bulldogs (CANCELLED)</td><td>$7.99</td><td><span class="status-tag st-live">REFUNDED</span></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ STAFF & ROLES ============ -->
+    <section id="tab-staff" style="display:none">
+      <div class="toolbar">
+        <div class="spacer"></div>
+        <button class="btn btn-primary" onclick="alert('Demo: create any account with any role — admin, editor, recorder, uploader, coach, scout. One person can hold multiple roles (recorder + uploader is common).')">＋ Create Account</button>
+      </div>
+      <div class="grid-wrap">
+        <table class="grid">
+          <thead><tr><th>Name</th><th>Roles</th><th>Scope</th><th>Last active</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><b>Michael Q.</b></td><td><span class="status-tag st-owned">ADMIN</span></td><td>Everything</td><td>now</td><td></td></tr>
+            <tr><td><b>Sarah E.</b></td><td><span class="status-tag st-rec">EDITOR</span></td><td>All games — cuts play-by-play, publishes recordings</td><td>2h ago</td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><b>Devon R.</b></td><td><span class="status-tag st-up">RECORDER</span> <span class="status-tag st-up">UPLOADER</span></td><td>Saturday crew — Lakeland area</td><td>1d ago</td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><b>Coach Mike</b></td><td><span class="status-tag st-proc">COACH</span></td><td>Eagles 12U — own page, schedule, prices, film room</td><td>3h ago</td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><b>T. Alvarez</b></td><td><span class="status-tag st-proc">SCOUT</span></td><td>View film & profiles · contact via parents only</td><td>5d ago</td><td><button class="icon-btn">✎</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- row editor modal -->
+<div class="modal-back" id="rowModal">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-head"><div><h3>Game Editor</h3><small>Everything about one game, one screen</small></div><button class="modal-x" onclick="document.getElementById('rowModal').classList.remove('open')">✕</button></div>
+    <div class="modal-body">
+      <div class="field-row">
+        <div class="field"><label>Team (squad)</label><select><option>Lakeland Eagles 12U</option><option>Winter Haven Storm 12U</option></select></div>
+        <div class="field"><label>Event</label><select><option>Fall Season 2026</option><option>Winter Haven Classic — Round 1</option><option>Winter Haven Classic — Round 2</option></select></div>
+      </div>
+      <div class="field"><label>Opponent</label><input value="Winter Haven Storm 12U"><div class="hint">Type any name. If they're on GFN it links their page automatically; if not, it stays plain text.</div></div>
+      <div class="field-row">
+        <div class="field"><label>Date</label><input type="date" value="2026-07-10"></div>
+        <div class="field"><label>Kickoff</label><input type="time" value="19:00"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Stream window start</label><input type="time" value="18:50"></div>
+        <div class="field"><label>Stream window end</label><input type="time" value="21:30"><div class="hint">Stream auto-removes from sale at end time.</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Stream price</label><input type="number" value="9.99" step="0.01"></div>
+        <div class="field"><label>Recording price</label><input type="number" value="7.99" step="0.01"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Bundle price</label><input type="number" value="14.99" step="0.01"></div>
+        <div class="field"><label>Score (after game)</label><input placeholder="e.g. W 21–14"></div>
+      </div>
+      <div class="field"><label>Video links</label><input placeholder="Stream URL / recording upload"><div class="hint">Editors attach the recording & play-by-play clips here. Photos & highlights too.</div></div>
+      <button class="btn btn-primary btn-block" onclick="document.getElementById('rowModal').classList.remove('open')">Save Game</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = GFN.header('admin');
+function tab(el,id){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active');
+  ['sched','teams','orders','staff'].forEach(s=>document.getElementById('tab-'+s).style.display = s===id?'':'none'); }
+
+const rows=[
+  {team:'Eagles 12U',event:'Fall Season 2026',date:'2026-07-10',time:'19:00',opp:'Winter Haven Storm 12U',stream:true,win:'18:50–21:30',sp:9.99,rec:true,rp:7.99,score:'',crew:'Devon R.'},
+  {team:'Storm 12U',event:'Fall Season 2026',date:'2026-07-11',time:'11:00',opp:'Bartow Bulldogs 12U',stream:true,win:'10:50–13:30',sp:9.99,rec:true,rp:7.99,score:'',crew:'Devon R.'},
+  {team:'Rams 10U',event:'Fall Season 2026',date:'2026-07-12',time:'14:00',opp:'Lake Wales Hornets 10U',stream:true,win:'13:50–16:30',sp:9.99,rec:true,rp:7.99,score:'',crew:'— assign —'},
+  {team:'Eagles 12U',event:'Fall Season 2026',date:'2026-07-05',time:'09:00',opp:'Mulberry Panthers 12U',stream:false,win:'ended',sp:'',rec:true,rp:7.99,score:'W 14–6',crew:'Devon R.'},
+  {team:'Eagles 12U',event:'WH Classic — Rd 2',date:'2026-06-28',time:'13:00',opp:'Plant City Raiders 12U',stream:false,win:'ended',sp:'',rec:true,rp:7.99,score:'W 28–7',crew:'Sarah E. (edit ✓)'}
+];
+function rowHtml(r){
+  return `<tr>
+    <td><input type="text" value="${r.team}" style="max-width:110px;font-weight:700"></td>
+    <td><input type="text" value="${r.event}"></td>
+    <td><input type="date" value="${r.date}"></td>
+    <td><input type="time" value="${r.time}"></td>
+    <td><input type="text" value="${r.opp}" style="max-width:170px"></td>
+    <td><input type="checkbox" ${r.stream?'checked':''}></td>
+    <td><input type="text" value="${r.win}" style="max-width:95px"></td>
+    <td><input type="number" value="${r.sp}" step="0.01" style="max-width:70px"></td>
+    <td><input type="checkbox" ${r.rec?'checked':''}></td>
+    <td><input type="number" value="${r.rp}" step="0.01" style="max-width:70px"></td>
+    <td><input type="text" value="${r.score}" placeholder="—" style="max-width:80px"></td>
+    <td><input type="text" value="${r.crew}" style="max-width:110px"></td>
+    <td><div class="row-actions"><button class="icon-btn" title="Full editor" onclick="document.getElementById('rowModal').classList.add('open')">✎</button><button class="icon-btn danger" title="Delete" onclick="this.closest('tr').remove()">🗑</button></div></td>
+  </tr>`;
+}
+document.getElementById('gridBody').innerHTML = rows.map(rowHtml).join('');
+function addRow(){ document.getElementById('gridBody').insertAdjacentHTML('afterbegin', rowHtml({team:'',event:'Fall Season 2026',date:'',time:'',opp:'',stream:true,win:'',sp:9.99,rec:true,rp:7.99,score:'',crew:''})); }
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tournaments — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container" id="page"></div>
+</main>
+<script src="assets/app.js"></script>
+<script>
+document.getElementById('hdr').innerHTML = GFN.header('tournaments');
+const T = GFN.tournament;
+let activeRound = 0;
+
+function schedRow(gid){
+  const g=GFN.games[gid]; const t=GFN.teams[g.home]; const d=new Date(g.date+"T12:00:00");
+  const price=g.status==='upcoming'?`$${g.stream}`:(g.status==='recording'?`$${g.recording}`:'');
+  return `<a class="sched-row" href="game.html?id=${g.id}">
+    <div class="sched-date"><b>${d.getDate()}</b><small>${d.toLocaleDateString('en-US',{month:'short'})}</small></div>
+    <div class="sched-info"><b>${t.name} ${t.squad} vs ${g.awayName}</b><small>${g.time} · ${g.venue}${g.score?` · Final ${g.score}`:''}</small></div>
+    <div class="sched-cta"><span class="price">${price}</span>${GFN.statusTag(g)}</div></a>`;
+}
+
+function render(){
+  document.getElementById('page').innerHTML = `
+  <div class="team-hero" style="background:linear-gradient(160deg,#3b1d0d,#5c2d10)">
+    <div class="team-crest" style="background:linear-gradient(135deg,var(--gold),#b45309)">🏆</div>
+    <div>
+      <span class="pill">Tournament</span>
+      <h1>${T.name}</h1>
+      <div class="team-meta">${T.dates} · ${T.venue} · Organized by rounds/days — find your game fast</div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="tabs">
+        ${T.rounds.map((r,i)=>`<button class="tab ${i===activeRound?'active':''}" onclick="activeRound=${i};render()">${r.label}</button>`).join('')}
+      </div>
+      <div class="panel"><div class="panel-body flush">
+        ${T.rounds[activeRound].games.length
+          ? T.rounds[activeRound].games.map(schedRow).join('')
+          : `<p style="padding:2rem;text-align:center;color:var(--muted)">Games for this round are added as matchups are set — teams just add a row, no bracket-building required.</p>`}
+      </div></div>
+
+      <div class="panel" style="margin-top:1.4rem">
+        <div class="panel-head"><h3>🖼️ Tournament Bracket</h3></div>
+        <div class="panel-body">
+          <div class="bracket-photo">
+            <div class="icon">📷</div>
+            <b>Snap a photo of the bracket — that's it.</b>
+            <p style="font-size:.88rem;margin-top:.3rem">Organizers photograph the handwritten bracket and upload it here so fans can see where every team stands. No bracket software, no confusion about which game is which. Rounds above match the paper.</p>
+            <button class="btn btn-ghost" style="margin-top:.9rem" onclick="alert('Demo: organizers upload the bracket photo from the Admin schedule grid.')">Upload bracket photo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="panel">
+        <div class="panel-head"><h3>🎫 Tournament Passes</h3></div>
+        <div class="panel-body flush">
+          ${T.passes.map(p=>{ const t=GFN.teams[p.team]; const key='tpass_'+T.id+'_'+p.team;
+            return `<div class="product"><div class="product-icon">${t.crest}</div>
+              <div><b>${t.name} ${t.squad}</b><small>Every ${t.name} game in this tournament — streams + recordings</small></div>
+              <div class="buy">${GFN.owned(key)?'<span class="owned-chip">✓ ACTIVE</span>':`<span class="price">$${p.price}</span><button class="btn btn-primary" onclick="GFN.openCheckout('Tournament Pass — ${t.name} ${t.squad}','${T.name}',${p.price},'${key}',render)">Get Pass</button>`}</div></div>`;}).join('')}
+        </div>
+      </div>
+      <div class="panel" style="margin-top:1.2rem">
+        <div class="panel-body" style="font-size:.85rem;color:var(--muted)">
+          <b style="color:var(--ink)">Why passes are per-team:</b> you follow <em>your</em> team through the bracket. Pass prices are set per team when the tournament is created in the schedule grid.
+        </div>
+      </div>
+    </aside>
+  </div>`;
+}
+render();
+</script>
+</body>
+</html>

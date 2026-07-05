@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zach Riddle #22 — GameFilmNow</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/team.css">
+</head>
+<body>
+<div id="hdr"></div>
+<main>
+  <div class="container">
+    <div class="profile-hero">
+      <div class="profile-pic">🏈<span class="vid-badge">▶ 3s</span></div>
+      <div style="flex:1;min-width:240px">
+        <h1>Zach Riddle <span style="color:var(--gold)">#22</span></h1>
+        <div class="profile-meta">RB · Lakeland Eagles 12U · Mid-Florida Youth League · Lakeland, FL</div>
+        <div class="stat-chips">
+          <span class="stat-chip"><b>19</b> tagged plays</span>
+          <span class="stat-chip"><b>412</b> play views</span>
+          <span class="stat-chip"><b>3</b> seasons on GFN</span>
+          <span class="stat-chip"><b>8</b> followers</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <button class="btn btn-primary" onclick="alert('Demo: edit profile — photo or a 3-second video avatar you record yourself, bio, and optional stats.')">✎ Edit Profile</button>
+        <button class="btn btn-ghost" onclick="alert('Demo: fans & family hit Follow — your games then show in their feed with a \'because you follow Zach Riddle\' tag.')">⭐ Follow</button>
+      </div>
+    </div>
+
+    <div class="layout" style="margin-top:1.5rem">
+      <div>
+        <div class="panel">
+          <div class="panel-head"><h3>🎬 Public Highlight Montage</h3><span class="tag tag-gold">HIGHLIGHT MODE ✓</span></div>
+          <div class="panel-body">
+            <div class="film-stage" style="aspect-ratio:16/8">
+              <div class="frame"><div style="text-align:center">
+                <div class="play-circle">▶</div>
+                <p style="margin-top:.8rem;color:#c4d0e2;font-size:.9rem">Zach Riddle — 2026 Season Reel · 18 plays · 2:14</p>
+              </div></div>
+            </div>
+            <p style="font-size:.83rem;color:var(--muted);margin-top:.8rem">This montage is public — family, friends, and scouts can watch it without an account. Built in the <a href="highlights.html">Highlight Builder</a>.</p>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:1.4rem">
+          <div class="panel-head"><h3>🎞️ My Games</h3></div>
+          <div class="panel-body flush">
+            <a class="game-row" href="film-room.html"><div class="gr-date"><b>4</b><small>Jul</small></div><div class="gr-info"><b>vs Auburndale Rams 12U · W 21–14</b><small>Fall Season 2026 · tagged in 6 plays</small></div><span class="tag tag-new">▶</span></a>
+            <a class="game-row" href="film-room.html"><div class="gr-date"><b>28</b><small>Jun</small></div><div class="gr-info"><b>vs Plant City Raiders 12U · W 28–7</b><small>WH Classic Rd 2 · tagged in 9 plays</small></div><span class="tag tag-new">▶</span></a>
+            <a class="game-row" href="film-room.html"><div class="gr-date"><b>27</b><small>Jun</small></div><div class="gr-info"><b>vs Kathleen Chiefs 12U · W 20–13</b><small>WH Classic Rd 1 · tagged in 4 plays</small></div><span class="tag tag-new">▶</span></a>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="panel">
+          <div class="panel-head"><h3>📝 Bio</h3></div>
+          <div class="panel-body"><p style="font-size:.9rem;color:var(--muted)">Two-hole runner. Film junkie. Trying to make varsity by 9th grade. 🦅 <i>(Bio is optional — write it or skip it.)</i></p></div>
+        </div>
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head"><h3>📊 Stats</h3><a href="#" onclick="alert('Demo: stats are player-entered and optional. Show them or hide them.');return false">Edit</a></div>
+          <div class="panel-body flush">
+            <div class="game-row"><div class="gr-info"><b>Rushing yards</b></div><span class="tag tag-gold">486</span></div>
+            <div class="game-row"><div class="gr-info"><b>Touchdowns</b></div><span class="tag tag-gold">7</span></div>
+            <div class="game-row"><div class="gr-info"><b>Yards / carry</b></div><span class="tag tag-gold">6.8</span></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:1.2rem">
+          <div class="panel-head"><h3>🏈 Teams</h3></div>
+          <div class="panel-body flush">
+            <div class="game-row"><div class="notif-icon">🦅</div><div class="gr-info"><b>Lakeland Eagles 12U</b><small>2026 · current</small></div></div>
+            <div class="game-row"><div class="notif-icon">🦅</div><div class="gr-info"><b>Lakeland Eagles 10U</b><small>2024–2025</small></div></div>
+          </div>
+          <div class="panel-body" style="border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)">Your profile and film history travel with you after the season — team to team, year to year.</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="assets/team.js"></script>
+<script>document.getElementById('hdr').innerHTML = FR.header('profile');</script>
+</body>
+</html>
