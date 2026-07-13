@@ -74,7 +74,7 @@ const FR = {
   save(k,v){ localStorage.setItem('fr_'+k, JSON.stringify(v)); },
 
   header(active){
-    return `<div class="demo-banner">🚧 DEMO TEMPLATE — sample film room, demo data. This becomes team.mygamefilmnow.com.</div>
+    return `<div class="demo-banner">🚧 DEMO TEMPLATE — sample film room; player, coach &amp; scout views all shown in one nav (real app scopes by login). This becomes team.mygamefilmnow.com.</div>
     <header class="site-header"><div class="container nav">
       <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small style="color:var(--gold)">Now</small>&nbsp;<span style="font-weight:600;color:var(--muted);font-size:.8rem">FILM ROOM</span></a>
       <button class="nav-toggle" aria-label="Menu" style="color:var(--ink)" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>

@@ -199,7 +199,7 @@ const GFN = {
 
   header(active){
     const owned=this.ownedList().length;
-    return `<div class="demo-banner">🚧 DEMO TEMPLATE — sample data, demo checkout. This becomes app.mygamefilmnow.com.</div>
+    return `<div class="demo-banner">🚧 DEMO TEMPLATE — sample data, demo checkout, and every role's view in one nav (real app scopes by login). This becomes app.mygamefilmnow.com.</div>
     <header class="site-header app-nav"><div class="container nav">
       <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small>Now</small></a>
       <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>

@@ -159,3 +159,38 @@ table.grid input[type=checkbox]{width:17px;height:17px;accent-color:var(--yellow
 /* matchup image upload option */
 .img-choice{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
 .img-choice .preview{width:150px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+
+/* ---------- review fixes ---------- */
+/* product rail: give price+button their own row so descriptions breathe (B15) */
+.product{flex-wrap:wrap}
+.product>div:not(.product-icon):not(.buy){flex:1;min-width:55%}
+.product .buy{flex-basis:100%;display:flex;justify-content:flex-end;align-items:center;gap:.8rem;text-align:right;margin-left:0;margin-top:.2rem}
+.product .buy .price{margin-bottom:0}
+
+/* schedule rows: stop tag/price from crushing game info on phones (B6) */
+@media(max-width:640px){
+  .sched-row{flex-wrap:wrap}
+  .sched-info{flex:1 1 calc(100% - 66px)}
+  .sched-cta{width:100%;display:flex;align-items:center;gap:.7rem;text-align:left;padding-left:62px}
+  .sched-cta .price{display:inline;margin:0}
+}
+
+/* tabs wrap instead of hiding off-screen on phones (B14) */
+@media(max-width:640px){
+  .tabs{flex-wrap:wrap;border-bottom:none;gap:.3rem}
+  .tab{border:1px solid var(--line);border-radius:8px;margin-bottom:0;padding:.5rem .8rem;font-size:.8rem}
+  .tab.active{border-color:var(--yellow);background:var(--yellow-dim)}
+}
+
+/* admin grid: actions column always visible + scroll fade cue (B4/B5) */
+.grid-wrap{position:relative}
+.grid-wrap::after{content:"";position:absolute;top:0;right:0;bottom:0;width:28px;background:linear-gradient(90deg,transparent,rgba(10,10,12,.9));pointer-events:none;border-radius:0 var(--radius) var(--radius) 0}
+table.grid td:last-child,table.grid th:last-child{position:sticky;right:0;background:var(--surface);box-shadow:-6px 0 10px rgba(0,0,0,.35);z-index:1}
+table.grid th:last-child{background:var(--surface-2);z-index:2}
+.scroll-hint{font-size:.75rem;color:var(--muted);text-align:right;margin:.35rem 2px 0}
+
+/* SLA countdown chips for the edit queue */
+.sla{font-family:var(--display);font-size:.95rem;letter-spacing:.04em;padding:.15rem .55rem;border-radius:6px}
+.sla.ok{background:rgba(46,224,111,.14);color:var(--green)}
+.sla.warn{background:var(--yellow-dim);color:var(--yellow)}
+.sla.late{background:rgba(255,77,77,.16);color:var(--red)}
