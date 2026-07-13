@@ -50,7 +50,8 @@ function render(){
   const q=(document.getElementById('q').value||'').toLowerCase();
   const games=Object.values(GFN.games).filter(g=>{
     const t=GFN.teams[g.home];
-    const hay=`${t.name} ${t.squad} ${t.city} ${t.league} ${g.awayName} ${g.event}`.toLowerCase();
+    const roster=t.roster.map(p=>p.name+' '+p.num).join(' ');
+    const hay=`${t.name} ${t.squad} ${t.city} ${t.league} ${g.awayName} ${g.event} ${roster}`.toLowerCase();
     if(q && !hay.includes(q)) return false;
     if(filter==='live') return g.status==='upcoming'||g.status==='live';
     if(filter==='recording') return g.status==='recording';
@@ -60,7 +61,7 @@ function render(){
 
   let html='';
   if(filter==='teams'||filter==='all'){
-    const teams=Object.values(GFN.teams).filter(t=>!q||`${t.name} ${t.squad} ${t.city} ${t.league}`.toLowerCase().includes(q));
+    const teams=Object.values(GFN.teams).filter(t=>!q||`${t.name} ${t.squad} ${t.city} ${t.league} ${t.roster.map(p=>p.name+' '+p.num).join(' ')}`.toLowerCase().includes(q));
     if(teams.length){
       html+=`<h2 class="page-title" style="font-size:1.25rem">Teams on GameFilmNow</h2><p class="page-sub">Only teams listed here have film for sale — opponents without a GFN account appear as text on schedules.</p><div class="card-grid" style="margin-bottom:2.4rem">`;
       html+=teams.map(t=>`<a class="game-card" href="team.html?id=${t.id}">

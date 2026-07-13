@@ -42,7 +42,7 @@
             <div class="game-row"><div class="notif-icon">⏳</div><div class="gr-info"><b>Tommy Vega #30</b><small>watched, no answer yet</small></div><span class="tag tag-dim">REMIND</span></div>
           </div>
           <div class="panel-body" style="border-top:1px solid var(--line)">
-            <button class="btn btn-ghost" onclick="alert('Demo: nudges go to the PARENTS of players who haven\\'t done film homework. Kids never get texted directly.')">🔔 Remind the stragglers (via parents)</button>
+            <button class="btn btn-ghost btn-block" style="white-space:normal" onclick="alert('Demo: nudges go to the PARENTS of players who haven\\'t done film homework. Kids never get texted directly.')">🔔 Remind stragglers (via parents)</button>
           </div>
         </div>
       </div>
@@ -75,6 +75,6 @@
   </div>
 </main>
 <script src="assets/team.js"></script>
-<script>document.getElementById('hdr').innerHTML = FR.header('coach');</script>
+<script>document.getElementById('hdr').innerHTML = FR.header('coach', {initials:'CM', name:'Coach Mike', bell:5});</script>
 </body>
 </html>

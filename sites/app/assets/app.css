@@ -60,7 +60,7 @@ a.game-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-
 .sched-row:hover{background:rgba(255,210,0,.05)}
 .sched-date{flex:none;width:52px;text-align:center;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:.3rem 0}
 .sched-date b{display:block;font-family:var(--display);font-weight:400;font-size:1.15rem;color:var(--yellow)}
-.sched-date small{font-size:.62rem;font-weight:800;text-transform:uppercase;color:var(--muted)}
+.sched-date small{font-size:.68rem;font-weight:800;text-transform:uppercase;color:var(--muted)}
 .sched-info{flex:1;min-width:0}
 .sched-info b{display:block;font-size:.93rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sched-info small{color:var(--muted);font-size:.8rem}
@@ -108,7 +108,7 @@ a.game-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-
 .countdown{display:flex;gap:.5rem;justify-content:center;margin-top:.9rem}
 .count-cell{background:rgba(0,0,0,.55);border:1px solid rgba(255,210,0,.35);border-radius:10px;padding:.5rem .7rem;min-width:58px;text-align:center}
 .count-cell b{display:block;font-family:var(--display);font-weight:400;font-size:1.5rem;color:var(--yellow)}
-.count-cell small{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;color:#c9cfda}
+.count-cell small{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#c9cfda}
 
 /* ---------- tournament ---------- */
 .tabs{display:flex;gap:.4rem;border-bottom:2px solid var(--line);margin-bottom:1.2rem;overflow-x:auto}
@@ -171,6 +171,7 @@ table.grid input[type=checkbox]{width:17px;height:17px;accent-color:var(--yellow
 @media(max-width:640px){
   .sched-row{flex-wrap:wrap}
   .sched-info{flex:1 1 calc(100% - 66px)}
+  .sched-info b{white-space:normal}
   .sched-cta{width:100%;display:flex;align-items:center;gap:.7rem;text-align:left;padding-left:62px}
   .sched-cta .price{display:inline;margin:0}
 }

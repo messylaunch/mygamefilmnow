@@ -11,7 +11,7 @@
 <div id="hdr"></div>
 <main>
   <div class="container">
-    <p style="margin-bottom:.7rem;font-size:.9rem"><a href="index.html">← My Team</a> <span style="color:var(--muted)">· vs Auburndale Rams 12U · Final W 21–14 · 64 plays</span></p>
+    <p style="margin-bottom:.7rem;font-size:.9rem"><a href="index.html">← My Team</a> <span style="color:var(--muted)" id="crumb">· vs Auburndale Rams 12U · Final W 21–14 · 64 plays</span></p>
 
     <div class="layout">
       <div>
@@ -45,7 +45,7 @@
 
       <aside>
         <div class="panel">
-          <div class="panel-head"><h3>💬 Play 14 — Discussion</h3></div>
+          <div class="panel-head"><h3 id="discTitle">💬 Play 14 — Discussion</h3></div>
           <div class="panel-body flush">
             <div class="comment coach-q">
               <div class="avatar" style="background:var(--gold);color:#0b1220">CM</div>
@@ -82,7 +82,14 @@
 <script src="assets/team.js"></script>
 <script>
 document.getElementById('hdr').innerHTML = FR.header('film');
-let current = 2; // play 14
+
+// load the game the player actually clicked (film-room.html?g=<id>)
+const gid = new URLSearchParams(location.search).get('g') || 'g2';
+const game = FR.games.find(x=>x.id===gid && x.status==='ready') || FR.games[0];
+FR.plays = FR.playsFor(game.id);
+document.getElementById('crumb').textContent = `· ${game.label} · Final ${game.score} · ${game.plays} plays`;
+document.title = `Film Room — ${game.label} — GameFilmNow`;
+let current = Math.min(2, FR.plays.length-1);
 
 function renderStrip(){
   document.getElementById('strip').innerHTML = FR.plays.map((p,i)=>`
@@ -96,6 +103,7 @@ function jump(i){
   document.getElementById('playTitle').innerHTML=`Play ${p.n} — ${p.label}<small>tap next/prev or the strip below</small>`;
   document.getElementById('stageTitle').innerHTML=`Play ${p.n} — ${p.label}`;
   document.getElementById('likeCount').textContent=p.likes;
+  document.getElementById('discTitle').textContent=`💬 Play ${p.n} — Discussion`;
   document.getElementById('likeBtn').classList.remove('on');
   document.getElementById('listBtn').classList.remove('on');
   const tb=document.getElementById('tagBtn');
@@ -126,7 +134,7 @@ function postComment(){
 FR.attachMentions(document.getElementById('cInput'));
 // make the pre-seeded @ZachRiddle mention clickable too
 document.querySelectorAll('.comment p').forEach(p=>{ p.innerHTML = FR.linkMentions(p.textContent); });
-jump(2);
+jump(current);
 </script>
 </body>
 </html>
