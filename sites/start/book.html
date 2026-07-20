@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Call — GameFilmNow</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.book-wrap{display:grid;grid-template-columns:340px 1fr;gap:1.6rem;max-width:980px;margin:0 auto}
+@media(max-width:860px){.book-wrap{grid-template-columns:1fr}}
+.type-pick{display:flex;flex-direction:column;gap:.6rem}
+.type-btn{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;cursor:pointer;color:var(--ink);font-family:var(--font);transition:border-color .12s}
+.type-btn b{display:block;font-size:.95rem}
+.type-btn small{color:var(--muted);font-size:.8rem}
+.type-btn.on{border-color:var(--yellow);background:rgba(255,210,0,.07)}
+.cal{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.3rem}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
+.cal-head b{font-family:var(--display);font-weight:400;font-size:1.2rem;letter-spacing:.04em;text-transform:uppercase}
+.cal-nav{display:flex;gap:.4rem}
+.cal-nav button{background:var(--surface-2);border:1px solid var(--line);color:var(--ink);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:1rem}
+.cal-nav button:disabled{opacity:.35;cursor:default}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.35rem;text-align:center}
+.cal-grid .dow{font-size:.66rem;font-weight:800;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;padding:.3rem 0}
+.day{aspect-ratio:1;display:grid;place-items:center;border-radius:9px;font-weight:700;font-size:.9rem;border:1.5px solid transparent;cursor:pointer;color:var(--ink);background:var(--surface-2)}
+.day.off{background:none;color:#3a3b42;cursor:default}
+.day:not(.off):hover{border-color:var(--muted)}
+.day.sel{background:var(--yellow);color:#0a0a0c;border-color:var(--yellow)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.5rem;margin-top:1rem}
+.slot{background:var(--surface-2);border:1.5px solid var(--line);border-radius:8px;padding:.55rem 0;text-align:center;font-weight:800;font-size:.85rem;cursor:pointer;color:var(--ink);font-family:var(--font)}
+.slot:hover{border-color:var(--muted)}
+.slot.sel{background:var(--yellow);color:#0a0a0c;border-color:var(--yellow)}
+.summary{background:rgba(255,210,0,.07);border:1px solid rgba(255,210,0,.35);border-radius:10px;padding:.8rem 1rem;font-size:.9rem;margin-top:1rem}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small>Now</small></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <nav class="nav-links">
+      <a href="index.html#how">How It Works</a>
+      <a href="services.html">Services</a>
+      <a href="index.html#filmroom">Film Study</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="book.html" class="active">Book a Call</a>
+    </nav>
+    <a class="btn btn-primary" href="https://app.mygamefilmnow.com">Find Your Team</a>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-head center" style="margin:0 auto 2.2rem">
+      <span class="kicker">Free · 15 Minutes · No Pressure</span>
+      <h2>Pick a time. We'll bring the plan.</h2>
+      <p class="lead">You'll leave the call knowing exactly what your season costs and what your program earns. Rather type than talk? <a href="request-film.html">Send a request instead →</a></p>
+    </div>
+
+    <div class="book-wrap" id="bookWrap">
+      <div>
+        <p style="font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem">What's the call about?</p>
+        <div class="type-pick" id="typePick">
+          <button class="type-btn on" data-type="film"><b>🎥 Film my team's games</b><small>Coaches &amp; team managers — season filming quote</small></button>
+          <button class="type-btn" data-type="league"><b>🏟️ Cover my league or tournament</b><small>Directors — every field, one contract</small></button>
+          <button class="type-btn" data-type="fundraising"><b>💰 Fundraising strategy</b><small>Make the season pay — the full ladder</small></button>
+          <button class="type-btn" data-type="camera-school"><b>🎓 Camera School interview</b><small>Certify your own crew &amp; sell on GFN</small></button>
+        </div>
+        <p class="ghl-note"><b>GHL:</b> this page is the placeholder for your GoHighLevel calendar. When you connect it, replace the calendar below with your GHL calendar embed (one embed per call type, or one calendar with a custom field) — the page, nav, and confirmation flow stay. Map: <code>docs/GHL-INTEGRATION.md</code>.</p>
+      </div>
+
+      <div class="cal" id="calBox">
+        <div class="cal-head">
+          <b id="calMonth">July 2026</b>
+          <div class="cal-nav"><button id="calPrev">‹</button><button id="calNext">›</button></div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div id="slotArea" style="display:none">
+          <p style="font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;margin-top:1.1rem">Available times <span id="slotDay" style="color:var(--yellow)"></span></p>
+          <div class="slots" id="slots"></div>
+        </div>
+        <div id="formArea" style="display:none">
+          <div class="summary" id="pickSummary"></div>
+          <div class="field-row" style="margin-top:1rem">
+            <div class="field"><label>Name</label><input id="bkName" required></div>
+            <div class="field"><label>Team / league</label><input id="bkTeam" placeholder="e.g. Lakeland Eagles 12U"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Email</label><input id="bkEmail" type="email" required></div>
+            <div class="field"><label>Mobile</label><input id="bkPhone" type="tel" required></div>
+          </div>
+          <button class="btn btn-primary btn-lg btn-block" id="bkConfirm">Confirm My Call →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none;padding-top:0">
+    <span>© 2026 GameFilmNow</span>
+    <span><a href="services.html" style="display:inline">Services</a> · <a href="request-film.html" style="display:inline">Request Film</a> · <a href="index.html" style="display:inline">Home</a></span>
+  </div>
+</footer>
+
+<script>
+/* Booking calendar (demo). GHL calendar embed replaces #calBox when connected. */
+const typeLabels={film:"Film consult",league:"League / tournament quote",fundraising:"Fundraising strategy call","camera-school":"Camera School interview"};
+let callType="film", selDate=null, selSlot=null;
+
+// preselect from ?type=
+const qt=new URLSearchParams(location.search).get('type');
+if(qt && typeLabels[qt]) callType=qt;
+document.querySelectorAll('.type-btn').forEach(b=>{
+  b.classList.toggle('on', b.dataset.type===callType);
+  b.onclick=()=>{ callType=b.dataset.type;
+    document.querySelectorAll('.type-btn').forEach(x=>x.classList.toggle('on',x===b));
+    updSummary(); };
+});
+
+// calendar: current month + next, weekdays + Saturday, from tomorrow
+const today=new Date();
+let view=new Date(today.getFullYear(),today.getMonth(),1);
+const maxView=new Date(today.getFullYear(),today.getMonth()+1,1);
+
+function renderCal(){
+  const y=view.getFullYear(),m=view.getMonth();
+  document.getElementById('calMonth').textContent=view.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  document.getElementById('calPrev').disabled = view<=new Date(today.getFullYear(),today.getMonth(),1);
+  document.getElementById('calNext').disabled = view>=maxView;
+  const first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate();
+  let html=['S','M','T','W','T','F','S'].map(d=>`<div class="dow">${d}</div>`).join('');
+  for(let i=0;i<first;i++) html+='<div></div>';
+  for(let d=1;d<=days;d++){
+    const dt=new Date(y,m,d), dow=dt.getDay();
+    const past=dt<=today, sunday=dow===0;
+    const off=past||sunday;
+    const sel=selDate && dt.toDateString()===selDate.toDateString();
+    html+=`<div class="day ${off?'off':''} ${sel?'sel':''}" ${off?'':`onclick="pickDay(${y},${m},${d})"`}>${d}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML=html;
+}
+function pickDay(y,m,d){
+  selDate=new Date(y,m,d); selSlot=null; renderCal();
+  const dow=selDate.getDay();
+  // fake availability: fewer slots on Saturdays (game day)
+  const slots=(dow===6)?['8:00 AM','8:30 AM','7:00 PM','7:30 PM']:['10:00 AM','11:00 AM','1:00 PM','2:30 PM','4:00 PM','5:30 PM','7:00 PM'];
+  document.getElementById('slotDay').textContent='· '+selDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('slots').innerHTML=slots.map(s=>`<button class="slot" onclick="pickSlot(this,'${s}')">${s}</button>`).join('');
+  document.getElementById('slotArea').style.display='';
+  document.getElementById('formArea').style.display='none';
+}
+function pickSlot(el,s){
+  selSlot=s;
+  document.querySelectorAll('.slot').forEach(x=>x.classList.toggle('sel',x===el));
+  updSummary();
+  document.getElementById('formArea').style.display='';
+  el.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+function updSummary(){
+  if(!selDate||!selSlot) return;
+  document.getElementById('pickSummary').innerHTML=`📅 <b>${typeLabels[callType]}</b> — ${selDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})} at <b>${selSlot}</b> (15 min, we call you)`;
+}
+document.getElementById('calPrev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCal();};
+document.getElementById('calNext').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCal();};
+document.getElementById('bkConfirm').onclick=()=>{
+  const n=document.getElementById('bkName').value.trim(), e=document.getElementById('bkEmail').value.trim(), p=document.getElementById('bkPhone').value.trim();
+  if(!n||!e||!p){ alert('Name, email, and mobile — that\'s all we need.'); return; }
+  document.getElementById('bookWrap').innerHTML=`<div class="card center" style="grid-column:1/-1;padding:3rem 2rem">
+    <div style="font-size:2.6rem">🎉</div>
+    <h2 style="margin:.4rem 0">You're booked, ${n.split(' ')[0]}!</h2>
+    <p class="lead" style="margin:0 auto 1.4rem">${typeLabels[callType]} — ${selDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})} at ${selSlot}.<br>Confirmation text on its way to ${p}. <em>(Demo — your GoHighLevel calendar makes this real.)</em></p>
+    <a class="btn btn-primary btn-lg" href="services.html">Back to Services</a>
+  </div>`;
+  scrollTo({top:0,behavior:'smooth'});
+};
+renderCal();
+</script>
+</body>
+</html>
