@@ -195,3 +195,8 @@ table.grid th:last-child{background:var(--surface-2);z-index:2}
 .sla.ok{background:rgba(46,224,111,.14);color:var(--green)}
 .sla.warn{background:var(--yellow-dim);color:var(--yellow)}
 .sla.late{background:rgba(255,77,77,.16);color:var(--red)}
+
+/* ---------- shared micro-motion (from the start. scroll-film) ---------- */
+.mo{opacity:0;transform:translateY(20px)}
+.mo-in{opacity:1;transform:none;transition:opacity .65s cubic-bezier(.22,.8,.36,1),transform .65s cubic-bezier(.22,.8,.36,1)}
+@media (prefers-reduced-motion: reduce){.mo{opacity:1;transform:none}.mo-in{transition:none}}

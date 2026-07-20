@@ -119,5 +119,6 @@ document.getElementById('feedEl').innerHTML =
   Object.values(GFN.games).filter(g=>g.home==='eagles12u').sort((a,b)=>b.date.localeCompare(a.date))
     .map(g=>GFN.gameCard(g, g.awayName.includes('Storm')?'Zach Riddle':'Eagles 12U')).join('');
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>
