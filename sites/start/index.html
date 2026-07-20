@@ -29,95 +29,88 @@
 
 <div class="timecode" aria-hidden="true"><span class="rec"></span><b id="tc">00:00:00:00</b><span class="chap" id="tcChap">Blackout</span></div>
 
-<!-- ════════ THE FILM ════════ -->
+<!-- ════════ THE FILM — one continuous shot (Higgsfield Seedance, scrubbed on canvas) ════════ -->
+<section class="film-stage-wrap" id="filmStage">
+  <div class="film-sticky">
+    <canvas id="filmCanvas"></canvas>
+    <canvas id="filmDust"></canvas>
+    <div class="film-grain"></div>
+    <div class="film-vignette"></div>
 
-<!-- SCENE 1 — BLACKOUT → LIGHTS ON -->
-<section class="film-scene sc-hero" id="scHero">
-  <div class="beam beam-l" id="beamL"></div>
-  <div class="beam beam-r" id="beamR"></div>
-  <div class="field-glow" id="fieldGlow"></div>
-  <canvas id="dust"></canvas>
-  <div class="hero-vignette"></div>
-  <div class="inner">
-    <span class="live-chip" id="liveChip"><span class="live-dot"></span> LIVE THIS WEEK: 12 games streaming</span>
-    <h1>
-      <span class="split-chars">Never miss another game.</span><br>
-      <span class="split-chars line2">Never miss another moment.</span>
-    </h1>
-    <p class="lead" id="heroLead">GameFilmNow live-streams and records Little League games with real multi-camera setups — so grandma in another state watches live, players study their film like the pros, and your team raises real money doing it.</p>
-    <div class="hero-cta" id="heroCta">
-      <a class="btn btn-primary btn-lg" href="https://app.mygamefilmnow.com">🏈 Watch a Game</a>
-      <a class="btn btn-ghost btn-lg" href="#teams">Get Your Team On Film</a>
+    <!-- BEAT 1 · BLACKOUT → LIGHTS -->
+    <div class="beat beat-center" data-from="0" data-to="0.115">
+      <span class="live-chip"><span class="live-dot"></span> LIVE THIS WEEK: 12 games streaming</span>
+      <h1>Never miss another game.<br><span class="l2">Never miss another moment.</span></h1>
+      <p class="lead">GameFilmNow live-streams and records Little League games with real multi-camera setups — so grandma in another state watches live, players study their film like the pros, and your team raises real money doing it.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="https://app.mygamefilmnow.com">🏈 Watch a Game</a>
+        <a class="btn btn-ghost btn-lg" href="#teams">Get Your Team On Film</a>
+      </div>
+      <div class="cue">Lights on — scroll</div>
     </div>
-  </div>
-  <div class="scroll-cue" id="scrollCue">Lights on — scroll</div>
-</section>
 
-<!-- SCENE 2 — THE DRIVE (horizontal run) -->
-<section class="film-scene sc-drive" id="scDrive">
-  <div class="drive-field"></div>
-  <div class="drive-hash"></div><div class="drive-hash h2"></div>
-  <div class="drive-head">
-    <span class="kicker">One Platform, Three Sidelines</span>
-    <h2>Who are you on game day?</h2>
-    <p>Keep scrolling — we'll drive you down the field.</p>
-  </div>
-  <div class="drive-track" id="driveTrack">
-    <div class="drive-word" data-depth="0.35">Fans</div>
-    <div class="drive-card">
-      <div class="num">01 · THE STANDS</div>
-      <h3>I want to watch a game</h3>
-      <p>Find your player's team, buy the live stream or the recording, and watch instantly — right on the same page. No app to download, no runaround.</p>
-      <a class="btn btn-primary" href="https://app.mygamefilmnow.com">Find Your Team →</a>
+    <!-- BEAT 2 · THE DRIVE -->
+    <div class="beat beat-left" data-from="0.24" data-to="0.40">
+      <span class="kicker">The Drive</span>
+      <h2>Friday night lives here.</h2>
+      <p class="lead">Multi-camera crews at your field. Every yard line, every snap, captured in HD under the lights.</p>
     </div>
-    <div class="drive-word" data-depth="0.5">Coaches</div>
-    <div class="drive-card">
-      <div class="num">02 · THE SIDELINE</div>
-      <h3>I coach or run a team</h3>
-      <p>Turn every game into a fundraiser and give your players the same film-study tools the pros use. Setup takes one season fee — you keep selling all year.</p>
-      <a class="btn btn-navy" href="#teams">See How Teams Join →</a>
+
+    <!-- BEAT 3 · THE PLAY -->
+    <div class="beat beat-right" data-from="0.45" data-to="0.60">
+      <span class="kicker">The Play</span>
+      <h2>Every play, guaranteed on camera.</h2>
+      <p class="lead">We never miss a snap — your team gets its film in 24 hours, recordings go on sale in 72.</p>
     </div>
-    <div class="drive-word" data-depth="0.42">Leagues</div>
-    <div class="drive-card">
-      <div class="num">03 · THE LEAGUE OFFICE</div>
-      <h3>We need our games filmed</h3>
-      <p>League director? Tournament organizer? Parent who wants the season captured right? Tell us about your games and we'll bring the cameras.</p>
-      <a class="btn btn-ghost" href="request-film.html">Request Game Film →</a>
+
+    <!-- BEAT 4 · THE LENS -->
+    <div class="beat beat-left" data-from="0.64" data-to="0.78">
+      <span class="kicker">The Lens</span>
+      <h2>Shot like the pros.</h2>
+      <p class="lead">Real broadcast cameras, not a phone on a fence — the film study your kids deserve.</p>
     </div>
-    <div class="drive-word" data-depth="0.3">Endzone</div>
+
+    <!-- BEAT 5 · EVERY SCREEN -->
+    <div class="beat beat-center" data-from="0.83" data-to="0.985">
+      <span class="kicker">Every Screen</span>
+      <h2>Grandma's watching from Ohio.</h2>
+      <p class="lead">Live streams to any screen, anywhere. Every connection counts.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="https://app.mygamefilmnow.com">🏈 Watch a Game</a>
+        <a class="btn btn-ghost btn-lg" href="request-film.html">Get Your Team On Film</a>
+      </div>
+    </div>
   </div>
 </section>
+<div id="afterFilm"></div>
 
-<!-- SCENE 3 — THE PLAY -->
-<section class="film-scene sc-play" id="scPlay">
-  <div class="play-stage">
-    <div class="play-frame" id="playFrame">
-      <svg viewBox="0 0 640 320" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Lakeland Eagles vs Winter Haven Storm">
-        <defs>
-          <linearGradient id="fmA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e8a3c"/><stop offset="1" stop-color="#0b3d1a"/></linearGradient>
-          <linearGradient id="fmB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#101d4d"/></linearGradient>
-        </defs>
-        <rect width="640" height="320" fill="#0a0a0c"/>
-        <polygon points="0,0 372,0 268,320 0,320" fill="url(#fmA)"/>
-        <polygon points="372,0 640,0 640,320 268,320" fill="url(#fmB)"/>
-        <g stroke="rgba(255,255,255,.09)" stroke-width="2"><line x1="60" y1="0" x2="20" y2="320"/><line x1="140" y1="0" x2="100" y2="320"/><line x1="540" y1="0" x2="580" y2="320"/><line x1="460" y1="0" x2="500" y2="320"/></g>
-        <polygon points="384,0 396,0 292,320 280,320" fill="#0a0a0c"/>
-        <polygon points="376,0 384,0 280,320 272,320" fill="#ffd200"/>
-        <g transform="translate(105,88) scale(1.45)">
-          <path d="M50 3 L92 17 V52 C92 79 73 93 50 98 C27 93 8 79 8 52 V17 Z" fill="url(#fmA)" stroke="#fff" stroke-width="3.5"/>
-          <text x="50" y="60" text-anchor="middle" font-family="Anton,Arial Narrow,Impact,sans-serif" font-size="34" fill="#fff">LE</text>
-        </g>
-        <g transform="translate(390,88) scale(1.45)">
-          <path d="M50 3 L92 17 V52 C92 79 73 93 50 98 C27 93 8 79 8 52 V17 Z" fill="url(#fmB)" stroke="#fff" stroke-width="3.5"/>
-          <text x="50" y="60" text-anchor="middle" font-family="Anton,Arial Narrow,Impact,sans-serif" font-size="34" fill="#fff">WS</text>
-        </g>
-        <text x="320" y="70" text-anchor="middle" font-family="Anton,Arial Narrow,Impact,sans-serif" font-size="46" fill="#ffd200" stroke="#0a0a0c" stroke-width="1.5" letter-spacing="2">VS</text>
-      </svg>
+<!-- THREE SIDELINES (was the pure-code drive scene) -->
+<section class="tight" id="sidelines" style="background:linear-gradient(180deg,#2b1e18 0%,#14100d 18%,var(--bg) 42%)">
+  <div class="container">
+    <div class="section-head center" style="margin:0 auto 2rem">
+      <span class="kicker">One Platform, Three Sidelines</span>
+      <h2>Who are you on game day?</h2>
     </div>
-    <div class="play-score">
-      <span>Eagles</span><b class="counter" data-to="21">0</b><span style="color:#fff">–</span><b class="counter" data-to="14">0</b><span>Storm</span>
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-family:var(--display);color:var(--yellow);letter-spacing:.2em;font-size:.9rem">01 · THE STANDS</div>
+        <h3 style="text-transform:uppercase;margin-top:.3rem">I want to watch a game</h3>
+        <p>Find your player's team, buy the live stream or the recording, and watch instantly — right on the same page. No app to download, no runaround.</p>
+        <a class="btn btn-primary" style="margin-top:1rem" href="https://app.mygamefilmnow.com">Find Your Team →</a>
+      </div>
+      <div class="card">
+        <div style="font-family:var(--display);color:var(--yellow);letter-spacing:.2em;font-size:.9rem">02 · THE SIDELINE</div>
+        <h3 style="text-transform:uppercase;margin-top:.3rem">I coach or run a team</h3>
+        <p>Turn every game into a fundraiser and give your players the same film-study tools the pros use. Setup takes one season fee — you keep selling all year.</p>
+        <a class="btn btn-navy" style="margin-top:1rem" href="#teams">See How Teams Join →</a>
+      </div>
+      <div class="card">
+        <div style="font-family:var(--display);color:var(--yellow);letter-spacing:.2em;font-size:.9rem">03 · THE LEAGUE OFFICE</div>
+        <h3 style="text-transform:uppercase;margin-top:.3rem">We need our games filmed</h3>
+        <p>League director? Tournament organizer? Parent who wants the season captured right? Tell us about your games and we'll bring the cameras.</p>
+        <a class="btn btn-ghost" style="margin-top:1rem" href="request-film.html">Request Game Film →</a>
+      </div>
     </div>
-    <p class="play-caption"><b>Every play, guaranteed on camera.</b> Streams live in HD · team film in 24 hours · recordings on sale in 72.</p>
   </div>
 </section>
 
@@ -327,6 +320,8 @@
 <script src="assets/vendor/gsap.min.js"></script>
 <script src="assets/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/vendor/lenis.min.js"></script>
-<script src="assets/film.js"></script>
+<script>window.FILM_FRAMES=301;window.FILM_SEAM="#2b1e18";</script>
+<script src="assets/film-content.js"></script>
+<script src="assets/film-scrub.js"></script>
 </body>
 </html>
