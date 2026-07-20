@@ -1,0 +1,129 @@
+/* ============================================================
+   GameFilmNow — "LIGHTS ON." scroll-film layer
+   The hero IS the page: blackout → floodlights → the drive →
+   the play → resolves into the funnel. Pure-code (GSAP+Lenis).
+   ============================================================ */
+
+html.has-film{background:#000}
+.film-scene{position:relative;overflow:hidden}
+
+/* ---------- fixed chrome ---------- */
+.timecode{position:fixed;top:78px;right:18px;z-index:60;display:flex;align-items:center;gap:.5rem;background:rgba(10,10,12,.72);border:1px solid var(--line);border-radius:6px;padding:.3rem .65rem;font-family:var(--font);font-size:.72rem;font-weight:700;letter-spacing:.08em;color:var(--muted);backdrop-filter:blur(6px);pointer-events:none}
+.timecode .rec{width:9px;height:9px;border-radius:50%;background:var(--red);animation:recblink 1.2s steps(1) infinite}
+@keyframes recblink{0%,100%{opacity:1}50%{opacity:.25}}
+.timecode b{color:#fff;font-variant-numeric:tabular-nums;font-weight:800}
+.timecode .chap{color:var(--yellow);text-transform:uppercase}
+@media(max-width:640px){.timecode{top:auto;bottom:14px;right:12px}}
+
+/* ---------- scene 1: BLACKOUT → LIGHTS ---------- */
+.sc-hero{min-height:100vh;display:grid;place-items:center;background:#000;text-align:center}
+.sc-hero .inner{position:relative;z-index:5;padding:0 20px;max-width:1000px}
+.sc-hero h1{font-size:clamp(2.6rem,8.5vw,6.2rem);line-height:.98}
+.sc-hero h1 .line2{color:var(--yellow)}
+.sc-hero h1 .ch{display:inline-block;will-change:transform}
+.sc-hero .lead{margin:1.4rem auto 2rem;max-width:36em}
+.hero-cta{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+.scroll-cue{position:absolute;bottom:4vh;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;z-index:6}
+.scroll-cue::after{content:"";display:block;width:1px;height:38px;margin:.5rem auto 0;background:linear-gradient(var(--yellow),transparent);animation:cuedrop 1.6s ease-in-out infinite}
+@keyframes cuedrop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* floodlight beams */
+.beam{position:absolute;top:-22vh;width:56vw;height:150vh;pointer-events:none;opacity:0;will-change:transform,opacity;z-index:2}
+.beam-l{left:-14vw;background:conic-gradient(from 156deg at 18% 0%,transparent 0deg,rgba(255,210,0,.16) 7deg,rgba(255,244,190,.34) 13deg,rgba(255,210,0,.15) 19deg,transparent 27deg)}
+.beam-r{right:-14vw;background:conic-gradient(from 172deg at 82% 0%,transparent 0deg,rgba(255,210,0,.15) 7deg,rgba(255,244,190,.32) 13deg,rgba(255,210,0,.14) 19deg,transparent 27deg)}
+.light-tower{position:absolute;top:5vh;width:70px;opacity:0;z-index:3}
+.light-tower.lt-l{left:4vw}.light-tower.lt-r{right:4vw;transform:scaleX(-1)}
+.field-glow{position:absolute;left:0;right:0;bottom:0;height:44vh;background:radial-gradient(ellipse 130% 100% at 50% 118%,rgba(30,138,60,.5),rgba(30,138,60,.14) 55%,transparent 75%);opacity:0;z-index:1}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 90% 75% at 50% 45%,transparent 55%,rgba(0,0,0,.9));z-index:4;pointer-events:none}
+#dust{position:absolute;inset:0;z-index:4;pointer-events:none}
+
+/* ---------- scene 2: THE DRIVE (horizontal run) ---------- */
+.sc-drive{background:linear-gradient(180deg,#000 0%,#07130a 30%,#0a1f10 100%)}
+.drive-field{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 11.8vw,rgba(255,255,255,.09) 11.8vw 12vw);opacity:.9}
+.drive-hash{position:absolute;left:0;right:0;top:26%;height:1px;background:rgba(255,255,255,.07)}
+.drive-hash.h2{top:74%}
+.drive-head{position:absolute;top:9vh;left:0;right:0;text-align:center;z-index:3}
+.drive-head h2{font-size:clamp(1.6rem,4.5vw,3rem)}
+.drive-head p{color:var(--muted);font-size:.95rem}
+.drive-track{display:flex;align-items:center;gap:5vw;width:max-content;padding:0 12vw;position:relative;z-index:2;height:100vh}
+.drive-card{flex:none;width:min(430px,78vw);background:rgba(10,10,12,.86);border:1px solid var(--line);border-radius:18px;padding:2rem;backdrop-filter:blur(4px);box-shadow:var(--shadow-lg)}
+.drive-card .num{font-family:var(--display);font-size:.9rem;color:var(--yellow);letter-spacing:.2em}
+.drive-card h3{font-family:var(--display);font-weight:400;font-size:clamp(1.7rem,3.5vw,2.5rem);text-transform:uppercase;margin:.3rem 0 .6rem}
+.drive-card p{color:var(--muted);font-size:.98rem;margin-bottom:1.2rem}
+.drive-word{flex:none;font-family:var(--display);font-size:clamp(5rem,16vw,12rem);line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,210,0,.28);text-transform:uppercase;user-select:none;will-change:transform}
+
+/* ---------- scene 3: THE PLAY ---------- */
+.sc-play{background:#000;min-height:100vh;display:grid;place-items:center}
+.play-stage{position:relative;width:min(1060px,94vw);z-index:2}
+.play-frame{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 120px rgba(0,0,0,.8);will-change:clip-path,transform}
+.play-frame svg{width:100%;display:block}
+.play-score{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);display:flex;gap:1rem;align-items:center;background:#0a0a0c;border:1px solid var(--yellow);border-radius:12px;padding:.7rem 1.4rem;box-shadow:var(--shadow-lg);z-index:3;white-space:nowrap}
+.play-score b{font-family:var(--display);font-size:2rem;color:var(--yellow);font-variant-numeric:tabular-nums;min-width:1.4em;text-align:center}
+.play-score span{font-size:.7rem;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.play-caption{text-align:center;margin-top:4.5rem;color:var(--muted);font-size:1rem}
+.play-caption b{color:#fff}
+
+/* ---------- marquee ---------- */
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--yellow);padding:.65rem 0;position:relative;z-index:2}
+.marquee-track{display:flex;width:max-content;will-change:transform}
+.marquee-track span{font-family:var(--display);font-size:1.25rem;color:#0a0a0c;text-transform:uppercase;letter-spacing:.06em;padding:0 1.4rem;white-space:nowrap}
+
+/* ---------- reveals (after-film content) ---------- */
+html.js .rv{opacity:0}
+.counter{font-variant-numeric:tabular-nums}
+
+/* ---------- reduced motion / no-js: everything visible, film static ---------- */
+@media (prefers-reduced-motion: reduce){
+  html.js .rv{opacity:1 !important;transform:none !important}
+  .scroll-cue::after,.timecode .rec{animation:none}
+}
+
+/* ---------- static fallback (no JS / reduced motion) ---------- */
+html:not(.js) .drive-track,
+html.static-film .drive-track{flex-wrap:wrap;width:auto;height:auto;justify-content:center;padding:16vh 20px 10vh;gap:1.4rem}
+html:not(.js) .drive-word,
+html.static-film .drive-word{display:none}
+html:not(.js) .sc-drive,
+html:not(.js) .sc-play{min-height:0}
+@media (prefers-reduced-motion: reduce){
+  .drive-track{flex-wrap:wrap;width:auto;height:auto;justify-content:center;padding:16vh 20px 10vh;gap:1.4rem}
+  .drive-word{display:none}
+  .beam,.field-glow{opacity:.5 !important}
+  .timecode{display:none}
+}
+
+/* ============================================================
+   Lane B — footage scrub stage
+   ============================================================ */
+.film-stage-wrap{position:relative;height:520vh;background:#000}
+.film-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+#filmCanvas{position:absolute;inset:0;width:100%;height:100%}
+#filmDust{position:absolute;inset:0;pointer-events:none;z-index:3}
+.film-grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+.film-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 92% 80% at 50% 45%,transparent 58%,rgba(0,0,0,.72))}
+
+/* beats — copy over the film */
+.beat{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(20px,7vw,110px);opacity:0;visibility:hidden;pointer-events:none;text-shadow:0 2px 24px rgba(0,0,0,.85)}
+.beat .btn{pointer-events:auto;text-shadow:none}
+.beat-center{align-items:center;text-align:center}
+.beat-left{align-items:flex-start;text-align:left;max-width:none}
+.beat-right{align-items:flex-end;text-align:right}
+.beat h1{font-size:clamp(2.4rem,7.5vw,5.6rem);line-height:.98;max-width:12em}
+.beat h1 .l2{color:var(--yellow)}
+.beat h2{font-size:clamp(1.9rem,5vw,3.6rem);max-width:11em}
+.beat .lead{margin:1.2rem 0 1.8rem;max-width:34em;color:#dfe3ea}
+.beat-right .lead{margin-left:auto}
+.beat-center .lead{margin-left:auto;margin-right:auto}
+.beat .kicker{backdrop-filter:blur(2px)}
+.beat .hero-cta{justify-content:inherit}
+.beat .cue{position:absolute;bottom:4vh;left:50%;transform:translateX(-50%);color:#cfd3da;font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+.beat .cue::after{content:"";display:block;width:1px;height:38px;margin:.5rem auto 0;background:linear-gradient(var(--yellow),transparent);animation:cuedrop 1.6s ease-in-out infinite}
+
+/* adaptive header over bright frames */
+.site-header.on-light{background:rgba(10,10,12,.55)}
+
+/* static fallback for footage film */
+html.static-film .film-stage-wrap{height:auto;background:#000 url('frames/f_0001.jpg') center/cover no-repeat}
+html.static-film .film-sticky{position:relative;height:auto;min-height:60vh;display:block;padding:14vh 0}
+html.static-film .beat{position:relative;opacity:1 !important;visibility:visible !important;padding-top:6vh;padding-bottom:6vh;pointer-events:auto}
+html.static-film .film-grain,html.static-film .film-vignette,html.static-film #filmDust{display:none}

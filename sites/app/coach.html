@@ -44,6 +44,7 @@
           </tbody>
         </table>
       </div>
+      <p class="scroll-hint">← scroll for more columns · ticket sales on the right →</p>
     </section>
 
     <!-- TEAM PAGE EDITOR -->
@@ -89,13 +90,13 @@
             <div class="panel-head"><h3>📣 Send to your list</h3></div>
             <div class="panel-body">
               <div class="field"><label>Audience</label>
-                <select><option>Team boosters + fundraising contacts (212 remaining of 300)</option><option>All player families (18 passes)</option><option>Everyone following Eagles 12U (94 fans)</option></select>
+                <select id="audSel" onchange="updSend()"><option value="94">Team boosters + fundraising contacts (94 contacts)</option><option value="18">All player families (18 passes)</option><option value="94f">Everyone following Eagles 12U (94 fans — free, no quota)</option></select>
               </div>
               <div class="field"><label>Message</label>
                 <textarea rows="3">🦅 GAME DAY Friday 7PM vs Winter Haven Storm! Can't make it to Bryant Stadium? Watch LIVE: {{game_link}} — every ticket supports the team!</textarea>
                 <div class="hint">GHL: this sends through your GoHighLevel sub-account. {{game_link}} personalizes per contact. Quota: 300/season per team; each Player Pass includes the player's own Top-20 list.</div>
               </div>
-              <button class="btn btn-primary" onclick="alert('Demo: in Phase 3 this fires the GHL campaign. Costs 1 quota credit per contact.')">Send · uses 212 → 118 credits</button>
+              <button class="btn btn-primary" id="sendBtn" onclick="alert('Demo: in Phase 3 this fires the GHL campaign. Costs 1 quota credit per contact (in-app fan notifications are free).')">Send · uses 212 → 118 credits</button>
             </div>
           </div>
           <div class="panel" style="margin-top:1.2rem">
@@ -128,6 +129,13 @@ document.getElementById('hdr').innerHTML = GFN.header('coach');
 function tab(el,id){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active');
   ['sched','page','comms'].forEach(s=>document.getElementById('tab-'+s).style.display = s===id?'':'none'); }
 
+// credit math follows the selected audience (in-app fan pushes are free)
+function updSend(){
+  const v=document.getElementById('audSel').value, btn=document.getElementById('sendBtn');
+  btn.textContent = v==='94f' ? 'Send · free (in-app + push)' : `Send · uses 212 → ${212-(+v)} credits`;
+}
+updSend();
+
 // search-as-you-type on opponent cells (same combobox as admin, division filters + create)
 document.querySelectorAll('.cell-opp').forEach(inp=>GFN.combo(inp, ()=>GFN.squadOptions(), {allowCreate:true}));
 
@@ -136,5 +144,6 @@ const monos=[['PP','#c2410c','#7c2d12'],['LA','#334155','#0f172a']];
 document.querySelectorAll('#tab-page .sponsor-logo').forEach((el,i)=>{const m=monos[i]||['SP','#444','#222'];el.innerHTML=GFX.mono(m[0],m[1],m[2]);});
 document.querySelectorAll('#tab-page .merch-img').forEach(el=>{el.innerHTML=GFX.mono('HD','#1e8a3c','#0b3d1a');el.style.overflow='hidden';el.style.borderRadius='10px';});
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>

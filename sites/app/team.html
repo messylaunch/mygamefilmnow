@@ -62,8 +62,9 @@ document.getElementById('page').innerHTML = `
       <div class="panel" style="margin-top:1.4rem">
         <div class="panel-head"><h3>🎓 Player Pass — Film Study Portal</h3></div>
         <div class="panel-body" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-          <p style="flex:1;min-width:220px;color:var(--muted);font-size:.93rem">Unlock the ${t.name} film room for your player: every game play-by-play in 24 hours, coach questions, self-tagging, and a public player profile. Requires parent consent — we'll walk you through it.</p>
-          <button class="btn btn-navy btn-lg" onclick="GFN.openCheckout('Player Pass — ${t.name} ${t.squad}','Film room access for 1 player + parent',75,'playerpass_${id}',()=>alert('Demo: in the real flow this now sends the parent consent form by text + email, then creates the player and parent accounts on team.mygamefilmnow.com.'))">Player Pass · $75</button>
+          <p style="flex:1;min-width:220px;color:var(--muted);font-size:.93rem">Unlock the ${t.name} film room for your player: every game play-by-play in 24 hours, coach questions, self-tagging, and a public player profile.<br>
+          <span style="color:var(--yellow);font-size:.85rem">🛡️ Parent consent required: right after checkout we text + email the consent form. The pass activates only when it's signed — and if you decide not to sign, the $75 is refunded in full, automatically.</span></p>
+          <button class="btn btn-navy btn-lg" onclick="GFN.openCheckout('Player Pass — ${t.name} ${t.squad}','Film room access for 1 player + parent · consent required',75,'playerpass_${id}',()=>alert('Demo: in the real flow this now sends the parent consent form by text + email, then creates the player and parent accounts on team.mygamefilmnow.com. Unsigned after 7 days = automatic full refund.'))">Player Pass · $75</button>
         </div>
       </div>
     </div>
@@ -90,5 +91,6 @@ document.getElementById('page').innerHTML = `
     </aside>
   </div>`;
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>

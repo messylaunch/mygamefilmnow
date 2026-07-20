@@ -139,6 +139,6 @@ docs/VIDEO-WALKTHROUGH-SCRIPTS.md← screens + word-for-word scripts for your re
 2. **One account across app. and team.** — buy a Player Pass in the store, the film room just works.
 3. **Squad = team + division + season** — the single fix for the team/division/league/tournament tangle.
 4. **Rounds/days, never live brackets** — bracket photo upload instead, exactly as you described.
-5. **Dark theme for the film room, light theme for the store** — film study happens on video; grandparents buy tickets. Different jobs, different UIs.
+5. **One brand across all three sites: black + polished yellow + white, thick athletic display type** (changed by owner decision 2026-07-13 — originally the store was going to be light). Legibility for older buyers is handled with large type, high-contrast yellow CTAs, and white body text instead of a light theme.
 6. **Bunny Stream recommended for video** — order-of-magnitude cheaper than Vimeo/Mux at your volume; supports live + VOD + signed links.
 7. **GHL is stubbed, not wired** — every place it connects is marked `GHL:` in the templates and mapped in the docs, per your instruction.

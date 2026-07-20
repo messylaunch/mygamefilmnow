@@ -25,7 +25,7 @@
               <b style="color:var(--ink)">Go public:</b> your montage shows on your player profile for family, friends, and scouts.
             </p>
             <button class="btn btn-primary btn-lg" onclick="FR.paywallCheckout('Highlight Mode — Zach Riddle','ZIP download + highlight builder + public montage',40,'highlight_unlock',render)">Unlock for $40</button>
-            <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">Billed to your parent's card on file · covers the whole season</p>
+            <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">Your parent gets the request and approves from their own account · covers the whole season</p>
           </div>
         </div>
 
@@ -102,5 +102,6 @@ function pick(i){
 function pickMusic(btn){ document.querySelectorAll('.music-pick .act-btn').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
 render();
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>

@@ -70,13 +70,28 @@ const FR = {
     { n:17, label:"1st & 10 — Play action", likes:5, comments:0, coachQ:false, taggedMe:false }
   ],
 
+  /* per-game play sets so film-room.html?g=<id> opens the RIGHT film */
+  playsFor(gid){
+    if(!gid || gid==='g2') return this.plays;
+    const g=this.games.find(x=>x.id===gid);
+    if(!g || g.status!=='ready') return this.plays;
+    const labels=['Inside run','Toss sweep','Play action','Screen right','Kick return +18','QB keeper','Counter left','Jet sweep TD 🏈','Goal line stand','44 Lead'];
+    const seed=gid.charCodeAt(1)+gid.length;
+    return Array.from({length:6},(_,i)=>({
+      n:i+seed+6,
+      label:`${i%2?'2nd':'1st'} & ${(i*3+seed)%9+1} — ${labels[(i+seed)%labels.length]}`,
+      likes:(i*seed*7)%23+1, comments:(i+seed)%6, coachQ:i===2, taggedMe:(i+seed)%3===0
+    }));
+  },
+
   state(k,d){ try{ return JSON.parse(localStorage.getItem('fr_'+k)) ?? d; }catch(e){ return d; } },
   save(k,v){ localStorage.setItem('fr_'+k, JSON.stringify(v)); },
 
-  header(active){
-    return `<div class="demo-banner">🚧 DEMO TEMPLATE — sample film room, demo data. This becomes team.mygamefilmnow.com.</div>
+  header(active, who){
+    who = who || { initials:this.me.initials, name:this.me.name, bell:4 };
+    return `<div class="demo-banner">🚧 DEMO TEMPLATE — sample film room; player, coach &amp; scout views all shown in one nav (real app scopes by login). This becomes team.mygamefilmnow.com.</div>
     <header class="site-header"><div class="container nav">
-      <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small style="color:var(--gold)">Now</small>&nbsp;<span style="font-weight:600;color:var(--muted);font-size:.8rem">FILM ROOM</span></a>
+      <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small style="color:var(--gold)">Now</small>&nbsp;<span class="logo-suffix" style="font-weight:600;color:var(--muted);font-size:.8rem">FILM ROOM</span></a>
       <button class="nav-toggle" aria-label="Menu" style="color:var(--ink)" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
       <nav class="nav-links">
         <a href="index.html" class="${active==='home'?'active':''}">My Team</a>
@@ -87,12 +102,14 @@ const FR = {
         <a href="scout.html" class="${active==='scout'?'active':''}">Scout View</a>
       </nav>
       <div class="nav-account">
-        <a class="nav-bell" href="index.html#notifications" title="Notifications">🔔<span class="dot">4</span></a>
-        <a class="nav-avatar" href="profile.html" title="${this.me.name}">${this.me.initials}</a>
+        <a class="nav-bell" href="index.html#notifications" title="Notifications">🔔<span class="dot">${who.bell}</span></a>
+        <a class="nav-avatar" href="profile.html" title="${who.name}">${who.initials}</a>
       </div>
     </div></header>`;
   },
 
+  /* Kid-safe paywall: kids never enter a card. The purchase request goes to
+     the PARENT, who approves on their own account/phone — then it unlocks. */
   paywallCheckout(title, sub, price, key, onDone){
     let back=document.getElementById('frModal');
     if(!back){ back=document.createElement('div'); back.id='frModal'; back.className='modal-back'; document.body.appendChild(back); }
@@ -101,19 +118,20 @@ const FR = {
       <div class="modal-body">
         <div class="summary-line"><span>${title}</span><span>$${price.toFixed(2)}</span></div>
         <div class="summary-line total"><span>Total</span><span>$${price.toFixed(2)}</span></div>
-        <div class="field" style="margin-top:1rem"><label>Card number</label><input placeholder="4242 4242 4242 4242"></div>
-        <div class="field-row"><div class="field"><label>Expiry</label><input placeholder="MM / YY"></div><div class="field"><label>CVC</label><input placeholder="123"></div></div>
-        <button class="btn btn-primary btn-block btn-lg" id="frPay">Pay $${price.toFixed(2)}</button>
-        <p class="stripe-note">🔒 Demo checkout — Stripe in the real build. Purchases bill the PARENT account on file.</p>
+        <p style="font-size:.9rem;color:var(--muted);margin:1rem 0">You're signed in as a player, so this goes to your parent first — <b style="color:var(--ink)">Maria Riddle (mom)</b> gets a text + email to approve it. The moment she says yes, it unlocks right here.</p>
+        <button class="btn btn-primary btn-block btn-lg" id="frAsk">Send request to Mom 📲</button>
+        <p class="stripe-note">🛡️ Kids never enter card details on GameFilmNow. Parents approve and pay from their own account.</p>
       </div></div>`;
     back.classList.add('open');
-    back.querySelector('#frPay').onclick=()=>{
-      FR.save(key,true);
+    back.querySelector('#frAsk').onclick=()=>{
       back.querySelector('.modal-body').innerHTML=`<div style="text-align:center;padding:1rem 0">
-        <div class="success-check">✓</div><h3>Unlocked!</h3>
-        <p style="color:var(--muted);font-size:.92rem;margin:.5rem 0 1.2rem">Receipt sent to your parent's email.</p>
-        <button class="btn btn-primary btn-block" id="frDone">Let's go ▶</button></div>`;
-      back.querySelector('#frDone').onclick=()=>{ back.classList.remove('open'); if(onDone) onDone(); };
+        <div class="success-check">📲</div><h3>Request sent!</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:.5rem 0 1.2rem">Mom just got the approval link. You'll get a notification the second she approves.</p>
+        <button class="btn btn-primary btn-block" id="frApprove">Demo: simulate parent approving ✓</button></div>`;
+      back.querySelector('#frApprove').onclick=()=>{
+        FR.save(key,true);
+        back.classList.remove('open'); if(onDone) onDone();
+      };
     };
   }
 };

@@ -17,12 +17,15 @@
     <div class="stat-cards">
       <div class="stat-card"><small>Revenue this week</small><b>$1,842</b><span class="delta">▲ 23% vs last week</span></div>
       <div class="stat-card"><small>Games this week</small><b>12</b><span class="delta">3 live streams scheduled</span></div>
-      <div class="stat-card"><small>Recordings due (72h SLA)</small><b>2</b><span class="delta" style="color:#b45309">1 due in 14h</span></div>
+      <div class="stat-card"><small>Recordings due (72h SLA)</small><b>2</b><span class="delta" style="color:var(--yellow)">1 due in 14h</span></div>
       <div class="stat-card"><small>Player Passes active</small><b>47</b><span class="delta">▲ 5 this week</span></div>
     </div>
 
     <div class="tabs">
       <button class="tab active" onclick="tab(this,'sched')">📅 Schedule Grid</button>
+      <button class="tab" onclick="tab(this,'queue')">🎬 Edit Queue</button>
+      <button class="tab" onclick="tab(this,'crew')">🎥 Crew</button>
+      <button class="tab" onclick="tab(this,'tourn')">🏆 Tournaments</button>
       <button class="tab" onclick="tab(this,'teams')">🏈 Teams &amp; Squads</button>
       <button class="tab" onclick="tab(this,'orders')">🧾 Orders &amp; Refunds</button>
       <button class="tab" onclick="tab(this,'staff')">👥 Staff &amp; Roles</button>
@@ -48,7 +51,89 @@
           <tbody id="gridBody"></tbody>
         </table>
       </div>
+      <p class="scroll-hint">← scroll for more columns · ✎ editor stays pinned →</p>
       <p style="font-size:.82rem;color:var(--muted);margin-top:.7rem">💡 Edit any cell inline — it saves as you type (in the real app). Streams come <b>on sale automatically</b> at window start and <b>off sale at window end</b>; the game page then forwards buyers to the recording. Click ✎ for the full game editor (links, photos, highlights, bracket photo, player-pass settings).</p>
+    </section>
+
+    <!-- ============ EDIT QUEUE (Editor role — own login in the real app) ============ -->
+    <section id="tab-queue" style="display:none">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">The editor's workbench. In the real app this is the <b>Editor role's own login</b> — shown here as a tab for the demo. Two clocks per game: <b>24h</b> to get play-by-play film to the team, <b>72h</b> to put the recording on sale.</p>
+      <div class="grid-wrap">
+        <table class="grid">
+          <thead><tr><th>Game</th><th>Uploaded</th><th>Team film (24h)</th><th>Recording (72h)</th><th>Editor</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Eagles 12U vs Mulberry Panthers</b> · Jul 5</td><td>Jul 5, 11:40 AM ✓</td>
+              <td><span class="sla late">-2H LATE</span></td><td><span class="sla warn">14H LEFT</span></td><td>Sarah E.</td>
+              <td><div class="row-actions"><button class="icon-btn" title="Upload play-by-play clips" onclick="alert('Demo: upload the cut play-by-play set → team film room goes live, players get notified.')">🎞</button><button class="icon-btn" title="Attach recording" onclick="alert('Demo: attach the full recording → it goes ON SALE automatically and pre-orders unlock.')">🎬</button></div></td>
+            </tr>
+            <tr>
+              <td><b>Storm 12U vs Bartow Bulldogs</b> · Jul 11</td><td><span style="color:var(--muted)">awaiting upload</span></td>
+              <td><span class="sla ok">CLOCK NOT STARTED</span></td><td><span class="sla ok">CLOCK NOT STARTED</span></td><td>— assign —</td>
+              <td><div class="row-actions"><button class="icon-btn" title="Assign editor">👤</button></div></td>
+            </tr>
+            <tr>
+              <td><b>Eagles 12U vs Auburndale Rams</b> · Jul 4</td><td>Jul 4, 9:15 PM ✓</td>
+              <td><span class="sla ok">DELIVERED 18H ✓</span></td><td><span class="sla ok">ON SALE 51H ✓</span></td><td>Sarah E.</td>
+              <td><span class="status-tag st-rec">DONE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="scroll-hint">← scroll for more columns →</p>
+    </section>
+
+    <!-- ============ CREW (Recorder/Uploader roles — own login in the real app) ============ -->
+    <section id="tab-crew" style="display:none">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">The recorder/uploader view — <b>their own login in the real app</b>. Assigned games, venue, camera count; "Recorded ✓" then "Uploaded ✓" — the upload is what starts the editor's SLA clocks.</p>
+      <div class="grid-wrap">
+        <table class="grid">
+          <thead><tr><th>Assigned game</th><th>Venue</th><th>Cameras</th><th>Crew</th><th>Recorded</th><th>Uploaded</th></tr></thead>
+          <tbody>
+            <tr><td><b>Eagles 12U vs Storm 12U</b> · Fri Jul 10, 7:00 PM</td><td>Bryant Stadium Field 2</td><td>3-cam</td><td>Devon R. (cert ✓)</td>
+              <td><button class="btn btn-ghost" style="padding:.35rem .8rem;font-size:.78rem" onclick="this.outerHTML='<span class=&quot;status-tag st-rec&quot;>RECORDED ✓</span>'">Mark recorded</button></td>
+              <td><button class="btn btn-primary" style="padding:.35rem .8rem;font-size:.78rem" onclick="alert('Demo: raw footage upload → editor SLA clocks start (24h team film / 72h recording).')">⬆ Upload footage</button></td></tr>
+            <tr><td><b>Storm 12U vs Bulldogs</b> · Sat Jul 11, 11:00 AM</td><td>Denison Stadium</td><td>2-cam</td><td>Devon R. (cert ✓)</td>
+              <td><span class="status-tag st-proc">UPCOMING</span></td><td><span class="status-tag st-proc">—</span></td></tr>
+            <tr><td><b>Rams 10U vs Hornets</b> · Sun Jul 12, 2:00 PM</td><td>Auburndale City Park</td><td>2-cam</td><td style="color:var(--red)">unassigned</td>
+              <td colspan="2"><button class="btn btn-ghost" style="padding:.35rem .8rem;font-size:.78rem" onclick="alert('Demo: assign a certified recorder — Camera School cert and camera count show on their profile.')">Assign crew</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="scroll-hint">← scroll for more columns →</p>
+    </section>
+
+    <!-- ============ TOURNAMENTS ============ -->
+    <section id="tab-tourn" style="display:none">
+      <div class="toolbar">
+        <div class="spacer"></div>
+        <button class="btn btn-primary" onclick="alert('Demo: new tournament = name, dates, venue, rounds/days. No bracket software — games get added to rounds as matchups are set.')">＋ New Tournament</button>
+      </div>
+      <div class="layout" style="margin-top:0">
+        <div class="panel">
+          <div class="panel-head"><h3>🏆 Winter Haven Classic 2026</h3><a href="tournament.html">Fan view →</a></div>
+          <div class="panel-body">
+            <div class="field-row">
+              <div class="field"><label>Rounds / days</label><input value="Round 1 · Sat — Round 2 · Sun — Championship · Mon"><div class="hint">Rounds are labels, not brackets. Add games to a round from the Schedule Grid (pick the event "WH Classic — Round …").</div></div>
+              <div class="field"><label>Bracket photo</label><button class="btn btn-ghost btn-block" onclick="alert('Demo: snap the handwritten bracket, upload — it shows on the fan tournament page.')">📷 Upload bracket photo</button></div>
+            </div>
+            <label style="display:block;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;margin:.4rem 0 .5rem">Tournament pass price — per squad</label>
+            <div class="grid-wrap"><table class="grid" style="min-width:0">
+              <thead><tr><th>Squad</th><th>Pass price</th><th>Sold</th></tr></thead>
+              <tbody>
+                <tr><td><b>Lakeland Eagles 12U</b></td><td><input type="number" value="19.99" step="0.01" style="max-width:90px"></td><td>34</td></tr>
+                <tr><td><b>Winter Haven Storm 12U</b></td><td><input type="number" value="19.99" step="0.01" style="max-width:90px"></td><td>21</td></tr>
+                <tr><td colspan="3"><button class="btn btn-ghost" style="padding:.4rem .9rem;font-size:.8rem" onclick="alert('Demo: add any GFN squad to this tournament and set its pass price — the search-as-you-type picker from the Schedule Grid.')">＋ Add squad to tournament</button></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+        <aside>
+          <div class="panel"><div class="panel-body" style="font-size:.85rem;color:var(--muted)">
+            <b style="color:var(--ink)">How tournaments work:</b> games live in the same Schedule Grid as season games — just pick the tournament event on the row. Fans see them grouped by round on the tournament page AND on each team's own page, together with season games. Passes are per-squad so families follow <em>their</em> team through the weekend.
+          </div></div>
+        </aside>
+      </div>
     </section>
 
     <!-- ============ TEAMS ============ -->
@@ -159,7 +244,7 @@
 <script>
 document.getElementById('hdr').innerHTML = GFN.header('admin');
 function tab(el,id){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active');
-  ['sched','teams','orders','staff'].forEach(s=>document.getElementById('tab-'+s).style.display = s===id?'':'none'); }
+  ['sched','queue','crew','tourn','teams','orders','staff'].forEach(s=>document.getElementById('tab-'+s).style.display = s===id?'':'none'); }
 
 const rows=[
   {team:'Eagles 12U',event:'Fall Season 2026',date:'2026-07-10',time:'19:00',opp:'Winter Haven Storm 12U',stream:true,win:'18:50–21:30',sp:9.99,rec:true,rp:7.99,score:'',crew:'Devon R.'},
@@ -210,5 +295,6 @@ function addRow(){
   wireCombos(document.getElementById('gridBody'));
 }
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>

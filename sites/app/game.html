@@ -26,14 +26,20 @@ const d = new Date(g.date+"T12:00:00");
 const dateStr = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
 
 /* -------- video stage: what shows depends on game status + what you own -------- */
+function countdown(){
+  const ms = new Date(g.streamStart) - Date.now();
+  if (ms <= 0) return `<div class="countdown"><div class="count-cell"><b>●</b><small>starting</small></div></div>`;
+  const d=Math.floor(ms/864e5), h=Math.floor(ms%864e5/36e5), m=Math.floor(ms%36e5/6e4);
+  return `<div class="countdown"><div class="count-cell"><b>${d}</b><small>days</small></div><div class="count-cell"><b>${h}</b><small>hrs</small></div><div class="count-cell"><b>${m}</b><small>min</small></div></div>`;
+}
 function stage(){
   if (g.status==='upcoming') {
     if (ownsStream) return `<div class="vs-inner"><div class="lock">🎟️</div><h2>You're set for the live stream!</h2>
       <p>Come back ${dateStr} at ${g.time}. The stream starts automatically right here — and we'll text your reminder with this link.</p>
-      <div class="countdown"><div class="count-cell"><b>4</b><small>days</small></div><div class="count-cell"><b>17</b><small>hrs</small></div><div class="count-cell"><b>22</b><small>min</small></div></div></div>`;
+      ${countdown()}</div>`;
     return `<div class="vs-inner"><div class="lock">🔒</div><h2>${t.name} ${t.squad} vs ${g.awayName}</h2>
       <p>Live ${dateStr} · ${g.time} · ${g.venue}. Buy the stream and watch right here — no redirects, no hunting for links.</p>
-      <div class="countdown"><div class="count-cell"><b>4</b><small>days</small></div><div class="count-cell"><b>17</b><small>hrs</small></div><div class="count-cell"><b>22</b><small>min</small></div></div></div>`;
+      ${countdown()}</div>`;
   }
   if (g.status==='processing') return `<div class="vs-inner"><div class="lock">🎬</div><h2>Final ${g.score} — recording in the edit room</h2>
     <p>Our editors are cutting this game now. Recordings go on sale within 72 hours of the final whistle${ownsRec?" — yours will unlock right here the moment it's ready.":" — follow "+t.name+" and we'll notify you the moment it drops."}</p></div>`;
@@ -108,5 +114,6 @@ document.getElementById('page').innerHTML = `
     </aside>
   </div>`;
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>

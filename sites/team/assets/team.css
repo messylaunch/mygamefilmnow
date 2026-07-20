@@ -148,3 +148,15 @@ main{min-height:70vh;padding:1.6rem 0 4rem}
 .mention-item small{color:var(--muted);margin-left:auto;font-weight:800}
 .comment .mention{color:var(--yellow);font-weight:800;text-decoration:none}
 .comment .mention:hover{text-decoration:underline}
+
+/* tight header on small phones — logo suffix goes, avatar stays on-screen */
+@media(max-width:480px){
+  .logo .logo-suffix{display:none}
+  .nav{gap:.8rem}
+  .nav-account{gap:.6rem}
+}
+
+/* ---------- shared micro-motion (from the start. scroll-film) ---------- */
+.mo{opacity:0;transform:translateY(20px)}
+.mo-in{opacity:1;transform:none;transition:opacity .65s cubic-bezier(.22,.8,.36,1),transform .65s cubic-bezier(.22,.8,.36,1)}
+@media (prefers-reduced-motion: reduce){.mo{opacity:1;transform:none}.mo-in{transition:none}}

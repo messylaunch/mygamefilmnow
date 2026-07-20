@@ -6,15 +6,22 @@
 <title>My Account — GameFilmNow</title>
 <link rel="stylesheet" href="assets/base.css">
 <link rel="stylesheet" href="assets/app.css">
+<style>
+.account-layout{grid-template-columns:220px 1fr}
+@media(max-width:900px){
+  .account-layout{grid-template-columns:1fr}
+  .account-layout .side-nav{flex-direction:row;flex-wrap:wrap;gap:.4rem}
+}
+</style>
 </head>
 <body>
 <div id="hdr"></div>
 <main>
   <div class="container">
     <h1 class="page-title" style="font-size:1.6rem">Hey John 👋</h1>
-    <p class="page-sub">Fan account · following 2 people &amp; 1 team · <span style="color:var(--green-dark);font-weight:700">GHL: tagged #1000 (Zach Riddle) · #500 (Eagles 12U)</span></p>
+    <p class="page-sub">Fan account · following 2 people &amp; 1 team</p>
 
-    <div class="layout" style="grid-template-columns:220px 1fr;margin-top:0">
+    <div class="layout account-layout" style="margin-top:0">
       <aside class="side-nav">
         <a class="active" href="#mygames" onclick="show('mygames',this);return false">🎬 My Games</a>
         <a href="#feed" onclick="show('feed',this);return false">⭐ My Feed</a>
@@ -67,13 +74,14 @@
           <div class="panel">
             <div class="panel-head"><h3>🔔 Notifications</h3><a href="#" onclick="return false">Mark all read</a></div>
             <div class="panel-body flush">
-              <div class="notif unread"><div class="notif-icon">🎟️</div><div><b>Game reminder:</b> Eagles 12U vs Winter Haven Storm streams Friday 7:00 PM.<small>Because you follow Zach Riddle · 2h ago · GHL: auto-text also sent</small></div></div>
+              <div class="notif unread"><div class="notif-icon">🎟️</div><div><b>Game reminder:</b> Eagles 12U vs Winter Haven Storm streams Friday 7:00 PM.<small>Because you follow Zach Riddle · 2h ago · also sent to your phone</small></div></div>
               <div class="notif unread"><div class="notif-icon">🎬</div><div><b>Recording ready:</b> Eagles vs Auburndale Rams (W 21–14) is now on sale.<small>Because you follow Lakeland Eagles 12U · 1d ago</small></div></div>
               <div class="notif unread"><div class="notif-icon">👨‍👩‍👧</div><div><b>Maria Riddle</b> added you to her family list.<small>2d ago</small></div></div>
               <div class="notif"><div class="notif-icon">🧾</div><div><b>Purchase receipt:</b> Live Stream — Eagles vs Mulberry. Link texted to (863) ···-··42.<small>5d ago</small></div></div>
             </div>
           </div>
         </section>
+        <p class="ghl-note" style="margin-top:1.2rem"><b>GHL (builder note, not shown to fans in the real app):</b> this account carries tags <code>player-1000</code> (Zach Riddle) + <code>team-500</code> (Eagles 12U); reminders/receipts fire off those tags. Map: <code>docs/GHL-INTEGRATION.md</code>.</p>
       </div>
     </div>
   </div>
@@ -111,5 +119,6 @@ document.getElementById('feedEl').innerHTML =
   Object.values(GFN.games).filter(g=>g.home==='eagles12u').sort((a,b)=>b.date.localeCompare(a.date))
     .map(g=>GFN.gameCard(g, g.awayName.includes('Storm')?'Zach Riddle':'Eagles 12U')).join('');
 </script>
+<script src="assets/motion.js"></script>
 </body>
 </html>
