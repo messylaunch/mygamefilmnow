@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Team Playbook — GameFilmNow Film Room</title>
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/team.css">
+<link rel="stylesheet" href="assets/shell.css">
+<meta name="theme-color" content="#060a10">
+<style>
+/* ---------- workbook ---------- */
+.pb-search{position:sticky;top:86px;z-index:40;background:rgba(6,10,16,.94);backdrop-filter:blur(10px);padding:.6rem 0;margin:0 -4px}
+@media(min-width:940px){.pb-search{top:112px}}
+.pb-search .box{display:flex;gap:.5rem;background:var(--surface-2);border:1.5px solid var(--line);border-radius:12px;padding:.15rem .3rem .15rem 1rem;align-items:center}
+.pb-search .box:focus-within{border-color:var(--acc)}
+.pb-search input{flex:1;background:none;border:none;color:var(--ink);font-family:var(--font);font-size:1rem;padding:.6rem 0;min-width:0}
+.pb-search input:focus{outline:none}
+.pb-search .count{font-size:.72rem;color:var(--muted);white-space:nowrap;padding-right:.7rem}
+.pb-chips{display:flex;gap:.45rem;overflow-x:auto;padding:.55rem 2px .2rem}
+.pb-chips a{flex:none;font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.32rem .75rem;text-decoration:none;white-space:nowrap}
+.pb-chips a:hover{color:var(--acc);border-color:var(--acc)}
+
+.chapter{margin-top:1.6rem;scroll-margin-top:170px}
+.chapter.hidden{display:none}
+.chapter .ch-head{display:flex;align-items:baseline;gap:.7rem;border-bottom:1px solid var(--line);padding-bottom:.5rem;margin-bottom:.9rem}
+.chapter .ch-num{font-family:var(--display);color:var(--acc);font-size:1.1rem;letter-spacing:.1em}
+.chapter h2{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(1.2rem,3.5vw,1.6rem)}
+.chapter h3{font-size:1rem;margin:1.1rem 0 .4rem;color:var(--ink)}
+.chapter p,.chapter li{font-size:.93rem;color:var(--muted);line-height:1.65}
+.chapter b{color:var(--ink)}
+.chapter ol,.chapter ul{margin:.4rem 0 .8rem 1.3rem}
+.chapter li{margin:.3rem 0}
+mark{background:rgba(94,225,255,.3);color:var(--ink);border-radius:3px;padding:0 2px}
+
+/* tutorial steps */
+.tut{counter-reset:tut;margin:.8rem 0}
+.tut .t-step{display:flex;gap:.9rem;padding:.7rem 0;border-bottom:1px dashed var(--line)}
+.tut .t-step:last-child{border-bottom:none}
+.tut .t-step::before{counter-increment:tut;content:counter(tut);flex:none;width:30px;height:30px;border-radius:8px;background:var(--acc);color:#04121a;font-family:var(--display);font-size:1rem;display:grid;place-items:center}
+.tut .t-step div{flex:1}
+.tut .t-step>div>b{display:block;font-size:.92rem}
+.tut .t-step p{margin-top:.15rem;font-size:.88rem}
+
+/* worksheet — interactive checklist, saved on this device */
+.worksheet{background:var(--surface);border:1px solid rgba(94,225,255,.35);border-radius:14px;padding:1.1rem 1.2rem;margin:1rem 0}
+.worksheet .ws-title{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--acc);margin-bottom:.6rem}
+.worksheet label{display:flex;gap:.7rem;align-items:flex-start;padding:.42rem 0;font-size:.9rem;color:var(--muted);cursor:pointer}
+.worksheet input[type=checkbox]{width:19px;height:19px;accent-color:var(--acc);flex:none;margin-top:1px}
+.worksheet input[type=checkbox]:checked+span{color:var(--ink);text-decoration:line-through;text-decoration-color:rgba(94,225,255,.5)}
+.worksheet .ws-note{font-size:.75rem;color:var(--muted);margin-top:.5rem;border-top:1px dashed var(--line);padding-top:.5rem}
+
+/* money math table */
+.money{width:100%;border-collapse:collapse;font-size:.88rem;margin:.7rem 0}
+.money th{text-align:left;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:.45rem .6rem;border-bottom:1px solid var(--line)}
+.money td{padding:.5rem .6rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--muted)}
+.money td b{color:var(--acc);font-family:var(--display);font-weight:400;letter-spacing:.03em}
+.money tr.total td{border-top:2px solid var(--acc);color:var(--ink);font-weight:700}
+
+/* use case cards */
+.usecase{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:12px;padding:1rem 1.1rem;margin:.7rem 0}
+.usecase b.uc-t{display:block;font-size:.95rem;margin-bottom:.25rem}
+.usecase p{font-size:.88rem}
+.usecase .uc-win{color:var(--green);font-weight:700;font-size:.82rem}
+
+.no-results{display:none;text-align:center;color:var(--muted);padding:3rem 1rem}
+.no-results.show{display:block}
+
+@media print{
+  .fr-top,.fr-tabs,.demo-banner,.pb-search,.pb-chips,.fr-sheet,.fr-sheet-back,.fr-shutter{display:none !important}
+  body{background:#fff;color:#000}
+  .fr-page{padding:0;max-width:none;margin:0}
+  .chapter p,.chapter li,.worksheet label{color:#222}
+  .chapter b,.chapter h2,.chapter h3{color:#000}
+  .worksheet,.usecase{border-color:#999;background:#fff}
+}
+</style>
+</head>
+<body>
+
+<main class="fr-page">
+  <p class="eyeline">For coaches &amp; teams</p>
+  <h1 style="font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,5vw,2.3rem);text-transform:uppercase;letter-spacing:.02em;margin:.25rem 0 .3rem">The Team Playbook</h1>
+  <p style="color:var(--muted);font-size:.95rem;max-width:44em">How to run GameFilmNow — and how to make it pay. Work through it chapter by chapter with your team. Checkboxes save on this device, and the whole thing prints as a handout (Ctrl/Cmd+P).</p>
+
+  <!-- SEARCH -->
+  <div class="pb-search">
+    <div class="box">
+      <span style="color:var(--muted)">🔎</span>
+      <input id="pbSearch" type="search" placeholder="Search the playbook… try 'sponsor', 'homework', 'Top-20', 'refund'" aria-label="Search the playbook">
+      <span class="count" id="pbCount"></span>
+    </div>
+    <div class="pb-chips" id="pbChips">
+      <a href="#ch1">Start Here</a><a href="#ch2">Coach Setup</a><a href="#ch3">Player Basics</a><a href="#ch4">Film Sessions</a><a href="#ch5">Player Growth</a><a href="#ch6">Top-20 Engine</a><a href="#ch7">Sell to Businesses</a><a href="#ch8">Game-Week Money</a><a href="#ch9">Season Money Map</a><a href="#ch10">Use Cases</a><a href="#ch11">Quick Answers</a>
+    </div>
+  </div>
+
+  <p class="no-results" id="noResults">Nothing matches that — try a shorter word, like "sponsor" or "tag".</p>
+
+  <!-- CH 1 -->
+  <section class="chapter" id="ch1">
+    <div class="ch-head"><span class="ch-num">01</span><h2>Start here — what this platform actually is</h2></div>
+    <p><b>GameFilmNow does three jobs for your team:</b> it puts every game on camera (live streams + recordings your fans buy), it gives your players a pro-style film room (every play, cut and ready in 24 hours), and it turns both into a fundraiser that actually pays — because you're selling the game itself, not candy.</p>
+    <p>The money side and the football side feed each other: teams that study film play better, teams that play better sell more film, and the sales fund the program. This workbook walks both tracks at once.</p>
+    <div class="worksheet" data-ws="ch1">
+      <div class="ws-title">✅ Before week one</div>
+      <label><input type="checkbox"><span>Coach has a login and can see the team dashboard</span></label>
+      <label><input type="checkbox"><span>The season schedule is entered (dates, times, opponents)</span></label>
+      <label><input type="checkbox"><span>Every player's PARENT contact is collected (email + mobile)</span></label>
+      <label><input type="checkbox"><span>Team page has a bio and at least one photo or crest</span></label>
+      <div class="ws-note">Checkboxes save automatically on this device — come back anytime.</div>
+    </div>
+  </section>
+
+  <!-- CH 2 -->
+  <section class="chapter" id="ch2">
+    <div class="ch-head"><span class="ch-num">02</span><h2>Coach setup — tutorial</h2></div>
+    <h3>Set up your season in one sitting</h3>
+    <div class="tut">
+      <div class="t-step"><div><b>Open Coach → My Schedule</b><p>Every game is one row: date, time, opponent, stream window, prices. Type in the Opponent box and matching GFN teams appear — pick one, or create a new opponent on the spot.</p></div></div>
+      <div class="t-step"><div><b>Set each game's stream window</b><p>Start and end times. The stream goes on sale automatically before kickoff and comes OFF sale at the end time — you never take anything down by hand.</p></div></div>
+      <div class="t-step"><div><b>Set your prices</b><p>Stream, recording, and bundle per game. Typical: $9.99 stream / $7.99 recording / $14.99 bundle. Your Team Pass covers the whole season.</p></div></div>
+      <div class="t-step"><div><b>Invite your players</b><p>Coach → Team Page → Invite players. Enter each player's name and their <b>parent's</b> email and phone. GFN sends the Player Pass invite and the parent consent form — kids are never contacted directly. No consent, no film room.</p></div></div>
+      <div class="t-step"><div><b>Dress your public page</b><p>Bio, roster, sponsor slots, merch. This page is your storefront — every fan who buys a ticket sees it.</p></div></div>
+    </div>
+    <h3>Fixing things</h3>
+    <p><b>Game time changed?</b> Edit the row — every fan who bought gets the update automatically. <b>Game cancelled?</b> Tell GFN support and every purchase refunds in one batch; buyers get a text. <b>Score wrong?</b> Type the right one in the Score cell.</p>
+  </section>
+
+  <!-- CH 3 -->
+  <section class="chapter" id="ch3">
+    <div class="ch-head"><span class="ch-num">03</span><h2>Player basics — tutorial</h2></div>
+    <div class="tut">
+      <div class="t-step"><div><b>Open Film from the bottom bar</b><p>Fresh film lands within 24 hours of every game, already cut play by play. Tap any cut to watch; Next/Prev or the strip to move.</p></div></div>
+      <div class="t-step"><div><b>❤ Like and ⊕ save</b><p>Heart the plays you love; add plays to My List to study later. Two taps, like the apps you already use.</p></div></div>
+      <div class="t-step"><div><b>🏷️ Tag yourself — this is the big one</b><p>Tag every play you're in (aim for 3+ per game: one you're proud of, one to fix, one hustle play). Tags build your personal reel and your season archive — they follow you team to team, year to year.</p></div></div>
+      <div class="t-step"><div><b>Talk football with @</b><p>Type @ in a comment to search teammates by name or position and tag them. Ask coach questions right on the play. It's a study space, not social media — everything stays with the team.</p></div></div>
+      <div class="t-step"><div><b>Answer the homework</b><p>When coach pins a question to a play, it hits your notifications. Answer before the film session — coach sees who did.</p></div></div>
+    </div>
+    <div class="worksheet" data-ws="ch3">
+      <div class="ws-title">✅ Player weekly habit (10 minutes)</div>
+      <label><input type="checkbox"><span>Watched every cut I'm in from the last game</span></label>
+      <label><input type="checkbox"><span>Tagged 3 of my plays (proud / fix / hustle)</span></label>
+      <label><input type="checkbox"><span>Answered coach's film question</span></label>
+      <label><input type="checkbox"><span>Voted Play of the Week</span></label>
+    </div>
+  </section>
+
+  <!-- CH 4 -->
+  <section class="chapter" id="ch4">
+    <div class="ch-head"><span class="ch-num">04</span><h2>The 30-minute film session — the coach's system</h2></div>
+    <p>Pros watch film. College watches film. Your team can too — in 30 minutes a week, without losing a single kid to boredom. Run it the same every week:</p>
+    <ol>
+      <li><b>Minutes 0–5 — the wins.</b> Open with 3–4 plays you tagged as "we did this RIGHT." Ask "why did this work?" and make a kid say it out loud.</li>
+      <li><b>Minutes 5–20 — the teach (8 plays max).</b> ONE theme per week — blocking landmarks, pursuit angles, alignment. Play it at speed, play it slow, ask the question BEFORE the reveal, let players answer first.</li>
+      <li><b>Minutes 20–27 — the homework reveal.</b> Pin next week's question in the app in front of them, so nobody can say they didn't know. The tracker shows who answered.</li>
+      <li><b>Minutes 27–30 — the highlight.</b> End on the best play of the game and let them be loud. Last emotion wins.</li>
+    </ol>
+    <h3>Your prep in 30 minutes flat</h3>
+    <p>First pass at 1.5× speed, no notes. Second pass: ❤ the wins reel, ⊕ My List the teach reel. Pick the week's one theme from what My List tells you, post the homework question, done.</p>
+    <p><b>The loop that changes teams:</b> film theme → Tuesday session → the same theme becomes Wednesday's first two drills → tag the fix on next week's film → show the before/after pair. A kid watching himself fix something in seven days believes in practice forever.</p>
+    <div class="worksheet" data-ws="ch4">
+      <div class="ws-title">✅ This week's session</div>
+      <label><input type="checkbox"><span>Wins reel picked (3–4 plays)</span></label>
+      <label><input type="checkbox"><span>ONE teach theme chosen · max 8 plays pulled</span></label>
+      <label><input type="checkbox"><span>Homework question written &amp; ready to pin live</span></label>
+      <label><input type="checkbox"><span>Best-play closer picked</span></label>
+      <label><input type="checkbox"><span>Wednesday's first two drills match the theme</span></label>
+    </div>
+  </section>
+
+  <!-- CH 5 -->
+  <section class="chapter" id="ch5">
+    <div class="ch-head"><span class="ch-num">05</span><h2>Player growth — from tags to a tryout tape</h2></div>
+    <p>Every tag is a brick. By season's end a player who tags 3 plays a game has a 30+ play archive — and that's a highlight tape waiting to happen.</p>
+    <ol>
+      <li><b>All season:</b> tag proud / fix / hustle every game. The "fix" tags matter most — pull last month's fix tags and watch the improvement on film. Show a parent. Show a scout.</li>
+      <li><b>Streaks keep it honest:</b> the study streak on your home screen counts days you opened film. Protect the streak.</li>
+      <li><b>End of season:</b> Highlight Mode unlocks the reel builder — pick your best 20, choose a soundtrack, and the reel builds itself. Download every tagged play as files, no screen recording ever.</li>
+      <li><b>The tape goes public</b> on your profile — middle school and high school coaches can watch it without an account. Rec league kids almost never show up to tryouts with film. Yours will.</li>
+    </ol>
+  </section>
+
+  <!-- CH 6 -->
+  <section class="chapter" id="ch6">
+    <div class="ch-head"><span class="ch-num">06</span><h2>Profit play #1 — the Top-20 engine</h2></div>
+    <p><b>The single highest-leverage thing your team will do all season</b> happens in week one and takes 15 minutes per family: every player lists the 20 people who'd actually want to watch them play. Grandparents, aunts and uncles, godparents, mom's coworkers, dad's barber.</p>
+    <p>22 players × 20 names = <b>440 people who already love someone on your team</b>. That's your fundraiser — it was sitting in everyone's phones the whole time. Once the lists are in, the system invites them, reminds them every game week, and hands them the stream link. Nobody has to remember to text anybody, ever.</p>
+    <h3>The math</h3>
+    <table class="money">
+      <tr><th>Assumption</th><th>Number</th></tr>
+      <tr><td>Top-20 contacts collected</td><td><b>440</b></td></tr>
+      <tr><td>Sign up to watch (1 in 4)</td><td><b>110</b></td></tr>
+      <tr><td>Average spend per fan per season (streams/recordings/passes)</td><td><b>$18</b></td></tr>
+      <tr class="total"><td>Season revenue from Top-20 alone</td><td><b>~$1,980</b></td></tr>
+    </table>
+    <div class="worksheet" data-ws="ch6">
+      <div class="ws-title">✅ Week one — the list drive</div>
+      <label><input type="checkbox"><span>Announced at practice: every family fills their Top-20 by Friday</span></label>
+      <label><input type="checkbox"><span>Coach dashboard shows who's done (nudge the stragglers' parents)</span></label>
+      <label><input type="checkbox"><span>Made it a competition — first position group to 100% picks Friday's music</span></label>
+      <label><input type="checkbox"><span>All lists in before game one</span></label>
+    </div>
+  </section>
+
+  <!-- CH 7 -->
+  <section class="chapter" id="ch7">
+    <div class="ch-head"><span class="ch-num">07</span><h2>Profit play #2 — sell the game to businesses</h2></div>
+    <p>It's easier to sell a game to a business owner than a box of chocolate. Your team page has sponsor slots — that's ad space real local families look at every single week, and <b>you keep 100% of sponsor money.</b></p>
+    <h3>The script (say it word for word)</h3>
+    <p>"Hi, I coach the {Team} — {player they know} is one of ours. Our games stream live to a few hundred local families every week, and our team page is where they all go to watch. A sponsor slot on that page is ${___} for the season — your logo in front of every family, every week, and it all goes to the kids. Want to be up there by Friday's game?"</p>
+    <ul>
+      <li>Bring your phone. Show them the team page. Close on the spot.</li>
+      <li>3 slots × $250–500 a season is realistic for a first year.</li>
+      <li>Pick the 10 businesses closest to your field. You need 3 yeses.</li>
+    </ul>
+    <div class="worksheet" data-ws="ch7">
+      <div class="ws-title">✅ Sponsor tracker</div>
+      <label><input type="checkbox"><span>Listed 10 businesses within a mile of the field</span></label>
+      <label><input type="checkbox"><span>Visited / called all 10 with the script</span></label>
+      <label><input type="checkbox"><span>Sponsor #1 signed and on the team page</span></label>
+      <label><input type="checkbox"><span>Sponsor #2 signed</span></label>
+      <label><input type="checkbox"><span>Sponsor #3 signed</span></label>
+      <label><input type="checkbox"><span>Thank-you shoutout posted for each sponsor after a win</span></label>
+    </div>
+  </section>
+
+  <!-- CH 8 -->
+  <section class="chapter" id="ch8">
+    <div class="ch-head"><span class="ch-num">08</span><h2>Profit play #3 — the game-week machine &amp; big-game pushes</h2></div>
+    <h3>Every week, automatically</h3>
+    <p>Tuesday: everyone's Top-20 gets "{Team} plays Saturday — watch live" with the link. Game day: "kickoff in 2 hours." After: "the film is ready — own it forever." Your only job: confirm the game row (time, price, stream window) is right by Monday night. Five minutes.</p>
+    <h3>2–3 times a season, stack it</h3>
+    <ul>
+      <li><b>Rivalry and tournament games:</b> push the bundle ("watch live now, keep it forever — $14.99").</li>
+      <li><b>Merch next to the game:</b> hoodies and tees sell best the week everyone's already buying the big game.</li>
+      <li><b>Your extra 300-contact team list</b> (boosters, car-wash signups, door-to-door) gets the big-game blast — that's what it's for.</li>
+      <li><b>Tournaments:</b> families buy the Tournament Pass once instead of deciding game by game — pitch it before round one.</li>
+    </ul>
+  </section>
+
+  <!-- CH 9 -->
+  <section class="chapter" id="ch9">
+    <div class="ch-head"><span class="ch-num">09</span><h2>The season money map — targets and tracking</h2></div>
+    <p>Set targets at the season meeting, show progress every week. Players see tickets sold (never dollars) — let them compete on it.</p>
+    <table class="money">
+      <tr><th>Stream</th><th>Modest season</th><th>Strong season</th></tr>
+      <tr><td>Streams &amp; recordings (10 games)</td><td>$900</td><td>$2,000</td></tr>
+      <tr><td>Team &amp; tournament passes</td><td>$400</td><td>$900</td></tr>
+      <tr><td>Sponsor slots (yours 100%)</td><td>$500</td><td>$1,500</td></tr>
+      <tr><td>Merch margin</td><td>$200</td><td>$600</td></tr>
+      <tr class="total"><td>Season total</td><td><b>~$2,000</b></td><td><b>~$5,000</b></td></tr>
+    </table>
+    <p><b>The weekly rhythm:</b> Monday — confirm game rows. Tuesday — film session + auto-reminders fire. Friday/Saturday — game day, streams sell. Sunday — screenshot the revenue number, post the week's win: <i>"Our families raised $410 this week just by watching our games."</i></p>
+    <div class="worksheet" data-ws="ch9">
+      <div class="ws-title">✅ Season targets set</div>
+      <label><input type="checkbox"><span>Revenue target agreed at the season meeting</span></label>
+      <label><input type="checkbox"><span>What the money buys is written down (new jerseys? travel? fees?)</span></label>
+      <label><input type="checkbox"><span>Weekly revenue screenshot ritual assigned to someone</span></label>
+      <label><input type="checkbox"><span>Tickets-sold leaderboard announced to players</span></label>
+    </div>
+  </section>
+
+  <!-- CH 10 -->
+  <section class="chapter" id="ch10">
+    <div class="ch-head"><span class="ch-num">10</span><h2>Use cases — how real teams run it</h2></div>
+    <div class="usecase">
+      <b class="uc-t">🏈 The rec team that replaced the candy fundraiser</b>
+      <p>10U team, 18 players, no booster club. Week one they ran the Top-20 drive (360 contacts), signed two $300 sponsors from the plaza next to the field, and pushed the Team Pass at the season meeting. They never sold a single candy bar.</p>
+      <p class="uc-win">Season take: ~$2,400 · new road uniforms paid in full</p>
+    </div>
+    <div class="usecase">
+      <b class="uc-t">🏆 The tournament squad with family five states away</b>
+      <p>All-star team, three-day tournament, grandparents everywhere from Ohio to Texas. Coach set up the tournament pass before round one and blasted the link to every family's Top-20. Sunday's championship stream had more viewers than the bleachers had seats.</p>
+      <p class="uc-win">One weekend: 74 passes sold · every game archived for the kids forever</p>
+    </div>
+    <div class="usecase">
+      <b class="uc-t">🎓 The 13-year-old with a tryout tape</b>
+      <p>Tagged 3 plays a game all season (41 total). Built a 20-play reel with Highlight Mode the week before middle school tryouts and put the link on his profile. The coaches had never seen film from a rec league kid before.</p>
+      <p class="uc-win">Made the team — and the JV coach followed his profile for next season</p>
+    </div>
+    <div class="usecase">
+      <b class="uc-t">📋 The coach who fixed a leaky offensive line on film</b>
+      <p>Three weeks of the same theme: blocking landmarks. Pin question Tuesday, drill Wednesday, tag the fixes Saturday, show before/after pairs the next Tuesday. Players started tagging their own fixes without being asked.</p>
+      <p class="uc-win">Sacks allowed went from 4 a game to 1 · film homework hit 100%</p>
+    </div>
+    <div class="usecase">
+      <b class="uc-t">🏟️ The league that put every field on camera</b>
+      <p>League director signed one contract covering all 20 teams. Every squad got its own page, passes, and film room; the league kept a share of every ticket. Fundraising stopped being 20 separate problems.</p>
+      <p class="uc-win">League-wide: every game filmed · shared revenue funded the referee budget</p>
+    </div>
+  </section>
+
+  <!-- CH 11 -->
+  <section class="chapter" id="ch11">
+    <div class="ch-head"><span class="ch-num">11</span><h2>Quick answers</h2></div>
+    <ul>
+      <li><b>When does film arrive?</b> Team play-by-play within 24 hours; public recording on sale within 72.</li>
+      <li><b>A parent can't find their purchase.</b> It's saved under My Games in their account, and the link was texted to them at purchase. It never expires.</li>
+      <li><b>Game cancelled — refunds?</b> One batch refund for the whole game via GFN support; every buyer gets notified automatically.</li>
+      <li><b>Can a kid buy things?</b> No. Kid-initiated purchases (like Highlight Mode) send an approval request to the parent — kids never enter card details.</li>
+      <li><b>Player on two teams?</b> The pill at the top-left of the app switches teams — film, homework, and calendar re-scope instantly.</li>
+      <li><b>Who sees the revenue?</b> Coaches see dollars. Players see tickets sold only.</li>
+      <li><b>Is the film room public?</b> No — it's the team's private study space, behind the Player Pass and parent consent. Only the highlight montage a player chooses to publish is public.</li>
+      <li><b>Texts to kids?</b> Never. All texts and emails go to parents; kids get in-app notifications only.</li>
+    </ul>
+    <p style="margin-top:1rem"><b>Still stuck?</b> Ask your GFN rep, or book a fundraising strategy call — coaching is part of what you're paying for.</p>
+  </section>
+</main>
+
+<script src="assets/team.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+FRShell.mount('coach');
+
+/* ---------- search: live filter + highlight ---------- */
+const chapters=[...document.querySelectorAll('.chapter')];
+const orig=new Map(chapters.map(c=>[c.id,c.innerHTML]));
+const input=document.getElementById('pbSearch');
+const count=document.getElementById('pbCount');
+const noRes=document.getElementById('noResults');
+let deb;
+input.addEventListener('input',()=>{ clearTimeout(deb); deb=setTimeout(run,120); });
+function esc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function run(){
+  const q=input.value.trim();
+  let shown=0, hits=0;
+  chapters.forEach(c=>{
+    c.innerHTML=orig.get(c.id);                       // reset marks
+    if(!q){ c.classList.remove('hidden'); return; }
+    const match=c.textContent.toLowerCase().includes(q.toLowerCase());
+    c.classList.toggle('hidden',!match);
+    if(match){
+      shown++;
+      const rx=new RegExp('('+esc(q)+')','gi');
+      const ql=q.toLowerCase();
+      const walk=document.createTreeWalker(c,NodeFilter.SHOW_TEXT);
+      const nodes=[]; let n;
+      while(n=walk.nextNode()) if(n.nodeValue.toLowerCase().includes(ql)) nodes.push(n);
+      nodes.forEach(node=>{
+        const span=document.createElement('span');
+        span.innerHTML=node.nodeValue.replace(rx,'<mark>$1</mark>');
+        hits+=(node.nodeValue.match(rx)||[]).length;
+        node.parentNode.replaceChild(span,node);
+      });
+      rebindWorksheets(c);
+    }
+  });
+  if(!q){ count.textContent=''; noRes.classList.remove('show'); chapters.forEach(rebindWorksheets); return; }
+  count.textContent = shown? `${hits} match${hits===1?'':'es'} · ${shown} chapter${shown===1?'':'s'}` : 'no matches';
+  noRes.classList.toggle('show',shown===0);
+}
+
+/* ---------- worksheet persistence (per device) ---------- */
+function rebindWorksheets(scope){
+  (scope||document).querySelectorAll('.worksheet').forEach(ws=>{
+    const key='pb_'+ws.dataset.ws;
+    const boxes=[...ws.querySelectorAll('input[type=checkbox]')];
+    const saved=JSON.parse(localStorage.getItem(key)||'[]');
+    boxes.forEach((b,i)=>{
+      b.checked=!!saved[i];
+      b.onchange=()=>{ localStorage.setItem(key, JSON.stringify(boxes.map(x=>x.checked))); };
+    });
+  });
+}
+rebindWorksheets(document);
+</script>
+</body>
+</html>

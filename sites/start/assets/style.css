@@ -55,7 +55,7 @@ h3{font-size:1.15rem}
 .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
 .btn-ghost:hover{border-color:var(--yellow);color:var(--yellow)}
 .btn-lg{font-size:1.05rem;padding:1rem 2rem}
-.btn-block{width:100%}
+.btn-block{width:100%;white-space:normal}
 
 /* ---------- header ---------- */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(10,10,12,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -93,6 +93,7 @@ h3{font-size:1.15rem}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.grid-2>*,.grid-3>*,.grid-4>*{min-width:0}
 @media(max-width:840px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.grid-2{gap:2rem}}
 
 /* ---------- forms ---------- */
