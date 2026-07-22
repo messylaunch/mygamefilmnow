@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Highlights — GameFilmNow</title>
+<title>My Reel — GameFilmNow Film Room</title>
 <link rel="stylesheet" href="assets/base.css">
 <link rel="stylesheet" href="assets/team.css">
+<link rel="stylesheet" href="assets/shell.css">
+<meta name="theme-color" content="#060a10">
 </head>
 <body>
-<div id="hdr"></div>
-<main>
+<main class="fr-page">
   <div class="container">
-    <h1 class="page-title" style="font-size:1.5rem">🏷️ My Plays &amp; Highlights</h1>
-    <p class="page-sub">Every play you've tagged yourself on, all season — 19 plays and counting.</p>
+    <p class="eyeline">Your season, your cut</p>
+    <h1 class="page-title" style="font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(1.5rem,4.5vw,2rem)">My Reel</h1>
+    <p class="page-sub">Every play you've tagged, all season — 19 and counting. Pick the best, roll the tape.</p>
 
     <div class="layout">
       <div>
@@ -75,8 +77,9 @@
   </div>
 </main>
 <script src="assets/team.js"></script>
+<script src="assets/shell.js"></script>
 <script>
-document.getElementById('hdr').innerHTML = FR.header('highlights');
+FRShell.mount('reel');
 const clipNames=["44 Sweep TD","Screen L +18","Kick return","Cutback +11","Goal line TD","4th down stop","Swing pass +9","Counter +15","2pt conversion","Jet sweep +22","Wheel route TD","Stiff arm +8","44 Lead +7","Toss crack +12","Screen R +6","Draw +19","Fade TD","Pitch +10","Trap +13"];
 let selected = new Set();
 
