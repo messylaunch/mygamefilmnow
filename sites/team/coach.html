@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coach View — GameFilmNow Film Room</title>
+<title>The Booth — GameFilmNow Film Room</title>
 <link rel="stylesheet" href="assets/base.css">
 <link rel="stylesheet" href="assets/team.css">
+<link rel="stylesheet" href="assets/shell.css">
+<meta name="theme-color" content="#060a10">
 </head>
 <body>
-<div id="hdr"></div>
-<main>
+<main class="fr-page">
   <div class="container">
-    <h1 class="page-title" style="font-size:1.5rem">📋 Coach Mike — Eagles 12U Film Room</h1>
+    <p class="eyeline">The booth</p>
+    <h1 class="page-title" style="font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(1.5rem,4.5vw,2rem)">Coach Mike — Eagles 12U</h1>
     <p class="page-sub">Run film like the pros: post questions, pin notes, track who's doing their homework. The <a href="../..//docs/COACHES-PLAYBOOK.md" onclick="alert('See docs/COACHES-PLAYBOOK.md — the 30-minute film session system.');return false">30-Minute Film Session playbook</a> shows you exactly how.</p>
 
     <div class="stat-cards">
@@ -75,7 +77,8 @@
   </div>
 </main>
 <script src="assets/team.js"></script>
-<script>document.getElementById('hdr').innerHTML = FR.header('coach', {initials:'CM', name:'Coach Mike', bell:5});</script>
+<script src="assets/shell.js"></script>
+<script>FRShell.mount('coach');</script>
 <script src="assets/motion.js"></script>
 </body>
 </html>

@@ -6,12 +6,13 @@
 <title>Film Room — GameFilmNow</title>
 <link rel="stylesheet" href="assets/base.css">
 <link rel="stylesheet" href="assets/team.css">
+<link rel="stylesheet" href="assets/shell.css">
+<meta name="theme-color" content="#060a10">
 </head>
 <body>
-<div id="hdr"></div>
-<main>
+<main class="fr-page">
   <div class="container">
-    <p style="margin-bottom:.7rem;font-size:.9rem"><a href="index.html">← My Team</a> <span style="color:var(--muted)" id="crumb">· vs Auburndale Rams 12U · Final W 21–14 · 64 plays</span></p>
+    <p style="margin-bottom:.7rem;font-size:.9rem"><a href="index.html">← Home</a> <span style="color:var(--muted)" id="crumb">· vs Auburndale Rams 12U · Final W 21–14 · 64 plays</span></p>
 
     <div class="layout">
       <div>
@@ -80,8 +81,9 @@
   </div>
 </main>
 <script src="assets/team.js"></script>
+<script src="assets/shell.js"></script>
 <script>
-document.getElementById('hdr').innerHTML = FR.header('film');
+FRShell.mount('film');
 
 // load the game the player actually clicked (film-room.html?g=<id>)
 const gid = new URLSearchParams(location.search).get('g') || 'g2';

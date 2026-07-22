@@ -89,17 +89,13 @@ const FR = {
 
   header(active, who){
     who = who || { initials:this.me.initials, name:this.me.name, bell:4 };
-    return `<div class="demo-banner">🚧 DEMO TEMPLATE — sample film room; player, coach &amp; scout views all shown in one nav (real app scopes by login). This becomes team.mygamefilmnow.com.</div>
+    return `<div class="demo-banner">🚧 DEMO — GFN Scout is a separate product with its own verified access. Players &amp; coaches use the Film Room app.</div>
     <header class="site-header"><div class="container nav">
-      <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small style="color:var(--gold)">Now</small>&nbsp;<span class="logo-suffix" style="font-weight:600;color:var(--muted);font-size:.8rem">FILM ROOM</span></a>
+      <a class="logo" href="index.html"><span class="logo-mark">▶</span>GameFilm<small style="color:var(--gold)">Now</small>&nbsp;<span class="logo-suffix" style="font-weight:600;color:var(--muted);font-size:.8rem">SCOUT</span></a>
       <button class="nav-toggle" aria-label="Menu" style="color:var(--ink)" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
       <nav class="nav-links">
-        <a href="index.html" class="${active==='home'?'active':''}">My Team</a>
-        <a href="film-room.html" class="${active==='film'?'active':''}">Film Room</a>
-        <a href="highlights.html" class="${active==='highlights'?'active':''}">My Highlights</a>
-        <a href="profile.html" class="${active==='profile'?'active':''}">My Profile</a>
-        <a href="coach.html" class="${active==='coach'?'active':''}">Coach View</a>
-        <a href="scout.html" class="${active==='scout'?'active':''}">Scout View</a>
+        <a href="scout.html" class="active">Scout Desk</a>
+        <a href="profile.html">Player Profiles</a>
       </nav>
       <div class="nav-account">
         <a class="nav-bell" href="index.html#notifications" title="Notifications">🔔<span class="dot">${who.bell}</span></a>

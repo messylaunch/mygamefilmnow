@@ -6,10 +6,11 @@
 <title>Zach Riddle #22 — GameFilmNow</title>
 <link rel="stylesheet" href="assets/base.css">
 <link rel="stylesheet" href="assets/team.css">
+<link rel="stylesheet" href="assets/shell.css">
+<meta name="theme-color" content="#060a10">
 </head>
 <body>
-<div id="hdr"></div>
-<main>
+<main class="fr-page">
   <div class="container">
     <div class="profile-hero">
       <div class="profile-pic" style="background:linear-gradient(135deg,#1e8a3c,#0b3d1a);overflow:hidden">
@@ -82,7 +83,8 @@
   </div>
 </main>
 <script src="assets/team.js"></script>
-<script>document.getElementById('hdr').innerHTML = FR.header('profile');</script>
+<script src="assets/shell.js"></script>
+<script>FRShell.mount('profile');</script>
 <script src="assets/motion.js"></script>
 </body>
 </html>

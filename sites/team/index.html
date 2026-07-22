@@ -2,78 +2,93 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Team — GameFilmNow Film Room</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Home — GameFilmNow Film Room</title>
 <link rel="stylesheet" href="assets/base.css">
 <link rel="stylesheet" href="assets/team.css">
+<link rel="stylesheet" href="assets/shell.css">
+<meta name="theme-color" content="#060a10">
 </head>
 <body>
-<div id="hdr"></div>
-<main>
-  <div class="container">
-    <h1 class="page-title" style="font-size:1.5rem">🦅 Lakeland Eagles 12U — Film Room</h1>
-    <p class="page-sub">Welcome back, Zach. New film drops within 24 hours of every game. This is your team's private study space — no open chat, just football.</p>
 
-    <div class="stat-cards">
-      <div class="stat-card"><small>Games on film</small><b>3</b><span class="delta">+1 in editing</span></div>
-      <div class="stat-card"><small>Plays you're tagged in</small><b>19</b><span class="delta">▲ 6 from last game</span></div>
-      <div class="stat-card"><small>Your play views</small><b>412</b><span class="delta">people watching your film</span></div>
-      <div class="stat-card"><small>Coach questions open</small><b>2</b><span class="delta" style="color:var(--gold)">answer them ↓</span></div>
+<main class="fr-page">
+  <p class="eyeline">The film room</p>
+  <h1 style="font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,5vw,2.3rem);text-transform:uppercase;letter-spacing:.02em;margin:.25rem 0 1rem">Lights down, <span style="color:var(--acc)" id="firstName">Zach</span>. Film's up.</h1>
+
+  <!-- UP NEXT — the one thing -->
+  <section class="upnext"><span class="vf"></span><span class="scan"></span>
+    <p class="eyeline">Up next</p>
+    <h2 id="unTitle">Answer Coach Mike on Play 14</h2>
+    <p id="unSub">"What hole should we hit here?" — due before Tuesday's film session (6:30 PM).</p>
+    <div class="row">
+      <a class="btn btn-primary" href="film-room.html?g=g2">▶ Pick up at Play 14</a>
+      <a class="btn btn-ghost" href="film-room.html">Open the film</a>
     </div>
+  </section>
 
-    <div class="layout">
-      <div>
-        <div class="panel">
-          <div class="panel-head"><h3>🎞️ Game Film</h3><span style="font-size:.8rem;color:var(--muted)">Team film in 24h · every play, every angle</span></div>
-          <div class="panel-body flush" id="gamesEl"></div>
-        </div>
-
-        <div class="panel" style="margin-top:1.4rem">
-          <div class="panel-head"><h3>📅 Team Calendar</h3><a href="#" onclick="alert('Demo: full calendar — games, practices, film sessions, Zoom calls. Coach adds events; parents get reminders.');return false">Full calendar</a></div>
-          <div class="panel-body flush">
-            <div class="game-row"><div class="gr-date"><b>7</b><small>Jul</small></div><div class="gr-info"><b>Film Study — Tuesday Session</b><small>6:30 PM · Coach reviews vs Mulberry · bring your homework plays</small></div><span class="tag tag-gold">FILM</span></div>
-            <div class="game-row"><div class="gr-date"><b>10</b><small>Jul</small></div><div class="gr-info"><b>GAME vs Winter Haven Storm</b><small>7:00 PM · Bryant Stadium Field 2 · streaming live</small></div><span class="tag tag-new">GAME</span></div>
-            <div class="game-row"><div class="gr-date"><b>12</b><small>Jul</small></div><div class="gr-info"><b>Team Zoom — Scheme Install</b><small>5:00 PM · link goes to parents' email</small></div><span class="tag tag-dim">ZOOM</span></div>
-          </div>
-        </div>
-      </div>
-
-      <aside>
-        <div class="panel" id="notifications">
-          <div class="panel-head"><h3>🔔 Notifications</h3><a href="#" onclick="return false">Mark read</a></div>
-          <div class="panel-body flush">
-            <div class="notif unread"><div class="notif-icon">❓</div><div><b>Coach Mike asked on Play 14:</b> "What hole should we hit here?"<small>vs Rams · 3h ago · <a href="film-room.html">answer in film room →</a></small></div></div>
-            <div class="notif unread"><div class="notif-icon">💬</div><div><b>@DeShawn mentioned you</b> on Play 15: "<span style="color:var(--gold)">@ZachRiddle</span> that cut was nasty 🔥"<small>vs Rams · 5h ago</small></div></div>
-            <div class="notif unread"><div class="notif-icon">🎞️</div><div><b>New film posted:</b> vs Auburndale Rams — 64 plays ready.<small>1d ago · parents notified too</small></div></div>
-            <div class="notif unread"><div class="notif-icon">👨‍👩‍👧</div><div><b>John Smith</b> (your uncle) started following you.<small>2d ago</small></div></div>
-            <div class="notif"><div class="notif-icon">📌</div><div><b>Coach note:</b> "@RunningBacks watch your landmarks on 14 before Tuesday."<small>2d ago</small></div></div>
-          </div>
-        </div>
-
-        <div class="panel" style="margin-top:1.2rem">
-          <div class="panel-head"><h3>⭐ My Lists</h3></div>
-          <div class="panel-body flush">
-            <a class="game-row" href="highlights.html"><div class="notif-icon">🏷️</div><div class="gr-info"><b>Tagged: my plays</b><small>19 plays across 3 games</small></div><span class="tag tag-gold">19</span></a>
-            <a class="game-row" href="highlights.html"><div class="notif-icon">❤️</div><div class="gr-info"><b>Liked plays</b><small>plays you hit ❤ on</small></div><span class="tag tag-dim">31</span></a>
-            <a class="game-row" href="highlights.html"><div class="notif-icon">📁</div><div class="gr-info"><b>My List</b><small>saved for later study</small></div><span class="tag tag-dim">12</span></a>
-          </div>
-        </div>
-
-        <p class="consent-note">🛡️ <b>Kid-safe by design:</b> your account is linked to Maria Riddle (parent). All texts/emails go to her — you get notifications right here in the app.</p>
-      </aside>
-    </div>
+  <!-- slim stat strip -->
+  <div class="statline" style="margin-top:.9rem">
+    <span class="chip hot"><b>🔥 3</b> day study streak</span>
+    <span class="chip"><b>19</b> plays tagged</span>
+    <span class="chip"><b>412</b> reel views</span>
+    <span class="chip"><b>1</b> homework due</span>
   </div>
+
+  <!-- fresh film -->
+  <div class="sec"><span class="eyeline">Fresh film</span><span style="font-size:.75rem;color:var(--muted)">every cut, 24h after the whistle</span></div>
+  <div class="panel"><div class="panel-body flush" id="gamesEl"></div></div>
+
+  <!-- play of the week -->
+  <div class="sec"><span class="eyeline">Play of the week</span><a href="#" onclick="return false" id="potwCount">31 votes in</a></div>
+  <div class="potw" id="potw">
+    <div class="frames">
+      <button class="opt" data-pct="68%"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#14532d,#0d1b2e);display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:1.1rem;letter-spacing:.05em">PLAY 15 · 44 SWEEP TD</div><span class="lbl">Zach R. #22</span><span class="pct">68%</span></button>
+      <button class="opt" data-pct="32%"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#1e3a8a,#0d1b2e);display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:1.1rem;letter-spacing:.05em">PLAY 07 · PICK SIX</div><span class="lbl">Tommy V. #30</span><span class="pct">32%</span></button>
+    </div>
+    <div class="potw-foot" id="potwFoot">Tap a play to cast your vote — winner rolls in Friday's team huddle.</div>
+  </div>
+
+  <!-- schedule -->
+  <div class="sec"><span class="eyeline">This week</span><a href="#" onclick="alert('Demo: full team calendar — games, practices, film sessions, Zoom calls. Reminders go to parents.');return false">Full calendar →</a></div>
+  <div class="panel"><div class="panel-body flush">
+    <div class="game-row"><div class="gr-date"><b>7</b><small>Jul</small></div><div class="gr-info"><b>Film session — Tuesday</b><small>6:30 PM · Coach runs vs Mulberry · bring your homework play</small></div><span class="tag tag-gold">FILM</span></div>
+    <div class="game-row"><div class="gr-date"><b>10</b><small>Jul</small></div><div class="gr-info"><b>Game — vs Winter Haven Storm</b><small>7:00 PM · Bryant Stadium Field 2 · streaming live</small></div><span class="tag tag-new">GAME</span></div>
+    <div class="game-row"><div class="gr-date"><b>12</b><small>Jul</small></div><div class="gr-info"><b>Team Zoom — scheme install</b><small>5:00 PM · link goes to parents' email</small></div><span class="tag tag-dim">ZOOM</span></div>
+  </div></div>
 </main>
+
 <script src="assets/team.js"></script>
+<script src="assets/shell.js"></script>
 <script>
-document.getElementById('hdr').innerHTML = FR.header('home');
-document.getElementById('gamesEl').innerHTML = FR.games.map(g=>{
-  const ready = g.status==='ready';
-  return `<a class="game-row" href="${ready?'film-room.html?g='+g.id:'#'}" ${ready?'':'onclick="return false" style="opacity:.55;cursor:default"'}>
-    <div class="gr-date"><b>${g.date.split(' ')[1]}</b><small>${g.date.split(' ')[0]}</small></div>
-    <div class="gr-info"><b>${g.label} · Final ${g.score}</b><small>${g.event}${ready?` · ${g.plays} plays · you're tagged in ${g.myTags}`:''}</small></div>
-    ${ready?'<span class="tag tag-new">▶ STUDY</span>':'<span class="tag tag-dim">EDITING — READY IN ~24H</span>'}</a>`;
-}).join('');
+FRShell.mount('home');
+const team = FRShell.team();
+
+/* per-team film list — players on multiple teams switch in the top bar */
+const gamesEl = document.getElementById('gamesEl');
+if (team.id === 'allstars') {
+  document.getElementById('unTitle').textContent = 'All-Stars film is in the edit room';
+  document.getElementById('unSub').textContent = 'Winter Classic Round 1 was uploaded last night — cuts land here within 24 hours.';
+  gamesEl.innerHTML = `
+    <div class="game-row" style="opacity:.6"><div class="gr-date"><b>18</b><small>Jul</small></div>
+      <div class="gr-info"><b>vs Ridge Raiders 12U · Final W 13–6</b><small>Winter Classic — Round 1 · cutting now</small></div>
+      <span class="tag tag-dim">READY IN ~24H</span></div>
+    <p style="padding:1rem 1.2rem;font-size:.82rem;color:var(--muted)">This squad is new — film piles up here as the tournament rolls.</p>`;
+} else {
+  gamesEl.innerHTML = FR.games.map(g=>{
+    const ready = g.status==='ready';
+    return `<a class="game-row" href="${ready?'film-room.html?g='+g.id:'#'}" ${ready?'':'onclick="return false" style="opacity:.55;cursor:default"'}>
+      <div class="gr-date"><b>${g.date.split(' ')[1]}</b><small>${g.date.split(' ')[0]}</small></div>
+      <div class="gr-info"><b>${g.label} · Final ${g.score}</b><small>${g.event}${ready?` · ${g.plays} cuts · you're in ${g.myTags}`:''}</small></div>
+      ${ready?'<span class="tag tag-new">▶ STUDY</span>':'<span class="tag tag-dim">READY IN ~24H</span>'}</a>`;
+  }).join('');
+}
+
+/* play of the week vote */
+document.querySelectorAll('.potw .opt').forEach(o=>o.onclick=()=>{
+  document.getElementById('potw').classList.add('voted');
+  document.getElementById('potwFoot').textContent = 'Vote counted. Winner rolls in Friday\'s team huddle — you can change your pick until Thursday night.';
+  document.getElementById('potwCount').textContent = '32 votes in';
+});
 </script>
 <script src="assets/motion.js"></script>
 </body>
